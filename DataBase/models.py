@@ -22,12 +22,20 @@ class User(Base):
 	id = Column(Integer, primary_key=True)
 	first_name = Column(String(20))
 	last_name = Column(String(20))
-	email = Column(String(20))
+	email = Column(String(20), unique=True)
 	username = Column(String(20), unique=True)
 
-new = User(first_name='ls', last_name='k', email='dsf', username='dsfeefedsa')
 
-session.add(new)
-session.commit()
+class UserProfile(Base):
+	__tablename__ = 'user_profiles'
+
+	user_id = Column(Integer, ForeignKey(User.id))
+	user = relationship(User, userlist=False)
+	user_type = Column(Boolean)
+
+# new = User(first_name='ls', last_name='k', email='dsf', username='dsfeefedsa')
+
+# session.add(new)
+# session.commit()
 
 Base.metadata.create_all(connection[1])
