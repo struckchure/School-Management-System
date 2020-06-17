@@ -1,0 +1,21 @@
+1. Data Analysis
+	Save user datas and also analyze area usages, like the most visited parts of the app. and also students data analysis, and possibly predict the success rate on the next exam based on the reports from past exams and also teacher ratings and numbers of subjects offered with difficulty level(Data Scientist problem)
+
+2. Finance records
+	School fees payments, and show exsiting records of school fees and other forms of payments, users should be able to add more payments modes, like excursion, hostel, etc. payment gateway for online fees payments
+
+3. Bulk SMS and E-Mail alerts
+	send notifications to users on registration of change or update on profile
+
+4. Calendar events
+	Set events on calendar
+
+5. CBT Test
+	Computer based tests and reports generation(definately)
+
+6. Chat rooms for staff and students and broadcasts too.
+	School head to staffs chat room
+	Staff to staff
+	staff to students
+	class teacher to class students
+	And all chats can be disabled by school admin
