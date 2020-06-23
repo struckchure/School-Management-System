@@ -1,0 +1,46 @@
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+
+
+# Custom Modules Imports
+
+from views.mainWindow import *
+
+# Custom Modeles End
+
+
+class mainWindow(QWidget):
+	def __init__(self):
+		QWidget.__init__(self)
+
+		self.main_layout = QVBoxLayout()
+		self.main_layout.setContentsMargins(0, 0, 0, 0)
+		self.main_layout.setAlignment(Qt.AlignTop)
+
+		self.setLayout(self.main_layout)
+		self.setWindowTitle('School Management')
+		self.showMaximized()
+
+		self.initialization()
+
+	def initialization(self):
+		self.pageController()
+
+	def pageController(self):
+		'''
+			Add widgets to this stacked widget, it acts like a layout
+			when you add new widgets to it, use this to activate the widget visibilty
+
+			self.pageControl.setCurrentIndex(self.pageControl.currentIndex() + 1)
+
+			when you add widgets to a stacked widget, it adds like using index, so it's even easier to navigate using indexing
+			just like in a list :)
+		'''
+
+		self.pageControl = QStackedWidget()
+		# self.pageControl.addWidget(Login())
+		self.pageControl.addWidget(Register(self.pageControl))
+		self.pageControl.setCurrentIndex(0)
+
+		self.main_layout.addWidget(self.pageControl)
