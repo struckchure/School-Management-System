@@ -37,8 +37,10 @@ class mainWindow(QWidget):
 			when you add widgets to a stacked widget, it adds like using index, so it's even easier to navigate using indexing
 			just like in a list :)
 		'''
+
 		self.pageControl = QStackedWidget()
-		self.pageControl.addWidget(Login())
+		# self.pageControl.addWidget(Login())
+		self.pageControl.addWidget(Register(self.pageControl))
 		self.pageControl.setCurrentIndex(0)
 
 		self.main_layout.addWidget(self.pageControl)
