@@ -1,0 +1,84 @@
+QLineEdit {
+	border-radius: 0px;
+	padding: 7px;
+	font-family: Verdana;
+	font-size: 13px;
+	text-align: left
+}
+
+QLineEdit:focus {
+	border: 2px solid #68B0B3;
+}
+
+
+QPushButton#login {
+	border-radius: 0px;
+	padding: 5px;
+	font-family: Verdana;
+	font-size: 13px;
+	text-align: center;
+	color: white;
+	background-color: #3E63CC;
+}
+
+
+QPushButton#login:pressed {
+	border: 2px solid #68B0B3;
+}
+
+
+QPushButton#login:not(focus) {
+	border: 0px;
+}
+
+
+QPushButton#forgotPassword {
+	border-radius: 0px;
+	padding: 5px;
+	font-family: Verdana;
+	font-size: 13px;
+	text-align: center;
+	color: #8D63E5;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+QPushButton#forgotPassword:hover {
+	color: #143D70;
+}
+
+QPushButton#forgotPassword:focus {
+	color: #143D88;
+}
+
+
+QLabel#pageTitle {
+	font-family: Verdana;
+	font-size: 25px;
+	color: black;
+}
+
+
+QLabel#signUpLabel {
+	font-family: Verdana;
+	font-size: 13px;
+	color: #D2A5A5;
+}
+
+
+QPushButton#signUpButton {
+	border-radius: 0px;
+	padding: 5px;
+	font-family: Verdana;
+	font-size: 13px;
+	text-align: center;
+	color: #8D63E5;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+QPushButton#signUpButton:hover {
+	color: #143D70;
+}
+
+QPushButton#signUpButton:focus {
+	color: #143D88;
+}

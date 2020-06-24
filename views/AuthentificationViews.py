@@ -112,35 +112,110 @@ class Login(QGroupBox):
 		self.mainPageLayout.addWidget(self.leftPageGroup)
 
 	def rightPage(self):
+		qss = open('resources/assets/qss/authQLineEdit.qss', 'r').read()
+		qss_button = open('resources/assets/qss/authQPushButton.qss', 'r').read()
+
 		self.rightPageLayout = QVBoxLayout()
 		self.rightPageLayout.setContentsMargins(0, 0, 0, 0)
 		self.rightPageLayout.setAlignment(Qt.AlignCenter)
 
+		self.pageTitle = QLabel('School Management System')
+		self.pageTitle.setAlignment(Qt.AlignCenter)
+		self.pageTitle.setObjectName('pageTitle')
+		self.pageTitle.setMaximumSize(500, 100)
+		self.pageTitle.setStyleSheet(qss_button)
+		self.rightPageLayout.addWidget(self.pageTitle, stretch=0, alignment=Qt.AlignTop)
+
+		self.spacer = QLabel()
+		self.spacer.setFixedHeight(30)
+		self.rightPageLayout.addWidget(self.spacer, stretch=0, alignment=Qt.AlignTop)
+
 		self.username = QLineEdit()
+		self.username.setObjectName('username')
+		self.username.setStyleSheet(qss)
 		self.username.setPlaceholderText('Username')
-		self.username.setMaximumSize(120, 50)
+		self.username.setMaximumSize(400, 60)
 		self.rightPageLayout.addWidget(self.username)
 
 		self.password = QLineEdit()
+		self.password.setObjectName('password')
+		self.password.setStyleSheet(qss)
 		self.password.setPlaceholderText('Password')
 		self.password.setEchoMode(QLineEdit.Password)
-		self.password.setMaximumSize(120, 50)
+		self.password.setMaximumSize(400, 60)
 		self.rightPageLayout.addWidget(self.password)
 
+		'''
+			Caps Lock warning, Session Keeper, Forgot Password
+		'''
+
+		self.spacer2 = QLabel()
+		self.spacer2.setFixedHeight(10)
+		self.rightPageLayout.addWidget(self.spacer2)
+
+		self.extraLayout = QHBoxLayout()
+		self.extraLayout.setContentsMargins(0, 0, 0, 0)
+		self.rightPageLayout.addLayout(self.extraLayout)
+
+		self.spacer2 = QLabel()
+		self.spacer2.setFixedHeight(10)
+		self.rightPageLayout.addWidget(self.spacer2)
+
+		self.keepSession = QCheckBox('Keep me logged in for 30 days')
+		self.extraLayout.addWidget(self.keepSession, stretch=0, alignment=Qt.AlignLeft)
+
+		self.forgotPassword = QPushButton('Forgot password?')
+		self.forgotPassword.setObjectName('forgotPassword')
+		self.forgotPassword.setStyleSheet(qss_button)
+		self.extraLayout.addWidget(self.forgotPassword, stretch=0, alignment=Qt.AlignRight)
+
 		self.loginButton = QPushButton('Login')
-		self.loginButton.setMaximumSize(120, 45)
+		self.loginButton.setObjectName('login')
+		self.loginButton.setStyleSheet(qss_button)
+		self.loginButton.setMaximumSize(400, 80)
 		self.loginButton.clicked.connect(self.loginButtonView)
 		self.rightPageLayout.addWidget(self.loginButton)
 
+		self.spacer3 = QLabel()
+		self.spacer3.setFixedHeight(30)
+		self.rightPageLayout.addWidget(self.spacer3)
+
+		self.signUpLayout = QHBoxLayout()
+		self.signUpLayout.setSpacing(0)
+		self.signUpLayout.setAlignment(Qt.AlignCenter)
+		self.rightPageLayout.addLayout(self.signUpLayout)
+
+		self.signUpLabel = QLabel('Need an account?')
+		self.signUpLabel.setObjectName('signUpLabel')
+		self.signUpLabel.setStyleSheet(qss_button)
+		self.signUpLabel.setMaximumSize(120, 50)
+		self.signUpLayout.addWidget(self.signUpLabel)
+
+		self.signUpButton = QPushButton('Sign Up')
+		self.signUpButton.setObjectName('signUpButton')
+		self.signUpButton.setStyleSheet(qss_button)
+		self.signUpButton.setMaximumSize(120, 50)
+		self.signUpLayout.addWidget(self.signUpButton)
+
+		blurRadius = 90
+		offset = 20
+		color = QColor(0, 0, 0, 255 * .3)
+
+		self.rightPageEffect = QGraphicsDropShadowEffect()
+		self.rightPageEffect.setBlurRadius(blurRadius)
+		self.rightPageEffect.setOffset(offset)
+		self.rightPageEffect.setColor(color)
+
 		self.rightPageGroup = QGroupBox()
+		self.rightPageGroup.setGraphicsEffect(self.rightPageEffect)
 		self.rightPageGroup.setLayout(self.rightPageLayout)
 		self.rightPageGroup.setFixedSize(int(self.rightPageWidth * self.mainPageGroup.width()), int(self.mainPageGroup.height() * self.rightPageHeight))
 		self.rightPageGroup.setObjectName('rightPageGroup')
 		self.rightPageGroup.setStyleSheet(
 			'''
 				QGroupBox#rightPageGroup {
-					background-color: #FEE4E4;
 					border: 0px;
+					background-color: #DEF3F1;
 					/* border-bottom-right-radius: 20px; */
 					/* border-top-right-radius: 20px; */
 				}
@@ -290,71 +365,290 @@ class Register(QGroupBox):
 		self.mainPageLayout.addWidget(self.leftPageGroup)
 
 	def rightPage(self):
+		qss = open('resources/assets/qss/authQLineEdit.qss', 'r').read()
+		qss_button = open('resources/assets/qss/authQPushButton.qss', 'r').read()
+
 		self.rightPageLayout = QVBoxLayout()
 		self.rightPageLayout.setContentsMargins(0, 0, 0, 0)
 		self.rightPageLayout.setAlignment(Qt.AlignCenter)
 
-		self.formGridLayout = QGridLayout()
-		self.formGridLayout.setAlignment(Qt.AlignCenter)
-		self.rightPageLayout.addLayout(self.formGridLayout)
+		self.pageTitle = QLabel('School Management System')
+		self.pageTitle.setAlignment(Qt.AlignCenter)
+		self.pageTitle.setObjectName('pageTitle')
+		self.pageTitle.setMaximumSize(500, 100)
+		self.pageTitle.setStyleSheet(qss_button)
+		self.rightPageLayout.addWidget(self.pageTitle, stretch=0, alignment=Qt.AlignTop)
+
+		self.spacer = QLabel()
+		self.spacer.setFixedHeight(10)
+		self.rightPageLayout.addWidget(self.spacer, stretch=0, alignment=Qt.AlignTop)
 
 		self.first_name = QLineEdit()
+		self.first_name.setObjectName('first_name')
+		self.first_name.setStyleSheet(qss_button)
 		self.first_name.setPlaceholderText('First name')
-		self.first_name.setMaximumSize(160, 70)
+		self.first_name.setMaximumSize(400, 60)
 		self.rightPageLayout.addWidget(self.first_name)
 
 		self.last_name = QLineEdit()
+		self.last_name.setObjectName('last_name')
+		self.last_name.setStyleSheet(qss_button)
 		self.last_name.setPlaceholderText('Last name')
-		self.last_name.setMaximumSize(160, 70)
+		self.last_name.setMaximumSize(400, 80)
 		self.rightPageLayout.addWidget(self.last_name)
-		
-		self.email = QLineEdit()
-		self.email.setPlaceholderText('E-Mail')
-		self.email.setMaximumSize(160, 70)
-		self.rightPageLayout.addWidget(self.email)
 
 		self.username = QLineEdit()
+		self.username.setObjectName('username')
+		self.username.setStyleSheet(qss)
 		self.username.setPlaceholderText('Username')
-		self.username.setMaximumSize(160, 70)
+		self.username.setMaximumSize(400, 60)
 		self.rightPageLayout.addWidget(self.username)
 
+		self.email = QLineEdit()
+		self.email.setObjectName('email')
+		self.email.setStyleSheet(qss)
+		self.email.setPlaceholderText('E-Mail')
+		self.email.setMaximumSize(400, 60)
+		self.rightPageLayout.addWidget(self.email)
+
 		self.password1 = QLineEdit()
-		self.password1.setPlaceholderText('New password')
+		self.password1.setObjectName('password')
+		self.password1.setStyleSheet(qss)
+		self.password1.setPlaceholderText('New Password')
 		self.password1.setEchoMode(QLineEdit.Password)
-		self.password1.setMaximumSize(160, 70)
+		self.password1.setMaximumSize(400, 60)
 		self.rightPageLayout.addWidget(self.password1)
 
 		self.password2 = QLineEdit()
-		self.password2.setPlaceholderText('Confirm password')
+		self.password2.setObjectName('password')
+		self.password2.setStyleSheet(qss)
+		self.password2.setPlaceholderText('Confirm Password')
 		self.password2.setEchoMode(QLineEdit.Password)
-		self.password2.setMaximumSize(160, 70)
+		self.password2.setMaximumSize(400, 60)
 		self.rightPageLayout.addWidget(self.password2)
 
-		self.buttonLayout = QHBoxLayout()
-		self.buttonLayout.setAlignment(Qt.AlignCenter)
-		self.rightPageLayout.addLayout(self.buttonLayout)
+		'''
+			Caps Lock warning, Session Keeper, Forgot Password
+		'''
 
-		self.loginButton = QPushButton('Register')
-		self.loginButton.setMaximumSize(120, 45)
-		self.loginButton.clicked.connect(self.registerButtonView)
-		self.buttonLayout.addWidget(self.loginButton)
+		self.spacer2 = QLabel()
+		self.spacer2.setFixedHeight(5)
+		self.rightPageLayout.addWidget(self.spacer2)
+
+		self.extraLayout = QHBoxLayout()
+		self.extraLayout.setContentsMargins(0, 0, 0, 0)
+		self.rightPageLayout.addLayout(self.extraLayout)
+
+		self.spacer2 = QLabel()
+		self.spacer2.setFixedHeight(5)
+		self.rightPageLayout.addWidget(self.spacer2)
+
+		self.keepSession = QCheckBox('I Agree')
+		self.extraLayout.addWidget(self.keepSession, stretch=0, alignment=Qt.AlignLeft)
+
+		self.termsAndConditions = QPushButton('Terms and Conditions')
+		self.termsAndConditions.setObjectName('forgotPassword')
+		self.termsAndConditions.setStyleSheet(qss_button)
+		self.extraLayout.addWidget(self.termsAndConditions, stretch=0, alignment=Qt.AlignRight)
+
+		self.registerButton = QPushButton('Register')
+		self.registerButton.setObjectName('login')
+		self.registerButton.setStyleSheet(qss_button)
+		self.registerButton.setMaximumSize(400, 80)
+		self.registerButton.clicked.connect(self.registerButtonView)
+		self.rightPageLayout.addWidget(self.registerButton)
+
+		self.spacer3 = QLabel()
+		self.spacer3.setFixedHeight(10)
+		self.rightPageLayout.addWidget(self.spacer3)
+
+		self.signInLayout = QHBoxLayout()
+		self.signInLayout.setSpacing(0)
+		self.signInLayout.setAlignment(Qt.AlignCenter)
+		self.rightPageLayout.addLayout(self.signInLayout)
+
+		self.signInLabel = QLabel('Already have an account?')
+		self.signInLabel.setObjectName('signUpLabel')
+		self.signInLabel.setStyleSheet(qss_button)
+		self.signInLabel.setMaximumSize(200, 50)
+		self.signInLayout.addWidget(self.signInLabel)
+
+		self.signInButton = QPushButton('Sign In')
+		self.signInButton.setObjectName('signUpButton')
+		self.signInButton.setStyleSheet(qss_button)
+		self.signInButton.setMaximumSize(120, 50)
+		self.signInLayout.addWidget(self.signInButton)
+
+		blurRadius = 90
+		offset = 20
+		color = QColor(0, 0, 0, 255 * .3)
+
+		self.rightPageEffect = QGraphicsDropShadowEffect()
+		self.rightPageEffect.setBlurRadius(blurRadius)
+		self.rightPageEffect.setOffset(offset)
+		self.rightPageEffect.setColor(color)
 
 		self.rightPageGroup = QGroupBox()
+		self.rightPageGroup.setGraphicsEffect(self.rightPageEffect)
 		self.rightPageGroup.setLayout(self.rightPageLayout)
 		self.rightPageGroup.setFixedSize(int(self.rightPageWidth * self.mainPageGroup.width()), int(self.mainPageGroup.height() * self.rightPageHeight))
 		self.rightPageGroup.setObjectName('rightPageGroup')
 		self.rightPageGroup.setStyleSheet(
 			'''
 				QGroupBox#rightPageGroup {
-					background-color: #FEE4E4;
 					border: 0px;
-					/* border-bottom-left-radius: 20px; */
-					/* border-top-left-radius: 20px; */
+					background-color: #DEF3F1;
+					/* border-bottom-right-radius: 20px; */
+					/* border-top-right-radius: 20px; */
 				}
 			'''
 		)
 
 		self.mainPageLayout.addWidget(self.rightPageGroup)
+
+	# def rightPage(self):
+	# 	self.rightPageLayout = QVBoxLayout()
+	# 	self.rightPageLayout.setContentsMargins(0, 0, 0, 0)
+	# 	self.rightPageLayout.setAlignment(Qt.AlignCenter)
+
+	# 	qss_button = open('resources/assets/qss/authQPushButton.qss', 'r').read()
+
+	# 	self.pageTitle = QLabel('School Management System')
+	# 	self.pageTitle.setAlignment(Qt.AlignCenter)
+	# 	self.pageTitle.setObjectName('pageTitle')
+	# 	self.pageTitle.setMaximumSize(500, 100)
+	# 	self.pageTitle.setStyleSheet(qss_button)
+	# 	self.rightPageLayout.addWidget(self.pageTitle, stretch=0, alignment=Qt.AlignTop)
+
+	# 	self.spacer = QLabel()
+	# 	self.spacer.setFixedHeight(30)
+	# 	self.rightPageLayout.addWidget(self.spacer, stretch=0, alignment=Qt.AlignTop)
+
+
+		# self.firstFormRow = QHBoxLayout()
+		# self.firstFormRow.setAlignment(Qt.AlignCenter)
+		# self.rightPageLayout.addLayout(self.firstFormRow)
+
+		# self.secondFormRow = QVBoxLayout()
+		# self.secondFormRow.setAlignment(Qt.AlignCenter)
+		# self.rightPageLayout.addLayout(self.secondFormRow)
+
+		# self.first_name = QLineEdit()
+		# self.first_name.setObjectName('first_name')
+		# self.first_name.setStyleSheet(qss_button)
+		# self.first_name.setPlaceholderText('First name')
+		# self.first_name.setMaximumSize(200, 60)
+		# self.firstFormRow.addWidget(self.first_name)
+
+		# self.last_name = QLineEdit()
+		# self.last_name.setObjectName('last_name')
+		# self.last_name.setStyleSheet(qss_button)
+		# self.last_name.setPlaceholderText('Last name')
+		# self.last_name.setMaximumSize(200, 80)
+		# self.firstFormRow.addWidget(self.last_name)
+		
+	# 	self.email = QLineEdit()
+	# 	self.email.setObjectName('email')
+	# 	self.email.setStyleSheet(qss_button)
+	# 	self.email.setPlaceholderText('E-Mail')
+	# 	self.email.setMaximumSize(400, 80)
+	# 	self.secondFormRow.addWidget(self.email)
+
+	# 	self.username = QLineEdit()
+	# 	self.username.setObjectName('username')
+	# 	self.username.setStyleSheet(qss_button)
+	# 	self.username.setPlaceholderText('Username')
+	# 	self.username.setMaximumSize(400, 80)
+	# 	self.secondFormRow.addWidget(self.username)
+
+	# 	self.password1 = QLineEdit()
+	# 	self.password1.setObjectName('password1')
+	# 	self.password1.setStyleSheet(qss_button)
+	# 	self.password1.setPlaceholderText('New password')
+	# 	self.password1.setEchoMode(QLineEdit.Password)
+	# 	self.password1.setMaximumSize(400, 80)
+	# 	self.secondFormRow.addWidget(self.password1)
+
+	# 	self.password2 = QLineEdit()
+	# 	self.password2.setObjectName('password2')
+	# 	self.password2.setStyleSheet(qss_button)
+	# 	self.password2.setPlaceholderText('Confirm password')
+	# 	self.password2.setEchoMode(QLineEdit.Password)
+	# 	self.password2.setMaximumSize(400, 80)
+	# 	self.secondFormRow.addWidget(self.password2)
+
+	# 	self.buttonLayout = QHBoxLayout()
+	# 	self.buttonLayout.setAlignment(Qt.AlignCenter)
+	# 	self.rightPageLayout.addLayout(self.buttonLayout)
+
+	# 	'''
+	# 		Caps Lock warning, Session Keeper, Forgot Password
+	# 	'''
+
+	# 	self.spacer2 = QLabel()
+	# 	self.spacer2.setFixedHeight(10)
+	# 	self.rightPageLayout.addWidget(self.spacer2)
+
+	# 	self.extraLayout = QHBoxLayout()
+	# 	self.extraLayout.setContentsMargins(0, 0, 0, 0)
+	# 	self.rightPageLayout.addLayout(self.extraLayout)
+
+	# 	self.spacer2 = QLabel()
+	# 	self.spacer2.setFixedHeight(10)
+	# 	self.rightPageLayout.addWidget(self.spacer2)
+
+	# 	self.agreementButton = QCheckBox('I agree')
+	# 	self.extraLayout.addWidget(self.agreementButton, stretch=0, alignment=Qt.AlignLeft)
+
+	# 	self.termsAndConditions = QPushButton('Terms and Conditions')
+	# 	self.termsAndConditions.setObjectName('forgotPassword')
+	# 	self.termsAndConditions.setStyleSheet(qss_button)
+	# 	self.extraLayout.addWidget(self.termsAndConditions, stretch=0, alignment=Qt.AlignRight)
+
+	# 	self.registerButton = QPushButton('Register')
+	# 	self.registerButton.setObjectName('login')
+	# 	self.registerButton.setStyleSheet(qss_button)
+	# 	self.registerButton.setMaximumSize(400, 80)
+	# 	self.registerButton.clicked.connect(self.registerButtonView)
+	# 	self.rightPageLayout.addWidget(self.registerButton)
+
+	# 	self.spacer3 = QLabel()
+	# 	self.spacer3.setFixedHeight(30)
+	# 	self.rightPageLayout.addWidget(self.spacer3)
+
+	# 	self.signUpLayout = QHBoxLayout()
+	# 	# self.signUpLayout.setSpacing(0)
+	# 	self.signUpLayout.setAlignment(Qt.AlignCenter)
+	# 	self.rightPageLayout.addLayout(self.signUpLayout)
+
+	# 	self.signInLabel = QLabel('Already have an account?')
+	# 	self.signInLabel.setObjectName('signUpLabel')
+	# 	self.signInLabel.setStyleSheet(qss_button)
+	# 	self.signInLabel.setMaximumSize(120, 50)
+	# 	self.signUpLayout.addWidget(self.signInLabel)
+
+	# 	self.signInButton = QPushButton('Sign In')
+	# 	self.signInButton.setObjectName('signUpButton')
+	# 	self.signInButton.setStyleSheet(qss_button)
+	# 	self.signInButton.setMaximumSize(120, 50)
+	# 	self.signUpLayout.addWidget(self.signInButton)
+
+	# 	self.rightPageGroup = QGroupBox()
+	# 	self.rightPageGroup.setLayout(self.rightPageLayout)
+	# 	self.rightPageGroup.setFixedSize(int(self.rightPageWidth * self.mainPageGroup.width()), int(self.mainPageGroup.height() * self.rightPageHeight))
+	# 	self.rightPageGroup.setObjectName('rightPageGroup')
+	# 	self.rightPageGroup.setStyleSheet(
+	# 		'''
+	# 			QGroupBox#rightPageGroup {
+	# 				background-color: #FEE4E4;
+	# 				border: 0px;
+	# 				/* border-bottom-left-radius: 20px; */
+	# 				/* border-top-left-radius: 20px; */
+	# 			}
+	# 		'''
+	# 	)
+
+	# 	self.mainPageLayout.addWidget(self.rightPageGroup)
 
 	def registerButtonView(self):
 		try:

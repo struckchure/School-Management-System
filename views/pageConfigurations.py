@@ -23,4 +23,4 @@ def getPageWidth(windowWidth=windowWidth):
 
 minPasswordLength = 6
 cardWidthRatio = 1.2
-cardHeightRatio = 0.7
+cardHeightRatio = 0.8

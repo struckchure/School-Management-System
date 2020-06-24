@@ -1,0 +1,11 @@
+QLineEdit {
+	border-radius: 0px;
+	padding: 7px;
+	font-family: Verdana;
+	font-size: 13px;
+	text-align: left
+}
+
+QLineEdit:focus {
+	border: 2px solid #68B0B3;
+}
