@@ -2,3 +2,4 @@ PyQt5
 SQLAlchemy
 MySQL-connector
 bcrypt
+opencv-python

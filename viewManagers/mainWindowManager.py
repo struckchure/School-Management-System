@@ -5,9 +5,19 @@ from PyQt5.QtWidgets import *
 
 # Custom Modules Imports
 
-from views.mainWindow import *
+from views import mainWindow as mainWindowViews
+from views import AuthentificationViews
+from views import pageConfigurations
 
 # Custom Modules End
+
+
+pageConfigurations = {
+	'index': 0,
+	'home': 1,
+	'login': 2,
+	'register': 3
+}
 
 
 class mainWindow(QWidget):
@@ -40,8 +50,9 @@ class mainWindow(QWidget):
 		'''
 
 		self.pageControl = QStackedWidget()
-		# self.pageControl.addWidget(Login())
-		self.pageControl.addWidget(Register(self.pageControl))
+		# self.pageControl.addWidget(AuthentificationViews.Login(self.pageControl))
+		self.pageControl.addWidget(mainWindowViews.Home(self.pageControl))
+		# self.pageControl.addWidget(AuthentificationViews.Register(self.pageControl))
 		self.pageControl.setCurrentIndex(0)
 
 		self.main_layout.addWidget(self.pageControl)
