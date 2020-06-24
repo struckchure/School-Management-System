@@ -26,10 +26,11 @@ from resources.assets.customWidgets import customWidgets
 
 
 class Home(QGroupBox):
-	def __init__(self, pageController):
+	def __init__(self, pageController, user):
 		QGroupBox.__init__(self)
 
 		self.pageController = pageController
+		self.user = user
 
 		self.groupLayout = QVBoxLayout()
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
@@ -84,7 +85,7 @@ class Home(QGroupBox):
 		self.navBarLayout.setContentsMargins(0, 0, 0, 0)
 		self.navBarLayout.setAlignment(Qt.AlignTop)
 
-		self.userInfo = customWidgets.NavBarUser()
+		self.userInfo = customWidgets.NavBarUser(user=self.user)
 		self.userInfo.setMaximumWidth(self.navBarWidth)
 		self.navBarLayout.addWidget(self.userInfo)
 

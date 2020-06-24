@@ -1,5 +1,7 @@
+# Window settings
+
 windowWidth = 950
-navBarWidth = 0.2
+navBarWidth = 0.25
 pageWidth = 1 - navBarWidth
 
 
@@ -15,3 +17,10 @@ def getNavBarWidth(windowWidth=pageWidth):
 
 def getPageWidth(windowWidth=windowWidth):
 	return windowWidth * pageWidth
+
+
+# Authentification settings
+
+minPasswordLength = 6
+cardWidthRatio = 1.2
+cardHeightRatio = 0.7

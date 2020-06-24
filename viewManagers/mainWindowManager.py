@@ -51,8 +51,8 @@ class mainWindow(QWidget):
 
 		self.pageControl = QStackedWidget()
 		# self.pageControl.addWidget(AuthentificationViews.Login(self.pageControl))
-		self.pageControl.addWidget(mainWindowViews.Home(self.pageControl))
-		# self.pageControl.addWidget(AuthentificationViews.Register(self.pageControl))
+		self.pageControl.addWidget(AuthentificationViews.Register(self.pageControl))
+		# self.pageControl.addWidget(mainWindowViews.Home(self.pageControl))
 		self.pageControl.setCurrentIndex(0)
 
 		self.main_layout.addWidget(self.pageControl)

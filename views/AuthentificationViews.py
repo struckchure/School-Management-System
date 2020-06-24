@@ -7,6 +7,9 @@ import cv2
 
 # Custom Modules Imports
 
+from views import pageConfigurations
+from views import mainWindow
+
 # Custom Modules End
 
 
@@ -41,11 +44,12 @@ class Login(QGroupBox):
 		self.initialization()
 
 	def initialization(self):
-		self.leftPageWidth = 0.4
-		self.rightPageWidth = 0.6
+		self.leftPageWidth = 1 - pageConfigurations.cardWidthRatio
+		self.rightPageWidth = pageConfigurations.cardWidthRatio
+		self.rightPageHeight = pageConfigurations.cardHeightRatio
 
 		self.mainPage()
-		self.leftPage()
+		# self.leftPage()
 		self.rightPage()
 
 	def mainPage(self):
@@ -130,15 +134,15 @@ class Login(QGroupBox):
 
 		self.rightPageGroup = QGroupBox()
 		self.rightPageGroup.setLayout(self.rightPageLayout)
-		self.rightPageGroup.setFixedSize(int(self.rightPageWidth * self.mainPageGroup.width()), self.mainPageGroup.height())
+		self.rightPageGroup.setFixedSize(int(self.rightPageWidth * self.mainPageGroup.width()), int(self.mainPageGroup.height() * self.rightPageHeight))
 		self.rightPageGroup.setObjectName('rightPageGroup')
 		self.rightPageGroup.setStyleSheet(
 			'''
 				QGroupBox#rightPageGroup {
 					background-color: #FEE4E4;
 					border: 0px;
-					border-bottom-right-radius: 20px;
-					border-top-right-radius: 20px;
+					/* border-bottom-right-radius: 20px; */
+					/* border-top-right-radius: 20px; */
 				}
 			'''
 		)
@@ -146,7 +150,50 @@ class Login(QGroupBox):
 		self.mainPageLayout.addWidget(self.rightPageGroup)
 
 	def loginButtonView(self):
-		pass
+		try:
+			from django.contrib.auth.models import User
+
+			username = self.username.text()
+			password = self.password.text()
+
+			if username:
+				if password:
+					if len(password) >= pageConfigurations.minPasswordLength:
+						try:
+							self.get_user = User.objects.get(username=username)
+
+							if password == self.get_user.password:
+								self.nextPage()
+
+								msg = f'Welcome Back {self.get_user.first_name} :) '
+								message_box = QMessageBox()
+								message_box.about(self, 'School Manager', msg)
+							else:
+								msg = 'Invalid Username or Password.'
+								message_box = QMessageBox()
+								message_box.about(self, 'School Manager', msg)
+						except User.DoesNotExist:
+							msg = 'Invalid Username or Password.'
+							message_box = QMessageBox()
+							message_box.about(self, 'School Manager', msg)
+					else:
+						msg = 'Password length is too short.\nShould contain at least six(6) characters.'
+						message_box = QMessageBox()
+						message_box.about(self, 'School Manager', msg)
+				else:
+					msg = 'Enter a valid Password.'
+					message_box = QMessageBox()
+					message_box.about(self, 'School Manager', msg)
+			else:
+				msg = 'Enter a valid Username.'
+				message_box = QMessageBox()
+				message_box.about(self, 'School Manager', msg)
+		except Exception as e:
+			raise e
+
+	def nextPage(self):
+		self.pageController.addWidget(mainWindow.Home(self.pageController, self.get_user))
+		self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
 
 
 class Register(QGroupBox):
@@ -165,7 +212,7 @@ class Register(QGroupBox):
 			'''
 				QGroupBox#login {
 					border: 0px;
-					background-image: url(resources/assets/images/bg7.png);
+					background-image: url(resources/assets/images/home_bg_color_particles.jpg);
 					background-repeat: no-repeat;
 					background-position: center;
 				}
@@ -175,12 +222,13 @@ class Register(QGroupBox):
 		self.initialization()
 
 	def initialization(self):
-		self.leftPageWidth = 0.4
-		self.rightPageWidth = 0.6
+		self.leftPageWidth = 1 - pageConfigurations.cardWidthRatio
+		self.rightPageWidth = pageConfigurations.cardWidthRatio
+		self.rightPageHeight = pageConfigurations.cardHeightRatio
 
 		self.mainPage()
+		# self.leftPage()
 		self.rightPage()
-		self.leftPage()
 
 	def mainPage(self):
 		self.mainPageLayout = QHBoxLayout()
@@ -293,15 +341,15 @@ class Register(QGroupBox):
 
 		self.rightPageGroup = QGroupBox()
 		self.rightPageGroup.setLayout(self.rightPageLayout)
-		self.rightPageGroup.setFixedSize(int(self.rightPageWidth * self.mainPageGroup.width()), self.mainPageGroup.height())
+		self.rightPageGroup.setFixedSize(int(self.rightPageWidth * self.mainPageGroup.width()), int(self.mainPageGroup.height() * self.rightPageHeight))
 		self.rightPageGroup.setObjectName('rightPageGroup')
 		self.rightPageGroup.setStyleSheet(
 			'''
 				QGroupBox#rightPageGroup {
 					background-color: #FEE4E4;
 					border: 0px;
-					border-bottom-left-radius: 20px;
-					border-top-left-radius: 20px;
+					/* border-bottom-left-radius: 20px; */
+					/* border-top-left-radius: 20px; */
 				}
 			'''
 		)

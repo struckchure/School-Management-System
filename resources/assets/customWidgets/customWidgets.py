@@ -20,8 +20,9 @@ class NavBarUser(QGroupBox):
 		self.imagePath = imagePath
 		self.user = user
 
-		self.itemLayout = QVBoxLayout()
+		self.itemLayout = QGridLayout()
 		self.itemLayout.setContentsMargins(0, 0, 0, 0)
+		self.itemLayout.setSpacing(0)
 		self.itemLayout.setAlignment(Qt.AlignCenter)
 
 		self.setLayout(self.itemLayout)
@@ -48,6 +49,7 @@ class NavBarUser(QGroupBox):
 
 		self.imagePixmap = QPixmap(self.imagePath)
 		self.userImage = QLabel()
+		self.userImage.setPixmap(self.imagePixmap)
 		self.userImage.setAlignment(Qt.AlignCenter)
 		self.userImage.setObjectName('userImage')
 		self.userImage.setMaximumSize(80, 80)
@@ -59,11 +61,11 @@ class NavBarUser(QGroupBox):
 				}
 			'''
 		)
-		self.userImage.setPixmap(self.imagePixmap)
 		
 		self.imageLayout.addWidget(self.userImage)
 
 		self.imageGroup = QGroupBox()
+		# self.imageGroup.setMaximumWidth(300)
 		self.imageGroup.setLayout(self.imageLayout)
 		self.imageGroup.setObjectName('imageGroup')
 		self.imageGroup.setStyleSheet(
@@ -75,16 +77,16 @@ class NavBarUser(QGroupBox):
 			'''
 		)
 
-		self.itemLayout.addWidget(self.imageGroup)
+		self.itemLayout.addWidget(self.imageGroup, 0, 0)
 
 	def userInfoSet(self):
 		self.infoLayout = QVBoxLayout()
 		self.infoLayout.setAlignment(Qt.AlignCenter)
 
-		self.userInfo = QLabel(self.user)
-		self.userInfo.setAlignment(Qt.AlignCenter)
+		self.userInfo = QLabel(self.user.get_full_name())
+		self.userInfo.setAlignment(Qt.AlignLeft)
 		self.userInfo.setObjectName('userInfo')
-		self.userInfo.setMaximumSize(300, 50)
+		self.userInfo.setMaximumSize(200, 50)
 		self.userInfo.setStyleSheet(
 			'''
 				QLabel#userInfo {
@@ -108,4 +110,4 @@ class NavBarUser(QGroupBox):
 			'''
 		)
 
-		self.itemLayout.addWidget(self.infoGroup)
+		self.itemLayout.addWidget(self.infoGroup, 1, 0)
