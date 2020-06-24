@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import *
 
 from views.mainWindow import *
 
-# Custom Modeles End
+# Custom Modules End
 
 
 class mainWindow(QWidget):
@@ -19,6 +19,7 @@ class mainWindow(QWidget):
 		self.main_layout.setAlignment(Qt.AlignTop)
 
 		self.setLayout(self.main_layout)
+		self.setObjectName('index')
 		self.setWindowTitle('School Management')
 		self.showMaximized()
 

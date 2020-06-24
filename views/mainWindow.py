@@ -14,8 +14,12 @@ import cv2
 
 # Custom Modules Imports
 
-# Custom Modeles End
+# Custom Modules End
 
+
+'''
+	AUTH Views
+'''
 
 class Login(QGroupBox):
 	def __init__(self):
@@ -383,3 +387,41 @@ class Register(QGroupBox):
 				message_box.about(self, 'School Manager', msg)
 		except Exception as e:
 			raise e
+
+'''
+	Home Views
+'''
+
+
+class Home(QGroupBox):
+	def __init__(self, pageController):
+		QGroupBox.__init__(self)
+
+		self.pageController = pageController
+
+		self.groupLayout = QVBoxLayout()
+		self.groupLayout.setContentsMargins(0, 0, 0, 0)
+		self.groupLayout.setAlignment(Qt.AlignCenter)
+
+		self.setLayout(self.groupLayout)
+		self.setObjectName('home')
+		self.setStyleSheet(
+			'''
+				QGroupBox#home {
+					border: 0px;
+					background-image: url(resources/assets/bg7.png);
+					background-repeat: no-repeat;
+					background-position: center;
+				}
+			'''
+		)
+
+		self.initialization()
+
+	def initialization(self):
+		self.leftPageWidth = 0.4
+		self.rightPageWidth = 0.6
+
+		self.mainPage()
+		self.rightPage()
+		self.leftPage()
