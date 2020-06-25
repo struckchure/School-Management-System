@@ -2,7 +2,6 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import sys
-from datetime import datetime
 
 
 class NavBarButtons(QPushButton):
@@ -14,15 +13,15 @@ class NavBarButtons(QPushButton):
 
 
 class NavBarUser(QGroupBox):
-	def __init__(self, imagePath='resources/assets/images/icons/delete.png', user='John Doe'):
+	def __init__(self, imagePath='resources/assets/images/icons/039-physics.png', user='John Doe'):
 		super(NavBarUser, self).__init__()
 
 		self.imagePath = imagePath
 		self.user = user
 
-		self.itemLayout = QGridLayout()
+		self.itemLayout = QVBoxLayout()
 		self.itemLayout.setContentsMargins(0, 0, 0, 0)
-		self.itemLayout.setSpacing(0)
+		# self.itemLayout.setSpacing(0)
 		self.itemLayout.setAlignment(Qt.AlignCenter)
 
 		self.setLayout(self.itemLayout)
@@ -32,6 +31,7 @@ class NavBarUser(QGroupBox):
 				QGroupBox#NavBarUser {
 					border: 0px;
 					border-bottom: 1px solid grey;
+					padding-top: 20px;
 					background-color: rgba(0, 0, 0, 0);
 				}
 			'''
@@ -62,22 +62,7 @@ class NavBarUser(QGroupBox):
 			'''
 		)
 		
-		self.imageLayout.addWidget(self.userImage)
-
-		self.imageGroup = QGroupBox()
-		# self.imageGroup.setMaximumWidth(300)
-		self.imageGroup.setLayout(self.imageLayout)
-		self.imageGroup.setObjectName('imageGroup')
-		self.imageGroup.setStyleSheet(
-			'''
-				QGroupBox#imageGroup {
-					border: 0px;
-					border-radius: 50px;
-				}
-			'''
-		)
-
-		self.itemLayout.addWidget(self.imageGroup, 0, 0)
+		self.itemLayout.addWidget(self.userImage, stretch=0, alignment=Qt.AlignCenter)
 
 	def userInfoSet(self):
 		self.infoLayout = QVBoxLayout()
@@ -97,20 +82,7 @@ class NavBarUser(QGroupBox):
 			'''
 		)
 		
-		self.imageLayout.addWidget(self.userInfo)
-
-		self.infoGroup = QGroupBox()
-		self.infoGroup.setLayout(self.imageLayout)
-		self.infoGroup.setObjectName('infoGroup')
-		self.infoGroup.setStyleSheet(
-			'''
-				QGroupBox#infoGroup {
-					border: 0px;
-				}
-			'''
-		)
-
-		self.itemLayout.addWidget(self.infoGroup, 1, 0)
+		self.itemLayout.addWidget(self.userInfo, stretch=0, alignment=Qt.AlignCenter)
 
 
 class PushNotification(QSystemTrayIcon):
@@ -122,103 +94,57 @@ class PushNotification(QSystemTrayIcon):
 
 
 class PopUp(QWidget):
-	def __init__(self, title='School Manager', body='Ping!!!'):
-		QWidget.__init__(self)
+	def __init__(self, title='School Manager', body='Body', buttonText='&Ok, thanks', parent=None):
+		super(QWidget, self).__init__(parent=None)
+
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+		self.setStyleSheet(qss)
+
+		self.title = title
+		self.body = body
+		self.buttonText = buttonText
 
 		self.windowLayout = QVBoxLayout()
-		self.windowLayout.setContentsMargins(0, 0, 0, 0)
 
+		self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
+		self.resize(300, 170)
+		self.setMaximumSize(600, 600)
 		resolution = QDesktopWidget().availableGeometry().center()
 		qr = self.frameGeometry()
 		qr.moveCenter(resolution)
-
-		self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
 		self.move(qr.topLeft())
 		self.setLayout(self.windowLayout)
-		self.resize(200, 200)
 
 		self.initialization()
 
 	def initialization(self):
-		self.closeButton = QPushButton('&x')
-		self.closeButton.setFixedSize(20, 20)
+		self.titleLabel = QLabel(self.title)
+		self.titleLabel.setAlignment(Qt.AlignCenter)
+		self.titleLabel.setStyleSheet(
+			'''
+				QLabel {
+					padding: 5px;
+					border: 0px;
+					border-bottom: 1px solid grey;
+				}
+			'''
+		)
+		self.titleLabel.setFixedSize(200, 40)
+		self.windowLayout.addWidget(self.titleLabel, stretch=0, alignment=Qt.AlignCenter)
+
+		self.bodyLabel = QLabel(self.body)
+		self.bodyLabel.setObjectName('bodyLabel')
+		self.bodyLabel.setAlignment(Qt.AlignCenter)
+		self.bodyLabel.setWordWrap(True)
+		self.bodyLabel.setMaximumSize(500, 500)
+		self.windowLayout.addWidget(self.bodyLabel, stretch=0, alignment=Qt.AlignCenter)
+
+		self.spacerLabel = QLabel()
+		self.spacerLabel.setFixedWidth(30)
+		self.windowLayout.addWidget(self.spacerLabel, stretch=0, alignment=Qt.AlignCenter)
+
+		self.closeButton = QPushButton(self.buttonText)
+		self.closeButton.setObjectName('login')
+		self.closeButton.setFixedSize(150, 30)
 		self.closeButton.clicked.connect(self.close)
-		self.windowLayout.addWidget(self.closeButton, stretch=0, alignment=Qt.AlignTop|Qt.AlignRight)
-
-
-class Notification(QWidget):
-    signNotifyClose = pyqtSignal(str)
-
-    def __init__(self, parent = None):
-        time = datetime.now()
-        currentTime = str(time.hour) + ":" + str(time.minute) + "_"
-        self.LOG_TAG = currentTime + self.__class__.__name__ + ": "
-        super(QWidget, self).__init__(parent)
-
-        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint) #убирает заголовок, поверх всех окон (| QtCore.Qt.WindowStaysOnTopHint)
-        self.resize(200, 200)
-        resolution = QDesktopWidget().availableGeometry().center()
-        qr = self.frameGeometry()
-        qr.moveCenter(resolution)
-        # screenWidth = resolution.width()
-        # screenHeight = resolution.height()
-        # print(self.LOG_TAG + "width: " + str(resolution.width()) + " height: " + str(resolution.height()))
-        self.count = 0 # Счетчик уведомлений
-        self.timer = 3
-
-        self.vboxMainLayout = QVBoxLayout() # layout contain notifications
-        self.move(qr.topLeft())
-        self.setLayout(self.vboxMainLayout)
-
-        self.closeButton = QPushButton('&X')
-        self.closeButton.setFixedSize(50, 50)
-        self.closeButton.clicked.connect(self.close)
-        self.vboxMainLayout.addWidget(self.closeButton, stretch=0, alignment=Qt.AlignTop|Qt.AlignRight)
-
-    def setNotify(self, title, notify):
-        count = self.count
-        title = QLabel()
-        title.setStyleSheet("border: 1px solid #000")
-        title.setText(title)
-        title.setStyleSheet("font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: bold; padding: 0;")
-
-        text = QLabel()
-        text.setText(notify)
-        text.setStyleSheet("font-family: 'Roboto', sans-serif; font-size: 12px; font-weight: normal; padding: 0;")
-
-        gridNotify = QGridLayout()
-        gridNotify.addWidget(title, 0, 0)
-        gridNotify.addWidget(text, 1, 0)
-
-        buttonClose = QPushButton()
-        buttonClose.clicked.connect(self.deleteWidgets)
-        buttonClose.setIcon(QIcon("resources/assests/images/delete.png"))
-        buttonClose.setFlat(False)
-        buttonClose.setMaximumWidth(14)
-        buttonClose.setMaximumHeight(14)
-
-        gridClose = QGridLayout()
-        gridClose.addWidget(buttonClose, 0, 0)
-
-        gridLayoutMain = QGridLayout()
-        gridLayoutMain.setColumnStretch(0,1)
-        gridLayoutMain.setColumnStretch(0,2)
-        gridLayoutMain.setColumnStretch(0,3)
-        gridLayoutMain.addLayout(gridClose, 0, 4)
-        gridLayoutMain.addLayout(gridNotify, 0, 0)
-
-        self.count += 1
-
-        self.vboxMainLayout.addLayout(gridLayoutMain)
-        self.show()
-        threading.Timer(2, self.delete, args=(gridLayoutMain,)).start()
-
-    def delete(self, layout):
-        for i in reversed(range(layout.count())):
-            item = layout.takeAt(i)
-            widget = item.widget()
-            if widget is not None:
-                widget.deleteLater()
-            elif item.layout() is not None:
-                print("")
-                self.delete(item.layout())
+		self.windowLayout.addWidget(self.closeButton, stretch=0, alignment=Qt.AlignHCenter | Qt.AlignBottom)

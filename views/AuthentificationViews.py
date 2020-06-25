@@ -9,6 +9,7 @@ import cv2
 
 from views import pageConfigurations
 from views import mainWindow
+from views import utils
 from resources.assets.customWidgets import customWidgets
 
 # Custom Modules End
@@ -244,29 +245,28 @@ class Login(QGroupBox):
 								self.nextPage()
 
 								msg = f'Welcome Back {self.get_user.first_name} :) '
-								# messagePopUp = customWidgets.PopUp(title='School Manager', body=msg)
-								messagePopUp = customWidgets.Notification()
-								messagePopUp.show()
+								self.messagePopUp = customWidgets.PopUp(title='School Manager', body=msg)
+								self.messagePopUp.show()
 							else:
 								msg = 'Invalid Username or Password.'
-								message_box = QMessageBox()
-								message_box.about(self, 'School Manager', msg)
+								self.messagePopUp = customWidgets.PopUp(title='School Manager', body=msg, buttonText='&Ok')
+								self.messagePopUp.show()
 						except User.DoesNotExist:
 							msg = 'Invalid Username or Password.'
-							message_box = QMessageBox()
-							message_box.about(self, 'School Manager', msg)
+							self.messagePopUp = customWidgets.PopUp(title='School Manager', body=msg, buttonText='&Ok')
+							self.messagePopUp.show()
 					else:
 						msg = 'Password length is too short.\nShould contain at least six(6) characters.'
-						message_box = QMessageBox()
-						message_box.about(self, 'School Manager', msg)
+						self.messagePopUp = customWidgets.PopUp(title='School Manager', body=msg, buttonText='&Ok')
+						self.messagePopUp.show()
 				else:
 					msg = 'Enter a valid Password.'
-					message_box = QMessageBox()
-					message_box.about(self, 'School Manager', msg)
+					self.messagePopUp = customWidgets.PopUp(title='School Manager', body=msg, buttonText='&Ok')
+					self.messagePopUp.show()
 			else:
 				msg = 'Enter a valid Username.'
-				message_box = QMessageBox()
-				message_box.about(self, 'School Manager', msg)
+				self.messagePopUp = customWidgets.PopUp(title='School Manager', body=msg, buttonText='&Ok')
+				self.messagePopUp.show()
 		except Exception as e:
 			raise e
 
@@ -275,6 +275,7 @@ class Login(QGroupBox):
 		self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
 
 	def signUpButtonView(self):
+		print('Login', self.pageFinders)
 		if 'signUpPage' not in self.pageFinders['page']:
 			self.pageFinders['page'].append('signUpPage')
 			self.pageFinders['index'].append(self.pageController.currentIndex() + 1)
@@ -283,7 +284,8 @@ class Login(QGroupBox):
 			self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
 
 		else:
-			self.pageController.setCurrentIndex(self.pageFinders['index'][self.pageFinders['page'].index('signUpPage')])
+			page = utils.findPage(self.pageFinders, 'signUpPage')
+			self.pageController.setCurrentIndex(page)
 
 
 class Register(QGroupBox):
@@ -559,48 +561,49 @@ class Register(QGroupBox):
 											user_profile.save()
 
 											msg = f'{first_name} {last_name} has been successfully registered, please check your mail for more information.'
-											message_box = QMessageBox()
-											message_box.about(self, 'School Manager', msg)
+											self.messagePopUp = customWidgets.PopUp(title='School Manager', body=msg, buttonText='&Ok')
+											self.messagePopUp.show()
 
 											self.pageController.addWidget(Login(self.pageController))
 											self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
 										else:
 											msg = 'Your passwords don\'t match. Try again.'
-											message_box = QMessageBox()
-											message_box.about(self, 'School Manager', msg)
+											self.messagePopUp = customWidgets.PopUp(title='School Manager', body=msg, buttonText='&Ok')
+											self.messagePopUp.show()
 									else:
 										msg = 'Please enter a valid password.'
-										message_box = QMessageBox()
-										message_box.about(self, 'School Manager', msg)
+										self.messagePopUp = customWidgets.PopUp(title='School Manager', body=msg, buttonText='&Ok')
+										self.messagePopUp.show()
 								else:
 									msg = 'Passwords should contain at least six(6) characters.'
-									message_box = QMessageBox()
-									message_box.about(self, 'School Manager', msg)
+									self.messagePopUp = customWidgets.PopUp(title='School Manager', body=msg, buttonText='&Ok')
+									self.messagePopUp.show()
 							else:
 								msg = 'Your email extension is not valid.'
-								message_box = QMessageBox()
-								message_box.about(self, 'School Manager', msg)
+								self.messagePopUp = customWidgets.PopUp(title='School Manager', body=msg, buttonText='&Ok')
+								self.messagePopUp.show()
 						else:
 							msg = 'Your email is not valid.'
-							message_box = QMessageBox()
-							message_box.about(self, 'School Manager', msg)
+							self.messagePopUp = customWidgets.PopUp(title='School Manager', body=msg, buttonText='&Ok')
+							self.messagePopUp.show()
 					else:
 						msg = f'{username} is already taken.'
-						message_box = QMessageBox()
-						message_box.about(self, 'School Manager', msg)
+						self.messagePopUp = customWidgets.PopUp(title='School Manager', body=msg, buttonText='&Ok')
+						self.messagePopUp.show()
 				else:
 					msg = 'Please enter a valid Username and E-Mail.'
-					message_box = QMessageBox()
-					message_box.about(self, 'School Manager', msg)
+					self.messagePopUp = customWidgets.PopUp(title='School Manager', body=msg, buttonText='&Ok')
+					self.messagePopUp.show()
 			else:
 				msg = 'First name and Last name is required.'
-				message_box = QMessageBox()
-				message_box.about(self, 'School Manager', msg)
+				self.messagePopUp = customWidgets.PopUp(title='School Manager', body=msg, buttonText='&Ok')
+				self.messagePopUp.show()
 		except Exception as e:
 			raise e
 
 	def signInButtonView(self):
 		if 'signInPage' not in self.pageFinders['page']:
+			print('Register', self.pageFinders)
 			self.pageFinders['page'].append('signInPage')
 			self.pageFinders['index'].append(self.pageController.currentIndex() + 1)
 			
@@ -608,4 +611,5 @@ class Register(QGroupBox):
 			self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
 
 		else:
-			self.pageController.setCurrentIndex(self.pageFinders['index'][self.pageFinders['page'].index('signInPage')])
+			page = utils.findPage(self.pageFinders, 'signInPage')
+			self.pageController.setCurrentIndex(page)
