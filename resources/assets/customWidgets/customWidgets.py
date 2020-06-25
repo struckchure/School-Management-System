@@ -160,6 +160,12 @@ class Notification(QWidget):
         resolution = QDesktopWidget().availableGeometry().center()
         qr = self.frameGeometry()
         qr.moveCenter(resolution)
+        # screenWidth = resolution.width()
+        # screenHeight = resolution.height()
+        # print(self.LOG_TAG + "width: " + str(resolution.width()) + " height: " + str(resolution.height()))
+        self.count = 0 # Счетчик уведомлений
+        self.timer = 3
+
         self.vboxMainLayout = QVBoxLayout() # layout contain notifications
         self.move(qr.topLeft())
         self.setLayout(self.vboxMainLayout)
@@ -168,12 +174,6 @@ class Notification(QWidget):
         self.closeButton.setFixedSize(50, 50)
         self.closeButton.clicked.connect(self.close)
         self.vboxMainLayout.addWidget(self.closeButton, stretch=0, alignment=Qt.AlignTop|Qt.AlignRight)
-        # screenWidth = resolution.width()
-        # screenHeight = resolution.height()
-        # print(self.LOG_TAG + "width: " + str(resolution.width()) + " height: " + str(resolution.height()))
-        self.count = 0 # Счетчик уведомлений
-        self.timer = 3
-
 
     def setNotify(self, title, notify):
         count = self.count
