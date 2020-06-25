@@ -9,6 +9,7 @@ import cv2
 
 from views import pageConfigurations
 from views import mainWindow
+from resources.assets.customWidgets import customWidgets
 
 # Custom Modules End
 
@@ -19,10 +20,11 @@ from views import mainWindow
 
 
 class Login(QGroupBox):
-	def __init__(self, pageController):
+	def __init__(self, pageController, pageFinders=pageConfigurations.pageFinders):
 		QGroupBox.__init__(self)
 
 		self.pageController = pageController
+		self.pageFinders = pageFinders
 
 		self.groupLayout = QVBoxLayout()
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
@@ -193,6 +195,7 @@ class Login(QGroupBox):
 
 		self.signUpButton = QPushButton('Sign Up')
 		self.signUpButton.setObjectName('signUpButton')
+		self.signUpButton.clicked.connect(self.signUpButtonView)
 		self.signUpButton.setStyleSheet(qss_button)
 		self.signUpButton.setMaximumSize(120, 50)
 		self.signUpLayout.addWidget(self.signUpButton)
@@ -240,9 +243,14 @@ class Login(QGroupBox):
 							if password == self.get_user.password:
 								self.nextPage()
 
+								self.trayIcon = customWidgets.Notification()
+
 								msg = f'Welcome Back {self.get_user.first_name} :) '
+								self.trayIcon.show()
+								print(dir(self.trayIcon))
+
 								message_box = QMessageBox()
-								message_box.about(self, 'School Manager', msg)
+								# message_box.about(self, 'School Manager', msg)
 							else:
 								msg = 'Invalid Username or Password.'
 								message_box = QMessageBox()
@@ -270,12 +278,24 @@ class Login(QGroupBox):
 		self.pageController.addWidget(mainWindow.Home(self.pageController, self.get_user))
 		self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
 
+	def signUpButtonView(self):
+		if 'signUpPage' not in self.pageFinders['page']:
+			self.pageFinders['page'].append('signUpPage')
+			self.pageFinders['index'].append(self.pageController.currentIndex() + 1)
+
+			self.pageController.addWidget(Register(self.pageController))
+			self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
+
+		else:
+			self.pageController.setCurrentIndex(self.pageFinders['index'][self.pageFinders['page'].index('signUpPage')])
+
 
 class Register(QGroupBox):
-	def __init__(self, pageController):
+	def __init__(self, pageController, pageFinders=pageConfigurations.pageFinders):
 		QGroupBox.__init__(self)
 
 		self.pageController = pageController
+		self.pageFinders = pageFinders
 
 		self.groupLayout = QVBoxLayout()
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
@@ -474,6 +494,7 @@ class Register(QGroupBox):
 		self.signInLayout.addWidget(self.signInLabel)
 
 		self.signInButton = QPushButton('Sign In')
+		self.signInButton.clicked.connect(self.signInButtonView)
 		self.signInButton.setObjectName('signUpButton')
 		self.signInButton.setStyleSheet(qss_button)
 		self.signInButton.setMaximumSize(120, 50)
@@ -505,150 +526,6 @@ class Register(QGroupBox):
 		)
 
 		self.mainPageLayout.addWidget(self.rightPageGroup)
-
-	# def rightPage(self):
-	# 	self.rightPageLayout = QVBoxLayout()
-	# 	self.rightPageLayout.setContentsMargins(0, 0, 0, 0)
-	# 	self.rightPageLayout.setAlignment(Qt.AlignCenter)
-
-	# 	qss_button = open('resources/assets/qss/authQPushButton.qss', 'r').read()
-
-	# 	self.pageTitle = QLabel('School Management System')
-	# 	self.pageTitle.setAlignment(Qt.AlignCenter)
-	# 	self.pageTitle.setObjectName('pageTitle')
-	# 	self.pageTitle.setMaximumSize(500, 100)
-	# 	self.pageTitle.setStyleSheet(qss_button)
-	# 	self.rightPageLayout.addWidget(self.pageTitle, stretch=0, alignment=Qt.AlignTop)
-
-	# 	self.spacer = QLabel()
-	# 	self.spacer.setFixedHeight(30)
-	# 	self.rightPageLayout.addWidget(self.spacer, stretch=0, alignment=Qt.AlignTop)
-
-
-		# self.firstFormRow = QHBoxLayout()
-		# self.firstFormRow.setAlignment(Qt.AlignCenter)
-		# self.rightPageLayout.addLayout(self.firstFormRow)
-
-		# self.secondFormRow = QVBoxLayout()
-		# self.secondFormRow.setAlignment(Qt.AlignCenter)
-		# self.rightPageLayout.addLayout(self.secondFormRow)
-
-		# self.first_name = QLineEdit()
-		# self.first_name.setObjectName('first_name')
-		# self.first_name.setStyleSheet(qss_button)
-		# self.first_name.setPlaceholderText('First name')
-		# self.first_name.setMaximumSize(200, 60)
-		# self.firstFormRow.addWidget(self.first_name)
-
-		# self.last_name = QLineEdit()
-		# self.last_name.setObjectName('last_name')
-		# self.last_name.setStyleSheet(qss_button)
-		# self.last_name.setPlaceholderText('Last name')
-		# self.last_name.setMaximumSize(200, 80)
-		# self.firstFormRow.addWidget(self.last_name)
-		
-	# 	self.email = QLineEdit()
-	# 	self.email.setObjectName('email')
-	# 	self.email.setStyleSheet(qss_button)
-	# 	self.email.setPlaceholderText('E-Mail')
-	# 	self.email.setMaximumSize(400, 80)
-	# 	self.secondFormRow.addWidget(self.email)
-
-	# 	self.username = QLineEdit()
-	# 	self.username.setObjectName('username')
-	# 	self.username.setStyleSheet(qss_button)
-	# 	self.username.setPlaceholderText('Username')
-	# 	self.username.setMaximumSize(400, 80)
-	# 	self.secondFormRow.addWidget(self.username)
-
-	# 	self.password1 = QLineEdit()
-	# 	self.password1.setObjectName('password1')
-	# 	self.password1.setStyleSheet(qss_button)
-	# 	self.password1.setPlaceholderText('New password')
-	# 	self.password1.setEchoMode(QLineEdit.Password)
-	# 	self.password1.setMaximumSize(400, 80)
-	# 	self.secondFormRow.addWidget(self.password1)
-
-	# 	self.password2 = QLineEdit()
-	# 	self.password2.setObjectName('password2')
-	# 	self.password2.setStyleSheet(qss_button)
-	# 	self.password2.setPlaceholderText('Confirm password')
-	# 	self.password2.setEchoMode(QLineEdit.Password)
-	# 	self.password2.setMaximumSize(400, 80)
-	# 	self.secondFormRow.addWidget(self.password2)
-
-	# 	self.buttonLayout = QHBoxLayout()
-	# 	self.buttonLayout.setAlignment(Qt.AlignCenter)
-	# 	self.rightPageLayout.addLayout(self.buttonLayout)
-
-	# 	'''
-	# 		Caps Lock warning, Session Keeper, Forgot Password
-	# 	'''
-
-	# 	self.spacer2 = QLabel()
-	# 	self.spacer2.setFixedHeight(10)
-	# 	self.rightPageLayout.addWidget(self.spacer2)
-
-	# 	self.extraLayout = QHBoxLayout()
-	# 	self.extraLayout.setContentsMargins(0, 0, 0, 0)
-	# 	self.rightPageLayout.addLayout(self.extraLayout)
-
-	# 	self.spacer2 = QLabel()
-	# 	self.spacer2.setFixedHeight(10)
-	# 	self.rightPageLayout.addWidget(self.spacer2)
-
-	# 	self.agreementButton = QCheckBox('I agree')
-	# 	self.extraLayout.addWidget(self.agreementButton, stretch=0, alignment=Qt.AlignLeft)
-
-	# 	self.termsAndConditions = QPushButton('Terms and Conditions')
-	# 	self.termsAndConditions.setObjectName('forgotPassword')
-	# 	self.termsAndConditions.setStyleSheet(qss_button)
-	# 	self.extraLayout.addWidget(self.termsAndConditions, stretch=0, alignment=Qt.AlignRight)
-
-	# 	self.registerButton = QPushButton('Register')
-	# 	self.registerButton.setObjectName('login')
-	# 	self.registerButton.setStyleSheet(qss_button)
-	# 	self.registerButton.setMaximumSize(400, 80)
-	# 	self.registerButton.clicked.connect(self.registerButtonView)
-	# 	self.rightPageLayout.addWidget(self.registerButton)
-
-	# 	self.spacer3 = QLabel()
-	# 	self.spacer3.setFixedHeight(30)
-	# 	self.rightPageLayout.addWidget(self.spacer3)
-
-	# 	self.signUpLayout = QHBoxLayout()
-	# 	# self.signUpLayout.setSpacing(0)
-	# 	self.signUpLayout.setAlignment(Qt.AlignCenter)
-	# 	self.rightPageLayout.addLayout(self.signUpLayout)
-
-	# 	self.signInLabel = QLabel('Already have an account?')
-	# 	self.signInLabel.setObjectName('signUpLabel')
-	# 	self.signInLabel.setStyleSheet(qss_button)
-	# 	self.signInLabel.setMaximumSize(120, 50)
-	# 	self.signUpLayout.addWidget(self.signInLabel)
-
-	# 	self.signInButton = QPushButton('Sign In')
-	# 	self.signInButton.setObjectName('signUpButton')
-	# 	self.signInButton.setStyleSheet(qss_button)
-	# 	self.signInButton.setMaximumSize(120, 50)
-	# 	self.signUpLayout.addWidget(self.signInButton)
-
-	# 	self.rightPageGroup = QGroupBox()
-	# 	self.rightPageGroup.setLayout(self.rightPageLayout)
-	# 	self.rightPageGroup.setFixedSize(int(self.rightPageWidth * self.mainPageGroup.width()), int(self.mainPageGroup.height() * self.rightPageHeight))
-	# 	self.rightPageGroup.setObjectName('rightPageGroup')
-	# 	self.rightPageGroup.setStyleSheet(
-	# 		'''
-	# 			QGroupBox#rightPageGroup {
-	# 				background-color: #FEE4E4;
-	# 				border: 0px;
-	# 				/* border-bottom-left-radius: 20px; */
-	# 				/* border-top-left-radius: 20px; */
-	# 			}
-	# 		'''
-	# 	)
-
-	# 	self.mainPageLayout.addWidget(self.rightPageGroup)
 
 	def registerButtonView(self):
 		try:
@@ -725,3 +602,14 @@ class Register(QGroupBox):
 				message_box.about(self, 'School Manager', msg)
 		except Exception as e:
 			raise e
+
+	def signInButtonView(self):
+		if 'signInPage' not in self.pageFinders['page']:
+			self.pageFinders['page'].append('signInPage')
+			self.pageFinders['index'].append(self.pageController.currentIndex() + 1)
+			
+			self.pageController.addWidget(Register(self.pageController, self.pageFinders))
+			self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
+
+		else:
+			self.pageController.setCurrentIndex(self.pageFinders['index'][self.pageFinders['page'].index('signInPage')])

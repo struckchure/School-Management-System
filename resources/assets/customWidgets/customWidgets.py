@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import sys
+from datetime import datetime
 
 
 class NavBarButtons(QPushButton):
@@ -10,7 +11,6 @@ class NavBarButtons(QPushButton):
 
 		self.buttonText = text
 		self.buttonImage = image
-
 
 
 class NavBarUser(QGroupBox):
@@ -111,3 +111,89 @@ class NavBarUser(QGroupBox):
 		)
 
 		self.itemLayout.addWidget(self.infoGroup, 1, 0)
+
+
+class PushNotification(QSystemTrayIcon):
+	def __init__(self, icon=QIcon('resources/assests/images/heart.png'), parent=None):
+		QSystemTrayIcon.__init__(self, icon, parent)
+		menu = QMenu(parent)
+		exitAction = menu.addAction("Exit")
+		self.setContextMenu(menu)
+
+
+class Notification(QWidget):
+    signNotifyClose = pyqtSignal(str)
+
+    def __init__(self, parent = None):
+        time = datetime.now()
+        currentTime = str(time.hour) + ":" + str(time.minute) + "_"
+        self.LOG_TAG = currentTime + self.__class__.__name__ + ": "
+        super(QWidget, self).__init__(parent)
+
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint) #убирает заголовок, поверх всех окон (| QtCore.Qt.WindowStaysOnTopHint)
+        self.resize(200, 200)
+        resolution = QDesktopWidget().availableGeometry().center()
+        qr = self.frameGeometry()
+        qr.moveCenter(resolution)
+        # screenWidth = resolution.width()
+        # screenHeight = resolution.height()
+        # print(self.LOG_TAG + "width: " + str(resolution.width()) + " height: " + str(resolution.height()))
+        self.count = 0 # Счетчик уведомлений
+        self.timer = 3
+
+        self.vboxMainLayout = QVBoxLayout() # layout contain notifications
+        self.move(qr.topLeft())
+        self.setLayout(self.vboxMainLayout)
+
+        self.closeButton = QPushButton('&X')
+        self.closeButton.setFixedSize(50, 50)
+        self.closeButton.clicked.connect(self.close)
+        self.vboxMainLayout.addWidget(self.closeButton, stretch=0, alignment=Qt.AlignTop|Qt.AlignRight)
+
+    def setNotify(self, title, notify):
+        count = self.count
+        title = QLabel()
+        title.setStyleSheet("border: 1px solid #000")
+        title.setText(title)
+        title.setStyleSheet("font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: bold; padding: 0;")
+
+        text = QLabel()
+        text.setText(notify)
+        text.setStyleSheet("font-family: 'Roboto', sans-serif; font-size: 12px; font-weight: normal; padding: 0;")
+
+        gridNotify = QGridLayout()
+        gridNotify.addWidget(title, 0, 0)
+        gridNotify.addWidget(text, 1, 0)
+
+        buttonClose = QPushButton()
+        buttonClose.clicked.connect(self.deleteWidgets)
+        buttonClose.setIcon(QIcon("resources/assests/images/delete.png"))
+        buttonClose.setFlat(False)
+        buttonClose.setMaximumWidth(14)
+        buttonClose.setMaximumHeight(14)
+
+        gridClose = QGridLayout()
+        gridClose.addWidget(buttonClose, 0, 0)
+
+        gridLayoutMain = QGridLayout()
+        gridLayoutMain.setColumnStretch(0,1)
+        gridLayoutMain.setColumnStretch(0,2)
+        gridLayoutMain.setColumnStretch(0,3)
+        gridLayoutMain.addLayout(gridClose, 0, 4)
+        gridLayoutMain.addLayout(gridNotify, 0, 0)
+
+        self.count += 1
+
+        self.vboxMainLayout.addLayout(gridLayoutMain)
+        self.show()
+        threading.Timer(2, self.delete, args=(gridLayoutMain,)).start()
+
+    def delete(self, layout):
+        for i in reversed(range(layout.count())):
+            item = layout.takeAt(i)
+            widget = item.widget()
+            if widget is not None:
+                widget.deleteLater()
+            elif item.layout() is not None:
+                print("")
+                self.delete(item.layout())

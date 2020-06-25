@@ -5,9 +5,9 @@ navBarWidth = 0.25
 pageWidth = 1 - navBarWidth
 
 
-pageConfigurations = {
-	'home': 1,
-	'login': 2,
+pageFinders = {
+	'page':[],
+	'index':[]
 }
 
 

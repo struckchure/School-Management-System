@@ -12,14 +12,6 @@ from views import pageConfigurations
 # Custom Modules End
 
 
-pageConfigurations = {
-	'index': 0,
-	'home': 1,
-	'login': 2,
-	'register': 3
-}
-
-
 class mainWindow(QWidget):
 	def __init__(self):
 		QWidget.__init__(self)
@@ -49,10 +41,12 @@ class mainWindow(QWidget):
 			just like in a list :)
 		'''
 
+		pageConfigurations.pageFinders['page'].append('indexPage')
+		pageConfigurations.pageFinders['index'].append(0)
+		
 		self.pageControl = QStackedWidget()
-		self.pageControl.addWidget(AuthentificationViews.Login(self.pageControl))
-		# self.pageControl.addWidget(AuthentificationViews.Register(self.pageControl))
-		# self.pageControl.addWidget(mainWindowViews.Home(self.pageControl))
+		self.pageControl.addWidget(AuthentificationViews.Login(self.pageControl, pageConfigurations.pageFinders))
 		self.pageControl.setCurrentIndex(0)
+
 
 		self.main_layout.addWidget(self.pageControl)
