@@ -121,6 +121,31 @@ class PushNotification(QSystemTrayIcon):
 		self.setContextMenu(menu)
 
 
+class PopUp(QWidget):
+	def __init__(self, title='School Manager', body='Ping!!!'):
+		QWidget.__init__(self)
+
+		self.windowLayout = QVBoxLayout()
+		self.windowLayout.setContentsMargins(0, 0, 0, 0)
+
+		resolution = QDesktopWidget().availableGeometry().center()
+		qr = self.frameGeometry()
+		qr.moveCenter(resolution)
+
+		self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
+		self.move(qr.topLeft())
+		self.setLayout(self.windowLayout)
+		self.resize(200, 200)
+
+		self.initialization()
+
+	def initialization(self):
+		self.closeButton = QPushButton('&x')
+		self.closeButton.setFixedSize(20, 20)
+		self.closeButton.clicked.connect(self.close)
+		self.windowLayout.addWidget(self.closeButton, stretch=0, alignment=Qt.AlignTop|Qt.AlignRight)
+
+
 class Notification(QWidget):
     signNotifyClose = pyqtSignal(str)
 
@@ -135,12 +160,6 @@ class Notification(QWidget):
         resolution = QDesktopWidget().availableGeometry().center()
         qr = self.frameGeometry()
         qr.moveCenter(resolution)
-        # screenWidth = resolution.width()
-        # screenHeight = resolution.height()
-        # print(self.LOG_TAG + "width: " + str(resolution.width()) + " height: " + str(resolution.height()))
-        self.count = 0 # Счетчик уведомлений
-        self.timer = 3
-
         self.vboxMainLayout = QVBoxLayout() # layout contain notifications
         self.move(qr.topLeft())
         self.setLayout(self.vboxMainLayout)
@@ -149,6 +168,12 @@ class Notification(QWidget):
         self.closeButton.setFixedSize(50, 50)
         self.closeButton.clicked.connect(self.close)
         self.vboxMainLayout.addWidget(self.closeButton, stretch=0, alignment=Qt.AlignTop|Qt.AlignRight)
+        # screenWidth = resolution.width()
+        # screenHeight = resolution.height()
+        # print(self.LOG_TAG + "width: " + str(resolution.width()) + " height: " + str(resolution.height()))
+        self.count = 0 # Счетчик уведомлений
+        self.timer = 3
+
 
     def setNotify(self, title, notify):
         count = self.count

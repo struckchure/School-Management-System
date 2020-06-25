@@ -243,14 +243,10 @@ class Login(QGroupBox):
 							if password == self.get_user.password:
 								self.nextPage()
 
-								self.trayIcon = customWidgets.Notification()
-
 								msg = f'Welcome Back {self.get_user.first_name} :) '
-								self.trayIcon.show()
-								print(dir(self.trayIcon))
-
-								message_box = QMessageBox()
-								# message_box.about(self, 'School Manager', msg)
+								# messagePopUp = customWidgets.PopUp(title='School Manager', body=msg)
+								messagePopUp = customWidgets.Notification()
+								messagePopUp.show()
 							else:
 								msg = 'Invalid Username or Password.'
 								message_box = QMessageBox()
