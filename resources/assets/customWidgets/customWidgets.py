@@ -4,43 +4,43 @@ from PyQt5.QtGui import *
 import sys
 
 
-class NavBarButtons(QPushButton):
-	def __init__(text, image):
-		super(NavBarButtons, self).__init__()
 
-		self.buttonText = text
-		self.buttonImage = image
+class SideBarTitle(QLabel):
+	def __init__(self, text):
+		QLabel.__init__(self)
+
+		self.text = text
+
+		qss = open('resources/assets/qss/boostrap.qss').read()
+
+		self.setStyleSheet(qss)
+		self.setWordWrap(True)
+		self.setText(self.text)
+		self.setAlignment(Qt.AlignCenter)
+		self.setObjectName('sideBarTitle')
 
 
-class NavBarUser(QGroupBox):
+class SideBarUser(QGroupBox):
 	def __init__(self, imagePath='resources/assets/images/icons/039-physics.png', user='John Doe'):
-		super(NavBarUser, self).__init__()
+		super(SideBarUser, self).__init__()
 
 		self.imagePath = imagePath
 		self.user = user
 
 		self.itemLayout = QVBoxLayout()
 		self.itemLayout.setContentsMargins(0, 0, 0, 0)
-		# self.itemLayout.setSpacing(0)
 		self.itemLayout.setAlignment(Qt.AlignCenter)
 
+		qss = open('resources/assets/qss/boostrap.qss').read()
+
+		self.setStyleSheet(qss)
 		self.setLayout(self.itemLayout)
-		self.setObjectName('NavBarUser')
-		self.setStyleSheet(
-			'''
-				QGroupBox#NavBarUser {
-					border: 0px;
-					border-bottom: 1px solid grey;
-					padding-top: 20px;
-					background-color: rgba(0, 0, 0, 0);
-				}
-			'''
-		)
+		self.setObjectName('sideBarUser')
 
 		self.initialization()
 
 	def initialization(self):
-		self.imageSet()
+		# self.imageSet()
 		self.userInfoSet()
 
 	def imageSet(self):
@@ -72,17 +72,55 @@ class NavBarUser(QGroupBox):
 		self.userInfo.setAlignment(Qt.AlignLeft)
 		self.userInfo.setObjectName('userInfo')
 		self.userInfo.setMaximumSize(200, 50)
-		self.userInfo.setStyleSheet(
-			'''
-				QLabel#userInfo {
-					border: 0px;
-					color: white;
-					font-family: Verdana;
-				}
-			'''
-		)
 		
 		self.itemLayout.addWidget(self.userInfo, stretch=0, alignment=Qt.AlignCenter)
+
+
+class SideBarSection(QGroupBox):
+	def __init__(self, title='Menu', width=100):
+		QGroupBox.__init__(self)
+
+		self.groupLayout = QVBoxLayout()
+		self.groupLayout.setAlignment(Qt.AlignLeft)
+		self.groupLayout.setSpacing(10)
+
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+		self.setStyleSheet(qss)
+		self.setFixedWidth(width * 0.85)
+		self.setObjectName('sideBarSection')
+		self.setLayout(self.groupLayout)
+
+		self.titleLabel = QLabel(f'{title}')
+		self.titleLabel.setAlignment(Qt.AlignLeft)
+		self.titleLabel.setObjectName('sideBarSectionTitle')
+		self.titleLabel.setFixedSize(width * 0.85, 30)
+		self.groupLayout.addWidget(self.titleLabel, stretch=0, alignment=Qt.AlignLeft)
+
+		self.initialization()
+
+	def initialization(self):
+		self.widgetLayout = QVBoxLayout()
+		self.widgetLayout.setAlignment(Qt.AlignLeft)
+
+		self.widgetGroup = QGroupBox()
+		self.widgetGroup.setLayout(self.widgetLayout)
+		self.widgetGroup.setObjectName('widgetGroup')
+		self.groupLayout.addWidget(self.widgetGroup, stretch=0, alignment=Qt.AlignTop | Qt.AlignLeft)
+
+
+class SideBarButton(QPushButton):
+	def __init__(self, title, image='resources/assets/images/icons/039-physics.png'):
+		QPushButton.__init__(self, QIcon(image), title)
+
+		# self.buttonText = title
+		# self.buttonImage = QIcon(image)
+
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+		self.setStyleSheet(qss)
+		self.setFixedHeight(40)
+		# self.setText(self.buttonText)
+		# self.setIcon(self.buttonIcon)
+		self.setObjectName('sideBarButton')
 
 
 class PushNotification(QSystemTrayIcon):

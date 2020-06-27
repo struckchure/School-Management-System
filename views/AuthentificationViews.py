@@ -271,11 +271,17 @@ class Login(QGroupBox):
 			raise e
 
 	def nextPage(self):
-		self.pageController.addWidget(mainWindow.Home(self.pageController, self.get_user))
-		self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
+		if 'homePage' not in self.pageFinders['page']:
+			self.pageFinders['page'].append('homePage')
+			self.pageFinders['index'].append(self.pageController.currentIndex() + 1)
+
+			self.pageController.addWidget(mainWindow.Home(self.pageController, self.get_user))
+			self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
+		else:
+			page = utils.findPage(self.pageFinders, 'homePage')
+			self.pageController.setCurrentIndex(page)
 
 	def signUpButtonView(self):
-		print('Login', self.pageFinders)
 		if 'signUpPage' not in self.pageFinders['page']:
 			self.pageFinders['page'].append('signUpPage')
 			self.pageFinders['index'].append(self.pageController.currentIndex() + 1)
@@ -376,7 +382,6 @@ class Register(QGroupBox):
 
 		self.image = QPixmap(img_file)
 		self.logo = QLabel()
-		# self.logo.setMaximumSize(self.leftPageGroup.width() // 2, self.leftPageGroup.height() // 2)
 		self.logo.setPixmap(self.image)
 		self.leftPageLayout.addWidget(self.logo)
 
@@ -603,7 +608,6 @@ class Register(QGroupBox):
 
 	def signInButtonView(self):
 		if 'signInPage' not in self.pageFinders['page']:
-			print('Register', self.pageFinders)
 			self.pageFinders['page'].append('signInPage')
 			self.pageFinders['index'].append(self.pageController.currentIndex() + 1)
 			
