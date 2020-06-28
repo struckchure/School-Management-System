@@ -41,8 +41,7 @@ class Home(QGroupBox):
 
 		self.setStyleSheet(qss)
 		self.setLayout(self.groupLayout)
-		self.resize(1370, 800)
-		self.setMaximumSize(1500, 1000)
+		self.setMaximumSize(1300, 1000)
 		self.setObjectName('home')
 		self.showMaximized()
 
@@ -115,7 +114,6 @@ class Home(QGroupBox):
 		self.navBarGroup.setObjectName('navBar')
 		self.pageLayout.addWidget(self.navBarGroup)
 
-
 	def mainPage(self):
 		self.mainPageLayout = QHBoxLayout()
 		self.mainPageLayout.setSpacing(0)
@@ -185,12 +183,13 @@ class Home(QGroupBox):
 
 		self.sideBarScroll = QScrollArea()
 		self.sideBarScroll.setMaximumWidth(self.sideBarWidth + 5)
-		self.sideBarScroll.setMaximumHeight(self.sideBarWidth * 3)
-		self.sideBarScroll.setWidget(self.sideBarGroup)
+		self.sideBarScroll.setMaximumHeight(1200)
+		self.sideBarScroll.setWidget(customWidgets.SideBar())
 		self.sideBarScroll.setWidgetResizable(True)
 		self.sideBarScroll.setObjectName('sideBarScroll')
 
-		self.mainPageLayout.addWidget(self.sideBarScroll)
+		# self.mainPageLayout.addWidget(self.sideBarScroll)
+		self.mainPageLayout.addWidget(customWidgets.SideBar())
 
 	def Page(self):
 		self.pageGroup = QGroupBox()

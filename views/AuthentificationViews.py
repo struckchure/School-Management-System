@@ -33,7 +33,7 @@ class Login(QGroupBox):
 
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
 
-		self.setStyelSheet(qss)
+		self.setStyleSheet(qss)
 		self.setLayout(self.groupLayout)
 		self.setObjectName('login')
 
@@ -45,7 +45,6 @@ class Login(QGroupBox):
 		self.rightPageHeight = pageConfigurations.cardHeightRatio
 
 		self.mainPage()
-		# self.leftPage()
 		self.rightPage()
 
 	def mainPage(self):
@@ -60,34 +59,6 @@ class Login(QGroupBox):
 		self.mainPageGroup.setObjectName('mainPageGroup')
 
 		self.groupLayout.addWidget(self.mainPageGroup)
-
-	def leftPage(self):
-		self.leftPageLayout = QVBoxLayout()
-		self.leftPageLayout.setContentsMargins(0, 0, 0, 0)
-		self.leftPageLayout.setAlignment(Qt.AlignCenter)
-
-		self.leftPageGroup = QGroupBox()
-		self.leftPageGroup.setLayout(self.leftPageLayout)
-		self.leftPageGroup.setFixedSize(int(self.leftPageWidth * self.mainPageGroup.width()), self.mainPageGroup.height())
-		self.leftPageGroup.setObjectName('leftPageGroup')
-
-		img_size = (self.leftPageGroup.width() // 2, self.leftPageGroup.height() // 2)
-		img_size = (300, 300)
-
-		# img_file = 'resources/assets/images/user-male-circle-filled.png'
-		# image_ = cv2.resize(cv2.imread(img_file), img_size)
-		# cv2.imwrite('resources/assets/images/logo.png', image_)
-		# img_file = 'resources/assets/images/logo.png'
-
-		img_file = 'resources/assets/images/icon.png'
-
-		self.image = QPixmap(img_file)
-		self.logo = QLabel()
-		# self.logo.setMaximumSize(self.leftPageGroup.width() // 2, self.leftPageGroup.height() // 2)
-		self.logo.setPixmap(self.image)
-		self.leftPageLayout.addWidget(self.logo)
-
-		self.mainPageLayout.addWidget(self.leftPageGroup)
 
 	def rightPage(self):
 		self.rightPageLayout = QVBoxLayout()

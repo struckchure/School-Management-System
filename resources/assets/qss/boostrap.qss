@@ -122,6 +122,11 @@ QLabel#pageTitle-sm {
 	color: black;
 }
 
+QGroupBox#sideBar {
+	background-color: blue;
+	border: 0px;
+}
+
 QLabel#sideBarTitle {
 	font-family: Verdana;
 	font-size: 15px;

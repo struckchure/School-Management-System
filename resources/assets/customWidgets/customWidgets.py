@@ -123,6 +123,26 @@ class SideBarButton(QPushButton):
 		self.setObjectName('sideBarButton')
 
 
+class SideBar(QScrollArea):
+	def __init__(self):
+		QScrollArea.__init__(self)
+
+		self.sideBarLayout = QVBoxLayout()
+		self.sideBarLayout.setAlignment(Qt.AlignCenter)
+
+		self.sideBarGroup = QGroupBox()
+		self.sideBarGroup.setFixedHeight(900)
+		self.sideBarGroup.setLayout(self.sideBarLayout)
+
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+		self.setStyleSheet(qss)
+		self.setWidget(self.sideBarGroup)
+		self.setWidgetResizable(True)
+		self.setMaximumSize(1200, 200)
+		self.setObjectName('sideBar')
+		self.showMaximized()
+
+
 class PushNotification(QSystemTrayIcon):
 	def __init__(self, icon=QIcon('resources/assests/images/heart.png'), parent=None):
 		QSystemTrayIcon.__init__(self, icon, parent)
