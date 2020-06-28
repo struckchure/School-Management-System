@@ -194,7 +194,6 @@ class Home(QGroupBox):
 
 	def Page(self):
 		self.pageGroup = QGroupBox()
-		# self.pageGroup.setMaximumWidth(self.pageWidth)
 		self.pageGroup.setLayout(self.pageLayout)
 		self.pageGroup.setObjectName('pageGroup')
 

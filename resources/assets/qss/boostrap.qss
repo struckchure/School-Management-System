@@ -1,3 +1,29 @@
+QGroupBox#login {
+	border: 0px;
+	background-image: url(resources/assets/images/home_bg_color_particles.jpg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+QGroupBox#mainPageGroup {
+	border-radius: 20px;
+	padding: 10px;
+}
+
+QGroupBox#rightPageGroup {
+	border: 0px;
+	background-color: #DEF3F1;
+	/* border-bottom-right-radius: 20px; */
+	/* border-top-right-radius: 20px; */
+}
+				
+QGroupBox#leftPageGroup {
+	background-color: #405BC1;
+	border: 0px;
+	border-bottom-left-radius: 20px;
+	border-top-left-radius: 20px;
+}
+
 QLineEdit {
 	border-radius: 0px;
 	padding: 7px;
