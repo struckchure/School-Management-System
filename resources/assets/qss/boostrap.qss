@@ -1,13 +1,17 @@
+QGroupBox#mainPageGroup {
+	border: 0px;
+}
+
+QScrollArea#mainPageScroll {
+	border: 0px;
+	background-color: #54D9D9;
+}
+
 QGroupBox#login {
 	border: 0px;
 	background-image: url(resources/assets/images/home_bg_color_particles.jpg);
 	background-repeat: no-repeat;
 	background-position: center;
-}
-
-QGroupBox#mainPageGroup {
-	border-radius: 20px;
-	padding: 10px;
 }
 
 QGroupBox#rightPageGroup {
@@ -246,11 +250,6 @@ QGroupBox#navBar {
 	padding-right: 15px;
 }
 
-
-QGroupBox#mainPageGroup {
-	border: 0px;
-	padding: 0px;
-}
 
 QGroupBox#sideBarUser {
 	border: 0px;

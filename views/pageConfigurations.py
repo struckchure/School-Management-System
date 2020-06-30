@@ -1,10 +1,13 @@
 # Window settings
 
 windowWidth = 1500
-navBarHeight = 45
+windowHeight = 1200
+
+navBarHeight = 35
+
 sideBarWidth = 0.2
-pageWidth = 1 - sideBarWidth
 sideBarButtonRatio = 0.7
+pageWidth = 1 - sideBarWidth
 
 pageFinders = {
 	'page':[],

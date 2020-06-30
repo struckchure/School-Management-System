@@ -4,6 +4,41 @@ from PyQt5.QtGui import *
 import sys
 
 
+# Custom Modules Imports
+
+from views import pageConfigurations
+
+# Custom Modules End
+
+'''
+	Home Views
+'''
+
+class NavBar(QGroupBox):
+	def __init__(self, user):
+		QGroupBox.__init__(self)
+
+		self.user = user
+
+		self.groupLayout = QHBoxLayout()
+		self.groupLayout.setContentsMargins(0, 0, 0, 0)
+
+		blurRadius = 20
+		offSet = 2.1
+
+		self.groupGraphicsEffect = QGraphicsDropShadowEffect()
+		self.groupGraphicsEffect.setBlurRadius(blurRadius)
+		self.groupGraphicsEffect.setOffset(offSet)
+
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+
+		self.setStyleSheet(qss)
+		self.setObjectName('navBar')
+		self.setLayout(self.groupLayout)
+		self.setGraphicsEffect(self.groupGraphicsEffect)
+		# self.setMaximumHeight(pageConfigurations.navBarHeight)
+		self.setFixedHeight(pageConfigurations.navBarHeight)
+
 
 class SideBarTitle(QLabel):
 	def __init__(self, text):
@@ -22,7 +57,7 @@ class SideBarTitle(QLabel):
 
 class SideBarUser(QGroupBox):
 	def __init__(self, imagePath='resources/assets/images/icons/039-physics.png', user='John Doe'):
-		super(SideBarUser, self).__init__()
+		QGroupBox.__init__(self)
 
 		self.imagePath = imagePath
 		self.user = user
