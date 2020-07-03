@@ -57,7 +57,8 @@ class Home(QGroupBox):
 		self.sideBar()
 
 	def navBar(self):
-		self.groupLayout.addWidget(customWidgets.NavBar(self.user))
+		self.navBarWidget = customWidgets.NavBar(self.user)
+		self.groupLayout.addWidget(self.navBarWidget)
 
 	def mainPage(self):
 		self.mainPageLayout = QHBoxLayout()
@@ -77,4 +78,45 @@ class Home(QGroupBox):
 		self.groupLayout.addWidget(self.mainPageScroll)
 
 	def sideBar(self):
-		pass
+		'''
+			Add widgets to the sideBar
+			self.sideBarWidget.sideBarLayout.addWidget(self.sideBarTitle)
+		'''
+		
+		# SideBar
+
+		self.sideBarWidget = customWidgets.SideBar()
+		
+		self.sideBarTitle = customWidgets.SideBarTitle('School Management System')
+		self.sideBarWidget.sideBarLayout.addWidget(self.sideBarTitle)
+
+		spacer = QLabel()
+		spacer.setFixedHeight(30)
+
+		self.sideBarWidget.sideBarLayout.addWidget(spacer)
+
+		# Sidebar eneded
+		############################
+		# Student section started
+
+		self.studentSection = customWidgets.SideBarSection('Students')
+		self.studentSection.setFixedWidth(self.sideBarWidget.width())
+		self.sideBarWidget.sideBarLayout.addWidget(self.studentSection)
+
+		self.newStudentButton = customWidgets.SideBarButton('Admission')
+		self.studentSection.widgetLayout.addWidget(self.newStudentButton)
+		
+		# Student section ended
+		#############################
+		# Teacher section started
+
+		self.teacherSection = customWidgets.SideBarSection('Teachers')
+		self.teacherSection.setFixedWidth(self.sideBarWidget.width())
+		self.sideBarWidget.sideBarLayout.addWidget(self.teacherSection)
+
+		self.newTeacherButton = customWidgets.SideBarButton('New Teacher')
+		self.teacherSection.widgetLayout.addWidget(self.newTeacherButton)
+
+		# Teacher section ended
+
+		self.mainPageLayout.addWidget(self.sideBarWidget)

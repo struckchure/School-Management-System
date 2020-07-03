@@ -1,18 +1,22 @@
-# Window settings
-
-windowWidth = 1500
-windowHeight = 1200
-
-navBarHeight = 35
-
-sideBarWidth = 0.2
-sideBarButtonRatio = 0.7
-pageWidth = 1 - sideBarWidth
+# Page configurations
 
 pageFinders = {
 	'page':[],
 	'index':[]
 }
+
+# Window settings
+
+windowWidth = 1500
+windowHeight = 1200
+
+navBarHeight = 40
+
+sideBarWidth = 0.18
+pageWidth = 1 - sideBarWidth
+sideBarWidgetWidthRatio = 0.65
+sideBarSize = [500, 900]
+
 
 
 def getSideBarWidth(windowWidth):

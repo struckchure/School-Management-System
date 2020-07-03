@@ -23,7 +23,7 @@ class NavBar(QGroupBox):
 		self.groupLayout = QHBoxLayout()
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
 
-		blurRadius = 20
+		blurRadius = 30
 		offSet = 2.1
 
 		self.groupGraphicsEffect = QGraphicsDropShadowEffect()
@@ -112,23 +112,24 @@ class SideBarUser(QGroupBox):
 
 
 class SideBarSection(QGroupBox):
-	def __init__(self, title='Menu', width=100):
+	def __init__(self, title='Menu'):
 		QGroupBox.__init__(self)
 
 		self.groupLayout = QVBoxLayout()
 		self.groupLayout.setAlignment(Qt.AlignLeft)
-		self.groupLayout.setSpacing(10)
+		self.groupLayout.setSpacing(0)
 
+		widgetWidthRatio = pageConfigurations.sideBarWidgetWidthRatio
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+
 		self.setStyleSheet(qss)
-		self.setFixedWidth(width * 0.85)
 		self.setObjectName('sideBarSection')
 		self.setLayout(self.groupLayout)
-
+		print(self.width() * widgetWidthRatio)
 		self.titleLabel = QLabel(f'{title}')
 		self.titleLabel.setAlignment(Qt.AlignLeft)
 		self.titleLabel.setObjectName('sideBarSectionTitle')
-		self.titleLabel.setFixedSize(width * 0.85, 30)
+		self.titleLabel.setFixedSize(self.width() * widgetWidthRatio, 30)
 		self.groupLayout.addWidget(self.titleLabel, stretch=0, alignment=Qt.AlignLeft)
 
 		self.initialization()
@@ -153,8 +154,6 @@ class SideBarButton(QPushButton):
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
 		self.setStyleSheet(qss)
 		self.setFixedHeight(40)
-		# self.setText(self.buttonText)
-		# self.setIcon(self.buttonIcon)
 		self.setObjectName('sideBarButton')
 
 
@@ -163,18 +162,21 @@ class SideBar(QScrollArea):
 		QScrollArea.__init__(self)
 
 		self.sideBarLayout = QVBoxLayout()
-		self.sideBarLayout.setAlignment(Qt.AlignCenter)
+		self.sideBarLayout.setAlignment(Qt.AlignTop)
 
 		self.sideBarGroup = QGroupBox()
-		self.sideBarGroup.setFixedHeight(900)
+		self.sideBarGroup.setObjectName('sideBarGroup')
+		self.sideBarGroup.setMinimumHeight(400)
 		self.sideBarGroup.setLayout(self.sideBarLayout)
-
+		
+		sideBarSize = pageConfigurations.sideBarSize
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+		
 		self.setStyleSheet(qss)
 		self.setWidget(self.sideBarGroup)
 		self.setWidgetResizable(True)
-		self.setMaximumSize(1200, 200)
-		self.setObjectName('sideBar')
+		self.setMaximumSize(sideBarSize[0], sideBarSize[1])
+		self.setObjectName('sideBarScroll')
 		self.showMaximized()
 
 
