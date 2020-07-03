@@ -47,12 +47,10 @@ class NavBarUser(QGroupBox):
 		self.imageLayout = QVBoxLayout()
 		self.imageLayout.setAlignment(Qt.AlignCenter)
 
-		self.imagePixmap = QPixmap(self.imagePath)
 		self.userImage = QLabel()
-		self.userImage.setPixmap(self.imagePixmap)
 		self.userImage.setAlignment(Qt.AlignCenter)
 		self.userImage.setObjectName('userImage')
-		self.userImage.setMaximumSize(80, 80)
+		self.userImage.setFixedSize(80, 80)
 		self.userImage.setStyleSheet(
 			'''
 				QLabel#userImage {
@@ -62,7 +60,7 @@ class NavBarUser(QGroupBox):
 			'''
 		)
 		
-		self.imageLayout.addWidget(self.userImage)
+		self.imageLayout.addWidget(self.userImage, stretch=0, alignment=Qt.AlignTop | Qt.AlignCenter)
 
 		self.imageGroup = QGroupBox()
 		# self.imageGroup.setMaximumWidth(300)
