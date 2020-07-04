@@ -306,13 +306,14 @@ QLabel#popUpTitle {
 }
 
 
-QGroupBox#noBorderBoxname {
+QGroupBox#noBorderBox {
 	border: 0px;
+	padding: 15px;
 }
 
 QGroupBox#rightMainGroup {
 	border: 0px;
-	padding: 50px;
+	padding: 35px;
 }
 
 QScrollArea#rightMainScroll {
@@ -320,12 +321,31 @@ QScrollArea#rightMainScroll {
 	background-color: rgba(0, 0, 0, 0);
 }
 
+/* idDashButtonStart */
+
 DashButton#dashButton {
 	border: 0px;
-	border-bottom: 2px solid #1554BD;
+	border-bottom: 4px solid #1554BD;
 	background-color: white;
+	text-align: right;
+	padding: 10px;
 }
 
 DashButton#dashButton:hover {
 	background-color: #DBEBED;
 }
+
+DashButton#dashButton:pressed {
+	background-color: #93DFE9;
+}
+
+QLabel#dashText {
+	color: #1554BD;
+}
+
+QLabel#dashValue {
+	color: black;
+	font-size: 30px;
+}
+
+/* idDashButtonEnd */

@@ -99,7 +99,6 @@ class SideBarSection(QGroupBox):
 		self.setStyleSheet(qss)
 		self.setObjectName('sideBarSection')
 		self.setLayout(self.groupLayout)
-		print(self.width() * widgetWidthRatio)
 		self.titleLabel = QLabel(f'{title}')
 		self.titleLabel.setAlignment(Qt.AlignLeft)
 		self.titleLabel.setObjectName('sideBarSectionTitle')
@@ -152,25 +151,85 @@ class SideBar(QScrollArea):
 		self.setObjectName('sideBarScroll')
 		self.showMaximized()
 
+'''
+	Usage:
+		self.teacherButton = customWidgets.DashButton(
+		buttonText='Teachers',
+		buttonValue=15,
+		buttonIcon='resources/assets/images/icons/local_library_black.png',
+		borderColor='green')
+'''
 
 class DashButton(QPushButton, QHBoxLayout):
-	def __init__(self):
+	def __init__(self, buttonText, buttonValue, buttonIcon='resources/assets/images/icons/view.png', borderColor='#1554BD'):
 		super(DashButton, self).__init__()
 
-		blurRadius = 30
-		offSet = 2.1
+		self.buttonText = str(buttonText)
+		self.buttonValue = str(buttonValue)
+		self.buttonIcon = buttonIcon
+		self.borderColor = str(borderColor)
+		
+		blurRadius = 20
+		xOffset = 0.1
+		yOffset = 0.1
 
 		self.groupGraphicsEffect = QGraphicsDropShadowEffect()
 		self.groupGraphicsEffect.setBlurRadius(blurRadius)
-		self.groupGraphicsEffect.setOffset(offSet)
+		self.groupGraphicsEffect.setXOffset(xOffset)
+		self.groupGraphicsEffect.setYOffset(yOffset)
 
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+		self.buttonLayout = QHBoxLayout()
+		self.buttonLayout.setAlignment(Qt.AlignTop | Qt.AlignVCenter)
+
+		iconWidth, iconHeight = pageConfigurations.DashButtonSize
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read().split('/* idDashButtonStart */')[1].split('/* idDashButtonStart */')[0].replace('#1554BD', borderColor)
 
 		self.setStyleSheet(qss)
+		self.setIcon(QIcon(QPixmap(self.buttonIcon)))
+		self.setLayout(self.buttonLayout)
 		self.setContentsMargins(0, 0, 0, 0)
 		self.setGraphicsEffect(self.groupGraphicsEffect)
 		self.setObjectName('dashButton')
-		self.setMinimumSize(250, 100)
+		self.setIconSize(QSize(iconWidth, iconHeight))
+		self.setMinimumSize(230, 80)
+		self.setMaximumSize(250, 100)
+
+		self.initialization()
+
+	def initialization(self):
+		self.leftLabel()
+		self.rightLabel()
+
+	def leftLabel(self):
+		self.leftLayout = QVBoxLayout()
+		self.leftLayout.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+
+		buttonRatio = 0.4
+
+		self.buttonTextLabel = QLabel(self.buttonText)
+		self.buttonTextLabel.setObjectName('dashText')
+		self.buttonTextLabel.setMaximumSize(self.width() * buttonRatio, self.height())
+		self.leftLayout.addWidget(self.buttonTextLabel)
+
+		self.buttonIconLabel = QLabel(self.buttonValue)
+		self.buttonIconLabel.setObjectName('dashValue')
+		self.buttonIconLabel.setMaximumSize(self.width() * buttonRatio, self.height())
+		self.leftLayout.addWidget(self.buttonIconLabel)
+
+		self.buttonLayout.addLayout(self.leftLayout)
+
+	def rightLabel(self):
+		self.rightLayout = QVBoxLayout()
+		self.rightLayout.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+
+		buttonRatio = 0.4
+		
+
+		self.buttonTextLabel = QLabel()
+		self.buttonTextLabel.setMaximumSize(self.width() * buttonRatio, self.height() * buttonRatio)
+		self.rightLayout.addWidget(self.buttonTextLabel)
+
+		self.buttonLayout.addLayout(self.rightLayout)
 
 
 class PushNotification(QSystemTrayIcon):
