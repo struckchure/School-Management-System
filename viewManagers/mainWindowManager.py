@@ -46,8 +46,7 @@ class mainWindow(QWidget):
 		pageConfigurations.pageFinders['index'].append(0)
 		
 		self.pageControl = QStackedWidget()
-		# self.pageControl.addWidget(AuthentificationViews.Login(self.pageControl, pageConfigurations.pageFinders))
-		self.pageControl.addWidget(mainWindowViews.Home(self.pageControl, pageConfigurations.pageFinders))
+		self.pageControl.addWidget(AuthentificationViews.Login(self.pageControl, pageConfigurations.pageFinders))
 		self.pageControl.setCurrentIndex(0)
 
 		self.main_layout.addWidget(self.pageControl)

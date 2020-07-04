@@ -1,24 +1,28 @@
 #!/usr/bin/env python3
 import os
+import sys
+
 try:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
     from django.core.wsgi import get_wsgi_application
-    application = get_wsgi_application()
 
+    application = get_wsgi_application()
 except Exception as e:
     print(e)
 
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QApplication
 from viewManagers.mainWindowManager import mainWindow
-import sys
 
 
 def main():
-    app = QApplication(sys.argv)
-    window = mainWindow()
-    window.show()
+	try:
+	    app = QApplication(sys.argv)
+	    window = mainWindow()
+	    window.show()
 
-    sys.exit(app.exec_())
+	    sys.exit(app.exec_())
+	except KeyboardInterrupt:
+		sys.exit()
 
 
 if __name__ == '__main__':

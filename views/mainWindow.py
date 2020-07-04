@@ -131,9 +131,9 @@ class Home(QGroupBox):
 		self.rightPageLayout = QVBoxLayout()
 		self.rightPageLayout.setContentsMargins(0, 0, 0, 0)
 		self.rightPageLayout.setSpacing(0)
-		self.rightPageLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
+		self.rightPageLayout.setAlignment(Qt.AlignTop)
 
-		self.rightPageLayout.addWidget(self.rightPageStackedWidget, stretch=0, alignment=Qt.AlignTop | Qt.AlignHCenter)
+		self.rightPageLayout.addWidget(self.rightPageStackedWidget, stretch=0, alignment=Qt.AlignLeft)
 		
 		rightPageFinders = {
 			'page':[],
@@ -147,6 +147,7 @@ class Home(QGroupBox):
 		self.rightPageStackedWidget.addWidget(self.dashBoard)
 
 		self.rightPageGroup = QGroupBox()
+		self.rightPageGroup.setMaximumSize(1500, 900)
 		self.rightPageGroup.setObjectName('rightMainGroup')
 		self.rightPageGroup.setLayout(self.rightPageLayout)
 
