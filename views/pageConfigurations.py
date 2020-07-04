@@ -12,10 +12,10 @@ windowHeight = 1200
 
 navBarHeight = 40
 
-sideBarWidth = 0.18
+sideBarWidth = 0.7
 pageWidth = 1 - sideBarWidth
-sideBarWidgetWidthRatio = 0.65
-sideBarSize = [500, 900]
+sideBarWidgetWidthRatio = 0.71
+sideBarSize = [230, 900]
 
 
 

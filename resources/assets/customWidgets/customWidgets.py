@@ -36,21 +36,17 @@ class NavBar(QGroupBox):
 		self.setObjectName('navBar')
 		self.setLayout(self.groupLayout)
 		self.setGraphicsEffect(self.groupGraphicsEffect)
-		# self.setMaximumHeight(pageConfigurations.navBarHeight)
 		self.setFixedHeight(pageConfigurations.navBarHeight)
 
 
 class SideBarTitle(QLabel):
 	def __init__(self, text):
-		QLabel.__init__(self)
-
-		self.text = text
+		QLabel.__init__(self, text)
 
 		qss = open('resources/assets/qss/boostrap.qss').read()
 
 		self.setStyleSheet(qss)
 		self.setWordWrap(True)
-		self.setText(self.text)
 		self.setAlignment(Qt.AlignCenter)
 		self.setObjectName('sideBarTitle')
 
@@ -75,29 +71,7 @@ class SideBarUser(QGroupBox):
 		self.initialization()
 
 	def initialization(self):
-		# self.imageSet()
 		self.userInfoSet()
-
-	def imageSet(self):
-		self.imageLayout = QVBoxLayout()
-		self.imageLayout.setAlignment(Qt.AlignCenter)
-
-		self.imagePixmap = QPixmap(self.imagePath)
-		self.userImage = QLabel()
-		self.userImage.setPixmap(self.imagePixmap)
-		self.userImage.setAlignment(Qt.AlignCenter)
-		self.userImage.setObjectName('userImage')
-		self.userImage.setMaximumSize(80, 80)
-		self.userImage.setStyleSheet(
-			'''
-				QLabel#userImage {
-					border: 2px solid #DAA5A5;
-					border-radius: 40px;
-				}
-			'''
-		)
-		
-		self.itemLayout.addWidget(self.userImage, stretch=0, alignment=Qt.AlignCenter)
 
 	def userInfoSet(self):
 		self.infoLayout = QVBoxLayout()
@@ -148,12 +122,11 @@ class SideBarButton(QPushButton):
 	def __init__(self, title, image='resources/assets/images/icons/039-physics.png'):
 		QPushButton.__init__(self, QIcon(image), title)
 
-		# self.buttonText = title
-		# self.buttonImage = QIcon(image)
-
+		buttonWidth = pageConfigurations.sideBarSize[0] * pageConfigurations.sideBarWidgetWidthRatio
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+
 		self.setStyleSheet(qss)
-		self.setFixedHeight(40)
+		self.setFixedSize(buttonWidth, 40)
 		self.setObjectName('sideBarButton')
 
 
@@ -178,6 +151,26 @@ class SideBar(QScrollArea):
 		self.setMaximumSize(sideBarSize[0], sideBarSize[1])
 		self.setObjectName('sideBarScroll')
 		self.showMaximized()
+
+
+class DashButton(QPushButton, QHBoxLayout):
+	def __init__(self):
+		super(DashButton, self).__init__()
+
+		blurRadius = 30
+		offSet = 2.1
+
+		self.groupGraphicsEffect = QGraphicsDropShadowEffect()
+		self.groupGraphicsEffect.setBlurRadius(blurRadius)
+		self.groupGraphicsEffect.setOffset(offSet)
+
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+
+		self.setStyleSheet(qss)
+		self.setContentsMargins(0, 0, 0, 0)
+		self.setGraphicsEffect(self.groupGraphicsEffect)
+		self.setObjectName('dashButton')
+		self.setMinimumSize(250, 100)
 
 
 class PushNotification(QSystemTrayIcon):
@@ -215,15 +208,7 @@ class PopUp(QWidget):
 	def initialization(self):
 		self.titleLabel = QLabel(self.title)
 		self.titleLabel.setAlignment(Qt.AlignCenter)
-		self.titleLabel.setStyleSheet(
-			'''
-				QLabel {
-					padding: 5px;
-					border: 0px;
-					border-bottom: 1px solid grey;
-				}
-			'''
-		)
+		self.titleLabel.setObjectName('popUpTitle')
 		self.titleLabel.setFixedSize(200, 40)
 		self.windowLayout.addWidget(self.titleLabel, stretch=0, alignment=Qt.AlignCenter)
 

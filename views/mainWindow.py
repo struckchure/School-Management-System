@@ -14,8 +14,11 @@ import cv2
 
 # Custom Modules Imports
 
-from views import pageConfigurations
 from resources.assets.customWidgets import customWidgets
+from views import pageConfigurations
+from views import DashBoard
+from views import Students
+from views import Teachers
 
 # Custom Modules End
 
@@ -55,6 +58,7 @@ class Home(QGroupBox):
 		self.navBar()
 		self.mainPage()
 		self.sideBar()
+		self.rightPage()
 
 	def navBar(self):
 		self.navBarWidget = customWidgets.NavBar(self.user)
@@ -120,3 +124,35 @@ class Home(QGroupBox):
 		# Teacher section ended
 
 		self.mainPageLayout.addWidget(self.sideBarWidget)
+
+	def rightPage(self):
+		self.rightPageStackedWidget = QStackedWidget()
+
+		self.rightPageLayout = QVBoxLayout()
+		self.rightPageLayout.setContentsMargins(0, 0, 0, 0)
+		self.rightPageLayout.setSpacing(0)
+		self.rightPageLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
+
+		self.rightPageLayout.addWidget(self.rightPageStackedWidget, stretch=0, alignment=Qt.AlignTop | Qt.AlignHCenter)
+		
+		rightPageFinders = {
+			'page':[],
+			'index':[]
+		}
+
+		rightPageFinders['page'].append('DashBoard')
+		rightPageFinders['index'].append(0)
+
+		self.dashBoard = DashBoard.DashBoard(self.rightPageStackedWidget, rightPageFinders)
+		self.rightPageStackedWidget.addWidget(self.dashBoard)
+
+		self.rightPageGroup = QGroupBox()
+		self.rightPageGroup.setObjectName('rightMainGroup')
+		self.rightPageGroup.setLayout(self.rightPageLayout)
+
+		self.rightPageScroll = QScrollArea()
+		self.rightPageScroll.setObjectName('rightMainScroll')
+		self.rightPageScroll.setWidgetResizable(True)
+		self.rightPageScroll.setWidget(self.rightPageGroup)
+
+		self.mainPageLayout.addWidget(self.rightPageScroll)

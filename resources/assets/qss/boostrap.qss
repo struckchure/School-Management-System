@@ -293,3 +293,39 @@ QGroupBox#NavBarUser {
 	padding-top: 20px;
 	background-color: rgba(0, 0, 0, 0);
 }
+
+QLabel#userImage {
+	border: 2px solid #DAA5A5;
+	border-radius: 40px;
+}
+
+QLabel#popUpTitle {
+	padding: 5px;
+	border: 0px;
+	border-bottom: 1px solid grey;
+}
+
+
+QGroupBox#noBorderBoxname {
+	border: 0px;
+}
+
+QGroupBox#rightMainGroup {
+	border: 0px;
+	padding: 50px;
+}
+
+QScrollArea#rightMainScroll {
+	border: 0px;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+DashButton#dashButton {
+	border: 0px;
+	border-bottom: 2px solid #1554BD;
+	background-color: white;
+}
+
+DashButton#dashButton:hover {
+	background-color: #DBEBED;
+}
