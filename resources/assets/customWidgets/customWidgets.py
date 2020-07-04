@@ -2,113 +2,217 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import sys
-from datetime import datetime
 
 
-class NavBarButtons(QPushButton):
-	def __init__(text, image):
-		super(NavBarButtons, self).__init__()
+class SideBarTitle(QLabel):
+	def __init__(self, text):
+		QLabel.__init__(self)
 
-		self.buttonText = text
-		self.buttonImage = image
+		self.text = text
+
+		qss = open('resources/assets/qss/boostrap.qss').read()
+
+		self.setStyleSheet(qss)
+		self.setWordWrap(True)
+		self.setText(self.text)
+		self.setAlignment(Qt.AlignCenter)
+		self.setObjectName('sideBarTitle')
 
 
-class NavBarUser(QGroupBox):
-	def __init__(self, imagePath='resources/assets/images/icons/delete.png', user='John Doe'):
-		super(NavBarUser, self).__init__()
+class SideBarSection(QGroupBox):
+	def __init__(self, title='Menu', width=100):
+		QGroupBox.__init__(self)
 
-		self.imagePath = imagePath
-		self.user = user
+		self.groupLayout = QVBoxLayout()
+		self.groupLayout.setAlignment(Qt.AlignLeft)
+		self.groupLayout.setSpacing(10)
 
-		self.itemLayout = QGridLayout()
-		self.itemLayout.setContentsMargins(0, 0, 0, 0)
-		self.itemLayout.setSpacing(0)
-		self.itemLayout.setAlignment(Qt.AlignCenter)
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+		self.setStyleSheet(qss)
+		self.setFixedWidth(width * 0.85)
+		self.setObjectName('sideBarSection')
+		self.setLayout(self.groupLayout)
 
-		self.setLayout(self.itemLayout)
-		self.setObjectName('NavBarUser')
-		self.setStyleSheet(
-			'''
-				QGroupBox#NavBarUser {
-					border: 0px;
-					border-bottom: 1px solid grey;
-					background-color: rgba(0, 0, 0, 0);
-				}
-			'''
-		)
+		self.titleLabel = QLabel(f'{title}')
+		self.titleLabel.setAlignment(Qt.AlignLeft)
+		self.titleLabel.setObjectName('sideBarSectionTitle')
+		self.titleLabel.setFixedSize(width * 0.85, 30)
+		self.groupLayout.addWidget(self.titleLabel, stretch=0, alignment=Qt.AlignLeft)
 
 		self.initialization()
 
 	def initialization(self):
-		self.imageSet()
-		self.userInfoSet()
+		self.widgetLayout = QVBoxLayout()
+		self.widgetLayout.setAlignment(Qt.AlignLeft)
 
-	def imageSet(self):
-		self.imageLayout = QVBoxLayout()
-		self.imageLayout.setAlignment(Qt.AlignCenter)
+		self.widgetGroup = QGroupBox()
+		self.widgetGroup.setLayout(self.widgetLayout)
+		self.widgetGroup.setObjectName('widgetGroup')
+		self.groupLayout.addWidget(self.widgetGroup, stretch=0, alignment=Qt.AlignTop | Qt.AlignLeft)
 
-		self.userImage = QLabel()
-		self.userImage.setAlignment(Qt.AlignCenter)
-		self.userImage.setObjectName('userImage')
-		self.userImage.setFixedSize(80, 80)
-		self.userImage.setStyleSheet(
-			'''
-				QLabel#userImage {
-					border: 2px solid #DAA5A5;
-					border-radius: 40px;
-				}
-			'''
-		)
-		
-		self.imageLayout.addWidget(self.userImage, stretch=0, alignment=Qt.AlignTop | Qt.AlignCenter)
 
-		self.imageGroup = QGroupBox()
-		# self.imageGroup.setMaximumWidth(300)
-		self.imageGroup.setLayout(self.imageLayout)
-		self.imageGroup.setObjectName('imageGroup')
-		self.imageGroup.setStyleSheet(
-			'''
-				QGroupBox#imageGroup {
-					border: 0px;
-					border-radius: 50px;
-				}
-			'''
-		)
+class SideBarButton(QPushButton):
+	def __init__(self, title, image='resources/assets/images/icons/039-physics.png'):
+		QPushButton.__init__(self, QIcon(image), title)
 
-		self.itemLayout.addWidget(self.imageGroup, 0, 0)
+		# self.buttonText = title
+		# self.buttonImage = QIcon(image)
 
-	def userInfoSet(self):
-		self.infoLayout = QVBoxLayout()
-		self.infoLayout.setAlignment(Qt.AlignCenter)
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+		self.setStyleSheet(qss)
+		self.setFixedHeight(40)
+		# self.setText(self.buttonText)
+		# self.setIcon(self.buttonIcon)
+		self.setObjectName('sideBarButton')
 
-		self.userInfo = QLabel(self.user.get_full_name())
-		self.userInfo.setAlignment(Qt.AlignLeft)
-		self.userInfo.setObjectName('userInfo')
-		self.userInfo.setMaximumSize(200, 50)
-		self.userInfo.setStyleSheet(
-			'''
-				QLabel#userInfo {
-					border: 0px;
-					color: white;
-					font-family: Verdana;
-				}
-			'''
-		)
-		
-		self.imageLayout.addWidget(self.userInfo)
 
-		self.infoGroup = QGroupBox()
-		self.infoGroup.setLayout(self.imageLayout)
-		self.infoGroup.setObjectName('infoGroup')
-		self.infoGroup.setStyleSheet(
-			'''
-				QGroupBox#infoGroup {
-					border: 0px;
-				}
-			'''
-		)
+class FirstRow(QPushButton):
+	def __init__(self, head, total_no, icon='resources/assets/images/icons/group.png'):
+		QPushButton.__init__(self)
 
-		self.itemLayout.addWidget(self.infoGroup, 1, 0)
+		self.hd = head
+		self.tln = total_no
+		self.icn = icon
+
+		blurradius = 160
+		offset = 17
+		color = QColor(0, 0, 0, 255 * .3)
+
+		self.shadow_effect = QGraphicsDropShadowEffect()
+		self.shadow_effect.setBlurRadius(blurradius)
+		self.shadow_effect.setOffset(offset)
+		self.shadow_effect.setColor(color)
+		self.setGraphicsEffect(self.shadow_effect)
+
+		width = 230
+		height = 70
+
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+		self.setStyleSheet(qss)
+		self.setContentsMargins(0, 0, 0, 0)
+		self.setMinimumSize(width, height)
+		self.setObjectName('firstRow')
+		self.setIcon(QIcon(self.icn))
+		self.setIconSize(QSize(50, 50))
+
+		self.assist_layout = QHBoxLayout()
+		self.assist_layout.setContentsMargins(0, 0, 0, 0)
+
+		self.firstRow = QVBoxLayout()
+		self.firstRow.setSpacing(0)
+		self.firstRow.setContentsMargins(0, 0, 0, 0)
+
+		self.head = QLabel(str(self.hd))
+		self.head.setMaximumHeight(11)
+		self.head.setObjectName("headText")
+		self.firstRow.addWidget(self.head)
+
+		self.total = QLabel(str(self.tln))
+		self.total.setMaximumHeight(20)
+		self.total.setObjectName("totalText")
+		self.firstRow.addWidget(self.total)
+
+		self.assist_layout.addLayout(self.firstRow)
+
+		self.box_icon = QLabel()
+		self.box_icon.setAlignment(Qt.AlignRight)
+		self.box_icon.setContentsMargins(0, 15, 24, 0)
+		box_icon = QPixmap(self.icn)
+		self.box_icon.setPixmap(box_icon)
+		#self.assist_layout.addWidget(self.box_icon)
+
+		self.setLayout(self.assist_layout)
+
+
+class SecondRow(QGroupBox):
+	def __init__(self, title, eventName):
+		QGroupBox.__init__(self)
+		self.eventName = eventName
+		self.title = title
+
+		blurradius = 200
+		offset = 16
+		color = QColor(0, 0, 0, 255 * .3)
+
+		self.shadow_effect = QGraphicsDropShadowEffect()
+		self.shadow_effect.setBlurRadius(blurradius)
+		self.shadow_effect.setOffset(offset)
+		self.shadow_effect.setColor(color)
+		self.setGraphicsEffect(self.shadow_effect)
+
+		width = 480
+
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+		self.setStyleSheet(qss)
+		self.setContentsMargins(0, 0, 0, 0)
+		self.setMaximumWidth(width)
+		self.setObjectName('secondRow')
+
+		self.secondRow = QVBoxLayout()
+		self.secondRow.setAlignment(Qt.AlignTop)
+		self.secondRow.setSpacing(0)
+		self.secondRow.setContentsMargins(0, 0, 0, 0)
+
+		#layout for title and add button
+		self.box_heading = QHBoxLayout()
+		self.box_heading.setSpacing(0)
+		self.box_heading.setContentsMargins(0, 0, 0, 0)
+
+		self.box_title = QLabel(self.title)
+		self.box_title.setMinimumSize(440, 35)
+		self.box_title.setObjectName('boxTitle')
+		#self.box_title.setAlignment(Qt.AlignTop)
+		self.box_heading.addWidget(self.box_title)
+
+		self.add_button = QPushButton()
+		self.add_button.setIcon(QIcon('resources/assets/images/icons/add_icon.png'))
+		self.add_button.setIconSize(QSize(20, 20))
+		self.add_button.setMinimumHeight(35)
+		#self.add_button.clicked.connect(self.addEvent)
+		self.add_button.setObjectName('addButton')
+		self.box_heading.addWidget(self.add_button)
+
+		self.secondRow.addLayout(self.box_heading)
+
+		self.eventList(self.eventName)
+
+		self.setLayout(self.secondRow)
+
+	def eventList(self, eventName):
+		# layout for lists
+		self.list_layout = QHBoxLayout()
+		self.list_layout.setSpacing(0)
+		self.list_layout.setContentsMargins(0, 0, 0, 0)
+
+		height = 30
+
+		self.event_name = QLabel(str(eventName))
+		self.event_name.setMinimumHeight(height)
+		self.event_name.setWordWrap(True)
+		self.event_name.setObjectName('event')
+		self.list_layout.addWidget(self.event_name)
+
+		self.edit_list_btn = QPushButton()
+		self.edit_list_btn.setMaximumSize(30, height)
+		self.edit_list_btn.setIcon(QIcon('resources/assets/images/icons/edit_icon.png'))
+		self.edit_list_btn.setIconSize(QSize(15, 15))
+		self.edit_list_btn.setObjectName('listBtn')
+		self.list_layout.addWidget(self.edit_list_btn)
+
+		self.delete_list_btn = QPushButton()
+		self.delete_list_btn.setMaximumSize(30, height)
+		self.delete_list_btn.setIcon(QIcon('resources/assets/images/icons/delete_icon.png'))
+		self.delete_list_btn.setIconSize(QSize(15, 15))
+		self.delete_list_btn.setObjectName('listBtn')
+		self.list_layout.addWidget(self.delete_list_btn)
+
+		self.event_scroll = QScrollArea()
+		self.event_scroll.setMaximumHeight(50)
+		self.event_scroll.setWidgetResizable(True)
+		self.event_scroll.setObjectName('eventScroll')
+		self.event_scroll.setLayout(self.list_layout)
+
+		self.secondRow.addWidget(self.event_scroll)
 
 
 class PushNotification(QSystemTrayIcon):
@@ -119,79 +223,58 @@ class PushNotification(QSystemTrayIcon):
 		self.setContextMenu(menu)
 
 
-class Notification(QWidget):
-    signNotifyClose = pyqtSignal(str)
+class PopUp(QWidget):
+	def __init__(self, title='School Manager', body='Body', buttonText='&Ok, thanks', parent=None):
+		super(QWidget, self).__init__(parent=None)
 
-    def __init__(self, parent = None):
-        time = datetime.now()
-        currentTime = str(time.hour) + ":" + str(time.minute) + "_"
-        self.LOG_TAG = currentTime + self.__class__.__name__ + ": "
-        super(QWidget, self).__init__(parent)
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+		self.setStyleSheet(qss)
 
-        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint) #убирает заголовок, поверх всех окон (| QtCore.Qt.WindowStaysOnTopHint)
-        self.resize(200, 200)
-        resolution = QDesktopWidget().availableGeometry().center()
-        qr = self.frameGeometry()
-        qr.moveCenter(resolution)
-        # screenWidth = resolution.width()
-        # screenHeight = resolution.height()
-        # print(self.LOG_TAG + "width: " + str(resolution.width()) + " height: " + str(resolution.height()))
-        self.count = 0 # Счетчик уведомлений
-        self.timer = 3
+		self.title = title
+		self.body = body
+		self.buttonText = buttonText
 
-        self.vboxMainLayout = QVBoxLayout() # layout contain notifications
-        self.move(qr.topLeft())
-        self.setLayout(self.vboxMainLayout)
+		self.windowLayout = QVBoxLayout()
 
-        self.closeButton = QPushButton('&X')
-        self.closeButton.setFixedSize(50, 50)
-        self.closeButton.clicked.connect(self.close)
-        self.vboxMainLayout.addWidget(self.closeButton, stretch=0, alignment=Qt.AlignTop|Qt.AlignRight)
+		self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
+		self.resize(300, 170)
+		self.setMaximumSize(600, 600)
+		resolution = QDesktopWidget().availableGeometry().center()
+		qr = self.frameGeometry()
+		qr.moveCenter(resolution)
+		self.move(qr.topLeft())
+		self.setLayout(self.windowLayout)
 
-    def setNotify(self, title, notify):
-        count = self.count
-        title = QLabel()
-        title.setStyleSheet("border: 1px solid #000")
-        title.setText(title)
-        title.setStyleSheet("font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: bold; padding: 0;")
+		self.initialization()
 
-        text = QLabel()
-        text.setText(notify)
-        text.setStyleSheet("font-family: 'Roboto', sans-serif; font-size: 12px; font-weight: normal; padding: 0;")
+	def initialization(self):
+		self.titleLabel = QLabel(self.title)
+		self.titleLabel.setAlignment(Qt.AlignCenter)
+		self.titleLabel.setStyleSheet(
+			'''
+				QLabel {
+					padding: 5px;
+					border: 0px;
+					border-bottom: 1px solid grey;
+				}
+			'''
+		)
+		self.titleLabel.setFixedSize(200, 40)
+		self.windowLayout.addWidget(self.titleLabel, stretch=0, alignment=Qt.AlignCenter)
 
-        gridNotify = QGridLayout()
-        gridNotify.addWidget(title, 0, 0)
-        gridNotify.addWidget(text, 1, 0)
+		self.bodyLabel = QLabel(self.body)
+		self.bodyLabel.setObjectName('bodyLabel')
+		self.bodyLabel.setAlignment(Qt.AlignCenter)
+		self.bodyLabel.setWordWrap(True)
+		self.bodyLabel.setMaximumSize(500, 500)
+		self.windowLayout.addWidget(self.bodyLabel, stretch=0, alignment=Qt.AlignCenter)
 
-        buttonClose = QPushButton()
-        buttonClose.clicked.connect(self.deleteWidgets)
-        buttonClose.setIcon(QIcon("resources/assests/images/delete.png"))
-        buttonClose.setFlat(False)
-        buttonClose.setMaximumWidth(14)
-        buttonClose.setMaximumHeight(14)
+		self.spacerLabel = QLabel()
+		self.spacerLabel.setFixedWidth(30)
+		self.windowLayout.addWidget(self.spacerLabel, stretch=0, alignment=Qt.AlignCenter)
 
-        gridClose = QGridLayout()
-        gridClose.addWidget(buttonClose, 0, 0)
-
-        gridLayoutMain = QGridLayout()
-        gridLayoutMain.setColumnStretch(0,1)
-        gridLayoutMain.setColumnStretch(0,2)
-        gridLayoutMain.setColumnStretch(0,3)
-        gridLayoutMain.addLayout(gridClose, 0, 4)
-        gridLayoutMain.addLayout(gridNotify, 0, 0)
-
-        self.count += 1
-
-        self.vboxMainLayout.addLayout(gridLayoutMain)
-        self.show()
-        threading.Timer(2, self.delete, args=(gridLayoutMain,)).start()
-
-    def delete(self, layout):
-        for i in reversed(range(layout.count())):
-            item = layout.takeAt(i)
-            widget = item.widget()
-            if widget is not None:
-                widget.deleteLater()
-            elif item.layout() is not None:
-                print("")
-                self.delete(item.layout())
+		self.closeButton = QPushButton(self.buttonText)
+		self.closeButton.setObjectName('login')
+		self.closeButton.setFixedSize(150, 30)
+		self.closeButton.clicked.connect(self.close)
+		self.windowLayout.addWidget(self.closeButton, stretch=0, alignment=Qt.AlignHCenter | Qt.AlignBottom)

@@ -1,9 +1,10 @@
 # Window settings
 
-windowWidth = 950
-navBarWidth = 0.25
-pageWidth = 1 - navBarWidth
-
+windowWidth = 1500
+navBarHeight = 45
+sideBarWidth = 0.2
+pageWidth = 1 - sideBarWidth
+sideBarButtonRatio = 0.7
 
 pageFinders = {
 	'page':[],
@@ -11,11 +12,11 @@ pageFinders = {
 }
 
 
-def getNavBarWidth(windowWidth=pageWidth):
-	return windowWidth * navBarWidth
+def getSideBarWidth(windowWidth):
+	return windowWidth * sideBarWidth
 
 
-def getPageWidth(windowWidth=windowWidth):
+def getPageWidth(windowWidth):
 	return windowWidth * pageWidth
 
 
