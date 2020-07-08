@@ -89,19 +89,20 @@ class Home(QGroupBox):
 		
 		# SideBar
 
-		self.sideBarWidget = customWidgets.SideBar()
-		
-		self.sideBarTitle = customWidgets.SideBarTitle('School Management System')
-		self.sideBarWidget.sideBarLayout.addWidget(self.sideBarTitle)
+		self.sideBarLayout = QVBoxLayout()
+		self.sideBarLayout.setContentsMargins(0, 0, 0, 0)
+		self.sideBarLayout.setSpacing(0)
+		self.sideBarLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
+		self.sideBarButtonRatio = pageConfigurations.sideBarButtonRatio
 
-		spacer = QLabel()
-		spacer.setFixedHeight(30)
+		self.title = 'smsUI'
+		self.sideBarTitle = customWidgets.SideBarTitle(text=self.title)
+		self.sideBarTitle.setMaximumWidth(self.sideBarWidth)
+		self.sideBarLayout.addWidget(self.sideBarTitle)
 
-		self.sideBarWidget.sideBarLayout.addWidget(spacer)
-
-		# Sidebar eneded
-		############################
-		# Student section started
+		spacer1 = QLabel()
+		spacer1.setFixedHeight(60)
+		self.sideBarLayout.addWidget(spacer1)
 
 		self.dashBoard = customWidgets.SideBarButton(title='DashBoard', image='resources/assets/images/icons/dashboard_icn.png')
 		self.sideBarLayout.addWidget(self.dashBoard)
