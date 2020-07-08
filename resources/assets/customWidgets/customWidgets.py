@@ -86,23 +86,23 @@ class SideBarUser(QGroupBox):
 
 
 class SideBarSection(QGroupBox):
-	def __init__(self, title='Menu'):
+	def __init__(self, title='Menu', width=100):
 		QGroupBox.__init__(self)
 
 		self.groupLayout = QVBoxLayout()
 		self.groupLayout.setAlignment(Qt.AlignLeft)
-		self.groupLayout.setSpacing(0)
+		self.groupLayout.setSpacing(10)
 
-		widgetWidthRatio = pageConfigurations.sideBarWidgetWidthRatio
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
-
 		self.setStyleSheet(qss)
+		self.setFixedWidth(width * 0.85)
 		self.setObjectName('sideBarSection')
 		self.setLayout(self.groupLayout)
+
 		self.titleLabel = QLabel(f'{title}')
 		self.titleLabel.setAlignment(Qt.AlignLeft)
 		self.titleLabel.setObjectName('sideBarSectionTitle')
-		self.titleLabel.setFixedSize(self.width() * widgetWidthRatio, 30)
+		self.titleLabel.setFixedSize(width * 0.85, 30)
 		self.groupLayout.addWidget(self.titleLabel, stretch=0, alignment=Qt.AlignLeft)
 
 		self.initialization()
