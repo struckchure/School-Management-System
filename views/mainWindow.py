@@ -137,10 +137,6 @@ class Home(QGroupBox):
 
 		self.sideBarLayout.addWidget(self.teacherSection)
 
-		# Teacher section ended
-
-		self.mainPageLayout.addWidget(self.sideBarWidget)
-
 	def rightPage(self):
 		self.rightPageStackedWidget = QStackedWidget()
 
