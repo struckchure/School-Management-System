@@ -121,11 +121,9 @@ class SideBarButton(QPushButton):
 	def __init__(self, title, image='resources/assets/images/icons/039-physics.png'):
 		QPushButton.__init__(self, QIcon(image), title)
 
-		buttonWidth = pageConfigurations.sideBarSize[0] * pageConfigurations.sideBarWidgetWidthRatio
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
-
 		self.setStyleSheet(qss)
-		self.setFixedSize(buttonWidth, 40)
+		self.setFixedHeight(40)
 		self.setObjectName('sideBarButton')
 
 
