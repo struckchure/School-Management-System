@@ -49,22 +49,23 @@ class SideBarTitle(QLabel):
 
 		self.setStyleSheet(qss)
 		self.setWordWrap(True)
+		self.setMaximumSize(200, 50)
 		self.setText(self.text)
 		self.setAlignment(Qt.AlignCenter)
 		self.setObjectName('sideBarTitle')
 
 
 class SideBarSection(QGroupBox):
-	def __init__(self, title='Menu', width=100):
+	def __init__(self, title='Menu', width=pageConfigurations.sideBarSectionWidth):
 		QGroupBox.__init__(self)
 
 		self.groupLayout = QVBoxLayout()
 		self.groupLayout.setAlignment(Qt.AlignLeft)
-		self.groupLayout.setSpacing(10)
+		self.groupLayout.setSpacing(5)
 
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
 		self.setStyleSheet(qss)
-		self.setFixedWidth(width * 0.85)
+		self.setFixedWidth(width)
 		self.setObjectName('sideBarSection')
 		self.setLayout(self.groupLayout)
 
@@ -81,6 +82,7 @@ class SideBarSection(QGroupBox):
 		self.widgetLayout.setAlignment(Qt.AlignLeft)
 
 		self.widgetGroup = QGroupBox()
+		self.widgetGroup.setFixedWidth(200)
 		self.widgetGroup.setLayout(self.widgetLayout)
 		self.widgetGroup.setObjectName('widgetGroup')
 		self.groupLayout.addWidget(self.widgetGroup, stretch=0, alignment=Qt.AlignTop | Qt.AlignLeft)
@@ -90,14 +92,10 @@ class SideBarButton(QPushButton):
 	def __init__(self, title, image='resources/assets/images/icons/039-physics.png'):
 		QPushButton.__init__(self, QIcon(image), title)
 
-		# self.buttonText = title
-		# self.buttonImage = QIcon(image)
-
+		ratio = 0.6
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
 		self.setStyleSheet(qss)
-		self.setFixedHeight(40)
-		# self.setText(self.buttonText)
-		# self.setIcon(self.buttonIcon)
+		self.setFixedSize(pageConfigurations.sideBarSize[0] * ratio, 40)
 		self.setObjectName('sideBarButton')
 
 
@@ -110,7 +108,7 @@ class SideBar(QScrollArea):
 
 		self.sideBarGroup = QGroupBox()
 		self.sideBarGroup.setObjectName('sideBarGroup')
-		self.sideBarGroup.setMinimumHeight(400)
+		self.sideBarGroup.setMinimumSize(230, 400)
 		self.sideBarGroup.setLayout(self.sideBarLayout)
 		
 		sideBarSize = pageConfigurations.sideBarSize

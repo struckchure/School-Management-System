@@ -15,7 +15,7 @@ navBarHeight = 40
 sideBarWidth = 0.7
 pageWidth = 1 - sideBarWidth
 sideBarSectionWidth = sideBarWidth * windowWidth
-sideBarWidgetWidthRatio = 0.7
+sideBarWidgetWidthRatio = 0.71
 sideBarButtonRatio = sideBarWidgetWidthRatio
 sideBarSize = [230, 900]
 
