@@ -355,6 +355,7 @@ QLabel#dashValue {
 
 
 QLabel#pageCrumb {
-	border: 1px solid black;
-	color: black;
+	font-family: Arial;
+	font-size: 30px;
+	color: #0d0d0d;
 }
