@@ -279,7 +279,7 @@ class FirstRow(QPushButton):
 		self.tln = total_no
 		self.icn = icon
 
-		blurradius = 160
+		blurradius = 30
 		offset = 0.1
 		color = QColor(0, 0, 0, 255 * .3)
 
@@ -335,7 +335,7 @@ class SecondRow(QGroupBox):
 		self.eventName = eventName
 		self.title = title
 
-		blurradius = 200
+		blurradius = 30
 		offset = 0.1
 		color = QColor(0, 0, 0, 255 * .3)
 
@@ -358,24 +358,24 @@ class SecondRow(QGroupBox):
 		self.secondRow.setSpacing(0)
 		self.secondRow.setContentsMargins(0, 0, 0, 0)
 
-		#layout for title and add button
+		# Layout for title and add button
+
 		self.box_heading = QHBoxLayout()
 		self.box_heading.setSpacing(0)
 		self.box_heading.setContentsMargins(0, 0, 0, 0)
 
 		self.box_title = QLabel(self.title)
-		self.box_title.setMinimumSize(440, 35)
+		self.box_title.setFixedSize(self.width(), 35)
 		self.box_title.setObjectName('boxTitle')
-		#self.box_title.setAlignment(Qt.AlignTop)
-		self.box_heading.addWidget(self.box_title)
+		self.box_heading.addWidget(self.box_title, stretch=0, alignment=Qt.AlignLeft)
 
 		self.add_button = QPushButton()
 		self.add_button.setIcon(QIcon('resources/assets/images/icons/add_icon.png'))
 		self.add_button.setIconSize(QSize(20, 20))
-		self.add_button.setMinimumHeight(35)
+		self.add_button.setFixedSize(30, 35)
 		#self.add_button.clicked.connect(self.addEvent)
 		self.add_button.setObjectName('addButton')
-		self.box_heading.addWidget(self.add_button)
+		self.box_heading.addWidget(self.add_button, stretch=0, alignment=Qt.AlignRight)
 
 		self.secondRow.addLayout(self.box_heading)
 
@@ -384,7 +384,8 @@ class SecondRow(QGroupBox):
 		self.setLayout(self.secondRow)
 
 	def eventList(self, eventName):
-		# layout for lists
+		# Layout for lists
+
 		self.list_layout = QHBoxLayout()
 		self.list_layout.setSpacing(0)
 		self.list_layout.setContentsMargins(0, 0, 0, 0)
@@ -398,14 +399,14 @@ class SecondRow(QGroupBox):
 		self.list_layout.addWidget(self.event_name)
 
 		self.edit_list_btn = QPushButton()
-		self.edit_list_btn.setMaximumSize(30, height)
+		self.edit_list_btn.setFixedSize(25, height)
 		self.edit_list_btn.setIcon(QIcon('resources/assets/images/icons/edit_icon.png'))
 		self.edit_list_btn.setIconSize(QSize(15, 15))
 		self.edit_list_btn.setObjectName('listBtn')
 		self.list_layout.addWidget(self.edit_list_btn)
 
 		self.delete_list_btn = QPushButton()
-		self.delete_list_btn.setMaximumSize(30, height)
+		self.delete_list_btn.setFixedSize(25, height)
 		self.delete_list_btn.setIcon(QIcon('resources/assets/images/icons/delete_icon.png'))
 		self.delete_list_btn.setIconSize(QSize(15, 15))
 		self.delete_list_btn.setObjectName('listBtn')

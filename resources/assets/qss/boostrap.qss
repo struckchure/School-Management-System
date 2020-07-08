@@ -359,3 +359,74 @@ QLabel#pageCrumb {
 	font-size: 30px;
 	color: #0d0d0d;
 }
+
+QPushButton#firstRow {
+	border:0px;
+	border-bottom:3px solid #3E63CC;
+	background-color:white;
+	text-align:right;
+	padding-right:15px;
+}
+
+QGroupBox#secondRow {
+	border:0px;
+}
+
+QLabel#headText {
+	color:#3E63CC;
+	font-size:10px;
+	font-weight:bold;
+}
+
+QLabel#totalText {
+	color:black;
+	font-size:20px;
+}
+
+QLabel#boxTitle {
+ 	color: #3E63CC;
+	font-size:12px;
+	font-weight: bold;
+	padding-left:10px;
+	background-color:#d9d9d9;
+}
+
+QPushButton#addButton {
+	border:0px;
+	background-color:#d9d9d9;
+	margin:0px;
+}
+QPushButton#addButton:hover {
+	border:1px solid #3E63CC;
+}
+
+QLabel#event {
+	color:#1a1a1a;
+	font-size:12px;
+	font-weight: bold;
+	padding-left:10px;
+	border-bottom:1px solid #404040;
+	background-color:white;
+}
+QLabel#event2 {
+	color:#1a1a1a;
+	font-size:12px;
+	font-weight: bold;
+	background-color:white;
+	padding-left:20px;
+	border-bottom:1px solid #404040;
+}
+
+QPushButton#listBtn {
+	border:0px;
+	background-color:white;
+}
+
+QPushButton#listBtn:hover {
+	border:1px solid #3E63CC;
+}
+
+QScrollArea#eventScroll {
+	border:0px;
+	background-color:white;
+}

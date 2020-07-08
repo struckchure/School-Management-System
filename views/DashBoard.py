@@ -50,4 +50,26 @@ class DashBoard(QGroupBox):
 		self.initalization()
 
 	def initalization(self):
-		pass
+		self.pageContentsLayout = QHBoxLayout()
+		self.pageContentsLayout.setAlignment(Qt.AlignLeft)
+		self.pageContentsLayout.setContentsMargins(0, 40, 0, 0)
+
+		self.upcomingEvents = customWidgets.SecondRow(title="Upcoming Events", eventName="Inter house Sport Inter house Sport Inter house Sport Inter house Sport")
+
+		self.eventDate = QLabel("12 November")
+		self.eventDate.setMinimumSize(120, 35)
+		self.eventDate.setObjectName('event2')
+		self.upcomingEvents.list_layout.addWidget(self.eventDate)
+
+		editButton = self.upcomingEvents.edit_list_btn
+		deleteButton = self.upcomingEvents.delete_list_btn
+		
+		self.upcomingEvents.list_layout.addWidget(editButton)
+		self.upcomingEvents.list_layout.addWidget(deleteButton)
+
+		self.notice_board = customWidgets.SecondRow(title="Notice Board", eventName="WAEC/NECO Exam")
+
+		self.pageContentsLayout.addWidget(self.upcomingEvents)
+		self.pageContentsLayout.addWidget(self.notice_board)
+
+		self.groupLayout.addLayout(self.pageContentsLayout, 2, 0, 1, 4)
