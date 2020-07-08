@@ -1,0 +1,346 @@
+QLineEdit {
+	border-radius: 0px;
+	padding: 7px;
+	font-family: Verdana;
+	font-size: 13px;
+	text-align: left
+}
+
+QLineEdit:focus {
+	border: 2px solid #68B0B3;
+}
+
+QLineEdit#searchQLineEdit {
+	padding: 2px;
+	font-family: Verdana;
+	font-size: 13px;
+	text-align: left;
+	border: 1px solid #68B0B3;
+}
+
+QLineEdit#searchQLineEdit:focus {
+	border: 2px solid #68B0B3;
+}
+
+
+QPushButton#login {
+	border-radius: 0px;
+	padding: 5px;
+	font-family: Verdana;
+	font-size: 13px;
+	text-align: center;
+	color: white;
+	background-color: #3E63CC;
+}
+
+
+QPushButton#login:pressed {
+	border: 2px solid #68B0B3;
+}
+
+
+QPushButton#login:not(focus) {
+	border: 0px;
+}
+
+QToolButton#Button-no-border {
+	border-radius: 0px;
+	padding: 5px;
+	font-family: Verdana;
+	font-size: 13px;
+	text-align: center;
+	color: white;
+	background-color: #3E63CC;
+}
+
+
+QToolButton#Button-no-border:pressed {
+	border: 2px solid #68B0B3;
+}
+
+
+QToolButton#Button-no-border:not(focus) {
+	border: 0px;
+}
+
+
+QPushButton#forgotPassword {
+	border-radius: 0px;
+	padding: 5px;
+	font-family: Verdana;
+	font-size: 13px;
+	text-align: center;
+	color: #8D63E5;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+QPushButton#forgotPassword:hover {
+	color: #143D70;
+}
+
+QPushButton#forgotPassword:focus {
+	color: #143D88;
+}
+
+
+QLabel#pageTitle {
+	font-family: Verdana;
+	font-size: 25px;
+	color: black;
+}
+
+QLabel#pageTitle-sm {
+	font-family: Verdana;
+	font-size: 15px;
+	font-weight: bold;
+	color: black;
+}
+
+QLabel#sideBarTitle {
+	font-family: Verdana;
+	font-size: 15px;
+	padding: 5px;
+	font-weight: bold;
+	color: white;
+}
+
+QLabel#userInfo {
+	border: 0px;
+	color: white;
+	font-family: Verdana;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+QGroupBox#sideBarSection {
+	font-family: Verdana;
+	border: 0px;
+}
+
+QPushButton#sideBarButton {
+	background-color: rgba(0, 0, 0, 0);
+	color: white;
+	font-family: Verdana;
+	font-size: 12px;
+	text-align: left;
+	border-radius: 10px;
+	border: 0px;
+}
+
+QPushButton#sideBarButton:hover {
+	border-top:1px solid #7FB7EB;
+	border-bottom: 1px solid #7FB7EB;
+	font-weight: bold;
+}
+
+QPushButton#sideBarButton:pressed {
+	background-color: #ECC4C4;
+}
+
+QPushButton#sideBarButton:not(focus) {
+	border: 0px;
+}
+
+QGroupBox#widgetGroup {
+	padding: 0px;
+	padding-left: 10px;
+	border: 0px;
+}
+
+QLabel#sideBarSectionTitle {
+	font-family: Verdana;
+	font-size: 15px;
+	color: #CAF1EE;
+	border: 0px;
+	padding: 0px;
+	padding-top: 2px;
+	border-top: 1px solid #CAF1EE;
+}
+
+QLabel#signUpLabel {
+	font-family: Verdana;
+	font-size: 13px;
+	color: #D2A5A5;
+}
+
+
+QPushButton#signUpButton {
+	border-radius: 0px;
+	padding: 5px;
+	font-family: Verdana;
+	font-size: 13px;
+	text-align: center;
+	color: #8D63E5;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+QPushButton#signUpButton:hover {
+	color: #143D70;
+}
+
+QPushButton#signUpButton:focus {
+	color: #143D88;
+}
+
+
+QToolButton#toolButton {
+	border-radius: 10px;
+	padding: 0px;
+	font-family: Verdana;
+	font-size: 13px;
+	text-align: center;
+	color: white;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+QToolButton#toolButton:hover {
+	background-color: #CBEDEB;
+}
+
+QToolButton#toolButton:pressed {
+	border: 2px solid #68B0B3;
+}
+
+
+QGroupBox#home {
+	border: 0px;
+	/* background-image: url(resources/assets/images/home_bg_color_particles.jpg); */
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+QGroupBox#navBar {
+	border: 0px;
+	background-color: white;
+	padding: 0px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+
+QGroupBox#mainPageGroup {
+	border: 0px;
+	padding: 0px;
+	background-color:white;
+}
+
+QGroupBox#sideBarUser {
+	border: 0px;
+	padding: 5px;
+	border-top: 1px solid white;
+	border-bottom: 1px solid white;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+QGroupBox#sideBarGroup {
+	border: 0px;
+	/* border-bottom-left-radius: 20px; */
+	/* border-top-left-radius: 20px; */
+	background-color: #3E63CC;
+}
+
+
+QScrollArea#sideBarScroll {
+	border: 0px;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+
+QGroupBox#pageGroup {
+	border: 0px;
+	/* border-bottom-right-radius: 20px; */
+	/* border-top-right-radius: 20px; */
+	background-color: white;
+}
+
+
+QScrollArea#pageScroll {
+	border: 0px;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+
+QGroupBox#NavBarUser {
+	border: 0px;
+	border-bottom: 1px solid grey;
+	padding-top: 20px;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+QLabel#dashboardTitle {
+	font-family:Arial;
+	font-size:20px;
+	color:#0d0d0d;
+}
+
+/* Solo */
+
+QPushButton#firstRow {
+ border:0px;
+ border-bottom:3px solid #3E63CC;
+ background-color:white;
+ text-align:right;
+ padding-right:15px;
+}
+
+QGroupBox#secondRow {
+ border:0px;
+}
+
+QLabel#headText {
+ color:#3E63CC;
+ font-size:10px;
+ font-weight:bold;
+}
+
+QLabel#totalText {
+ color:black;
+ font-size:20px;
+}
+
+QLabel#boxTitle {
+ color: #3E63CC;
+ font-size:12px;
+ font-weight: bold;
+ padding-left:10px;
+ background-color:#d9d9d9;
+}
+
+QPushButton#addButton {
+ border:0px;
+ background-color:#d9d9d9;
+ margin:0px;
+}
+QPushButton#addButton:hover {
+ border:1px solid #3E63CC;
+}
+
+QLabel#event {
+ color:#1a1a1a;
+ font-size:12px;
+ font-weight: bold;
+ padding-left:10px;
+ border-bottom:1px solid #404040;
+ background-color:white;
+}
+QLabel#event2 {
+ color:#1a1a1a;
+ font-size:12px;
+ font-weight: bold;
+ background-color:white;
+ padding-left:20px;
+ border-bottom:1px solid #404040;
+}
+
+QPushButton#listBtn {
+ border:0px;
+ background-color:white;
+}
+
+QPushButton#listBtn:hover {
+ border:1px solid #3E63CC;
+}
+
+QScrollArea#eventScroll {
+ border:0px;
+ background-color:white;
+}
