@@ -103,23 +103,38 @@ class Home(QGroupBox):
 		############################
 		# Student section started
 
-		self.studentSection = customWidgets.SideBarSection('Students')
-		self.studentSection.setFixedWidth(self.sideBarWidget.width())
-		self.sideBarWidget.sideBarLayout.addWidget(self.studentSection)
+		self.dashBoard = customWidgets.SideBarButton(title='DashBoard', image='resources/assets/images/icons/dashboard_icn.png')
+		self.sideBarLayout.addWidget(self.dashBoard)
 
-		self.newStudentButton = customWidgets.SideBarButton('Admission')
-		self.studentSection.widgetLayout.addWidget(self.newStudentButton)
-		
-		# Student section ended
-		#############################
-		# Teacher section started
+		self.studentSection = customWidgets.SideBarSection(title='Student', width=self.sideBarWidth)
+		self.admissionButton = customWidgets.SideBarButton(title='Admission', image='resources/assets/images/icons/admission.png')
+		self.admissionButton.setFixedWidth(int(self.sideBarWidth * self.sideBarButtonRatio))
+		self.studentSection.widgetLayout.addWidget(self.admissionButton)
 
-		self.teacherSection = customWidgets.SideBarSection('Teachers')
-		self.teacherSection.setFixedWidth(self.sideBarWidget.width())
-		self.sideBarWidget.sideBarLayout.addWidget(self.teacherSection)
+		self.studentPromotionButton = customWidgets.SideBarButton(title='Promotion', image='resources/assets/images/icons/promotion.png')
+		self.studentPromotionButton.setFixedWidth(int(self.sideBarWidth * self.sideBarButtonRatio))
+		self.studentSection.widgetLayout.addWidget(self.studentPromotionButton)
 
-		self.newTeacherButton = customWidgets.SideBarButton('New Teacher')
-		self.teacherSection.widgetLayout.addWidget(self.newTeacherButton)
+		self.allStudentsButton = customWidgets.SideBarButton(title='All Students', image='resources/assets/images/icons/all.png')
+		self.allStudentsButton.setFixedWidth(int(self.sideBarWidth * self.sideBarButtonRatio))
+		self.studentSection.widgetLayout.addWidget(self.allStudentsButton)
+
+		self.sideBarLayout.addWidget(self.studentSection)
+
+		self.teacherSection = customWidgets.SideBarSection(title='Teacher', width=self.sideBarWidth)
+		self.addTeacherButton = customWidgets.SideBarButton(title='New Teacher', image='resources/assets/images/icons/new_teacher.png')
+		self.addTeacherButton.setFixedWidth(int(self.sideBarWidth * self.sideBarButtonRatio))
+		self.teacherSection.widgetLayout.addWidget(self.addTeacherButton)
+
+		self.teacherPromotionButton = customWidgets.SideBarButton(title='Promotion', image='resources/assets/images/icons/promotion.png')
+		self.teacherPromotionButton.setFixedWidth(int(self.sideBarWidth * self.sideBarButtonRatio))
+		self.teacherSection.widgetLayout.addWidget(self.teacherPromotionButton)
+
+		self.allTeachersButton = customWidgets.SideBarButton(title='All Teachers', image='resources/assets/images/icons/all.png')
+		self.allTeachersButton.setFixedWidth(int(self.sideBarWidth * self.sideBarButtonRatio))
+		self.teacherSection.widgetLayout.addWidget(self.allTeachersButton)
+
+		self.sideBarLayout.addWidget(self.teacherSection)
 
 		# Teacher section ended
 
