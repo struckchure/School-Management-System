@@ -92,10 +92,10 @@ class SideBarButton(QPushButton):
 	def __init__(self, title, image='resources/assets/images/icons/039-physics.png'):
 		QPushButton.__init__(self, QIcon(image), title)
 
-		ratio = 0.6
+		ratio = 0.7
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
 		self.setStyleSheet(qss)
-		self.setFixedSize(pageConfigurations.sideBarSize[0] * ratio, 40)
+		self.setFixedSize(pageConfigurations.sideBarSize[0] * ratio, pageConfigurations.sideBarButtonHeight)
 		self.setObjectName('sideBarButton')
 
 
@@ -161,7 +161,7 @@ class DashButton(QPushButton, QHBoxLayout):
 		self.setGraphicsEffect(self.groupGraphicsEffect)
 		self.setObjectName('dashButton')
 		self.setIconSize(QSize(iconWidth, iconHeight))
-		self.setMinimumSize(230, 80)
+		self.setMinimumSize(230, 65)
 		self.setMaximumSize(250, 100)
 
 		self.initialization()

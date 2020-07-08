@@ -14,10 +14,12 @@ navBarHeight = 40
 
 sideBarWidth = 0.7
 pageWidth = 1 - sideBarWidth
-sideBarSectionWidth = sideBarWidth * windowWidth
+sideBarButtonHeight = 35
+sideBarSectionWidth = 0.6 * windowWidth
 sideBarWidgetWidthRatio = 0.71
 sideBarButtonRatio = sideBarWidgetWidthRatio
 sideBarSize = [230, 900]
+
 
 def getSideBarWidth(windowWidth):
 	return windowWidth * sideBarWidth

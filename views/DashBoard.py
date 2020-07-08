@@ -25,14 +25,18 @@ class DashBoard(QGroupBox):
 
 		self.groupLayout = QGridLayout()
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
-		self.groupLayout.setAlignment(Qt.AlignTop)
+		self.groupLayout.setAlignment(Qt.AlignTop | Qt.AlignCenter)
 		self.groupLayout.setSpacing(20)
 		
-		self.studentButton = customWidgets.DashButton('Students', 100, buttonIcon='resources/assets/images/icons/event_black.png')
-		self.teacherButton = customWidgets.DashButton('Teachers', 15, buttonIcon='resources/assets/images/icons/local_library_black.png', borderColor='green')
+		self.studentButton = customWidgets.DashButton('Students', 100, buttonIcon='resources/assets/images/icons/group.png')
+		self.teacherButton = customWidgets.DashButton('Teachers', 15, buttonIcon='resources/assets/images/icons/group2.png', borderColor='green')
+		self.groupButton = customWidgets.DashButton('Groups', 10, buttonIcon='resources/assets/images/icons/group3.png', borderColor='green')
+		self.clubsButton = customWidgets.DashButton('Clubs', 20, buttonIcon='resources/assets/images/icons/group4.png', borderColor='green')
 
 		self.groupLayout.addWidget(self.studentButton, 0, 0)
 		self.groupLayout.addWidget(self.teacherButton, 0, 1)
+		self.groupLayout.addWidget(self.groupButton, 0, 2)
+		self.groupLayout.addWidget(self.clubsButton, 0, 3)
 
 		qss = open('resources/assets/qss/boostrap.qss').read()
 
