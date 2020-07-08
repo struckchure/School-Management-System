@@ -233,7 +233,7 @@ class Register(QGroupBox):
 
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
 
-		self.setStyelSheet(qss)
+		self.setStyleSheet(qss)
 		self.setLayout(self.groupLayout)
 		self.setObjectName('login')
 

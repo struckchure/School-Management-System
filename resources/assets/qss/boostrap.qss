@@ -4,7 +4,8 @@ QGroupBox#mainPageGroup {
 
 QScrollArea#mainPageScroll {
 	border: 0px;
-	background-color: rgba(0, 0, 0, 0);
+	background-color: rgba(0, 0, 0, 0); 
+	
 }
 
 QGroupBox#login {
@@ -16,9 +17,9 @@ QGroupBox#login {
 
 QGroupBox#rightPageGroup {
 	border: 0px;
-	background-color: #DEF3F1;
-	/* border-bottom-right-radius: 20px; */
-	/* border-top-right-radius: 20px; */
+	background-color: rgba(0, 0, 0, 0.35);
+	border-bottom-left-radius: 40;
+	border-top-right-radius: 40px;
 }
 				
 QGroupBox#leftPageGroup {
@@ -116,7 +117,8 @@ QPushButton#forgotPassword:focus {
 QLabel#pageTitle {
 	font-family: Verdana;
 	font-size: 25px;
-	color: black;
+	font-weight: bold;
+	color: white;
 }
 
 QLabel#pageTitle-sm {
