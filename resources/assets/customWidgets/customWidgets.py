@@ -41,18 +41,21 @@ class NavBar(QGroupBox):
 
 class SideBarTitle(QLabel):
 	def __init__(self, text):
-		QLabel.__init__(self, text)
+		QLabel.__init__(self)
+
+		self.text = text
 
 		qss = open('resources/assets/qss/boostrap.qss').read()
 
 		self.setStyleSheet(qss)
 		self.setWordWrap(True)
+		self.setText(self.text)
 		self.setAlignment(Qt.AlignCenter)
 		self.setObjectName('sideBarTitle')
 
 
 class SideBarSection(QGroupBox):
-	def __init__(self, title='Menu', width=pageConfigurations.sideBarSectionWidth):
+	def __init__(self, title='Menu', width=100):
 		QGroupBox.__init__(self)
 
 		self.groupLayout = QVBoxLayout()
@@ -61,7 +64,7 @@ class SideBarSection(QGroupBox):
 
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
 		self.setStyleSheet(qss)
-		self.setFixedWidth(100 * 0.85)
+		self.setFixedWidth(width * 0.85)
 		self.setObjectName('sideBarSection')
 		self.setLayout(self.groupLayout)
 
@@ -87,9 +90,14 @@ class SideBarButton(QPushButton):
 	def __init__(self, title, image='resources/assets/images/icons/039-physics.png'):
 		QPushButton.__init__(self, QIcon(image), title)
 
+		# self.buttonText = title
+		# self.buttonImage = QIcon(image)
+
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
 		self.setStyleSheet(qss)
 		self.setFixedHeight(40)
+		# self.setText(self.buttonText)
+		# self.setIcon(self.buttonIcon)
 		self.setObjectName('sideBarButton')
 
 
