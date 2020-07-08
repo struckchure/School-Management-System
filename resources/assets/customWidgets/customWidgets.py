@@ -51,42 +51,8 @@ class SideBarTitle(QLabel):
 		self.setObjectName('sideBarTitle')
 
 
-class SideBarUser(QGroupBox):
-	def __init__(self, imagePath='resources/assets/images/icons/039-physics.png', user='John Doe'):
-		QGroupBox.__init__(self)
-
-		self.imagePath = imagePath
-		self.user = user
-
-		self.itemLayout = QVBoxLayout()
-		self.itemLayout.setContentsMargins(0, 0, 0, 0)
-		self.itemLayout.setAlignment(Qt.AlignCenter)
-
-		qss = open('resources/assets/qss/boostrap.qss').read()
-
-		self.setStyleSheet(qss)
-		self.setLayout(self.itemLayout)
-		self.setObjectName('sideBarUser')
-
-		self.initialization()
-
-	def initialization(self):
-		self.userInfoSet()
-
-	def userInfoSet(self):
-		self.infoLayout = QVBoxLayout()
-		self.infoLayout.setAlignment(Qt.AlignCenter)
-
-		self.userInfo = QLabel(self.user.get_full_name())
-		self.userInfo.setAlignment(Qt.AlignLeft)
-		self.userInfo.setObjectName('userInfo')
-		self.userInfo.setMaximumSize(200, 50)
-		
-		self.itemLayout.addWidget(self.userInfo, stretch=0, alignment=Qt.AlignCenter)
-
-
 class SideBarSection(QGroupBox):
-	def __init__(self, title='Menu', width=100):
+	def __init__(self, title='Menu', width=pageConfigurations.sideBarSectionWidth):
 		QGroupBox.__init__(self)
 
 		self.groupLayout = QVBoxLayout()
@@ -95,7 +61,7 @@ class SideBarSection(QGroupBox):
 
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
 		self.setStyleSheet(qss)
-		self.setFixedWidth(width * 0.85)
+		self.setFixedWidth(100 * 0.85)
 		self.setObjectName('sideBarSection')
 		self.setLayout(self.groupLayout)
 

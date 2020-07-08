@@ -89,12 +89,11 @@ class Home(QGroupBox):
 		
 		# SideBar
 
-		self.sideBarLayout = QVBoxLayout()
-		self.sideBarLayout.setContentsMargins(0, 0, 0, 0)
-		self.sideBarLayout.setSpacing(0)
-		self.sideBarLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
-		self.sideBarButtonRatio = pageConfigurations.sideBarButtonRatio
+		self.sideBarScroll = customWidgets.SideBar()
 
+		self.sideBarLayout = self.sideBarScroll.sideBarLayout
+		self.sideBarButtonRatio = pageConfigurations.sideBarButtonRatio
+		
 		self.title = 'smsUI'
 		self.sideBarTitle = customWidgets.SideBarTitle(text=self.title)
 		self.sideBarTitle.setMaximumWidth(self.sideBarWidth)
@@ -136,6 +135,8 @@ class Home(QGroupBox):
 		self.teacherSection.widgetLayout.addWidget(self.allTeachersButton)
 
 		self.sideBarLayout.addWidget(self.teacherSection)
+
+		self.mainPageLayout.addWidget(self.sideBarScroll)
 
 	def rightPage(self):
 		self.rightPageStackedWidget = QStackedWidget()
