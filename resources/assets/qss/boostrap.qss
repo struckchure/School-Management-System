@@ -267,9 +267,9 @@ QGroupBox#NavBarUser {
 }
 
 QLabel#dashboardTitle {
- font-family:Arial;
- font-size:20px;
- color:#0d0d0d;
+	font-family:Arial;
+	font-size:20px;
+	color:#0d0d0d;
 }
 
 QPushButton#firstRow {
