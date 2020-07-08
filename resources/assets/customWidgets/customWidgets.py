@@ -257,3 +257,15 @@ class PopUp(QWidget):
 		self.closeButton.setFixedSize(150, 30)
 		self.closeButton.clicked.connect(self.close)
 		self.windowLayout.addWidget(self.closeButton, stretch=0, alignment=Qt.AlignHCenter | Qt.AlignBottom)
+
+
+class PageCrumb(QLabel):
+	def __init__(self, title=''):
+		super(PageCrumb, self).__init__(title)
+
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+		
+		self.setStyleSheet(qss)
+		# self.setMaximumSize(100, 45)
+		self.setFixedSize(500, 45)
+		self.setObjectName('pageCrumb')

@@ -352,3 +352,9 @@ QLabel#dashValue {
 }
 
 /* idDashButtonEnd */
+
+
+QLabel#pageCrumb {
+	border: 1px solid black;
+	color: black;
+}
