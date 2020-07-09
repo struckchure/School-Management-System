@@ -14,29 +14,96 @@ from views import pageConfigurations
 	Home Views
 '''
 
+class NavBarUser(QPushButton, QGroupBox):
+	def __init__(self, user, default_image='resources/assets/images/icons/user.png'):
+		super(NavBarUser, self).__init__()
+
+		self.user = user
+		self.userIcon = QIcon(default_image)
+
+		navSideMargins = pageConfigurations.navSideMargins
+
+		self.navBarUserLayout = QGridLayout()
+		self.navBarUserLayout.setContentsMargins(0, 0, 0, 0)
+
+		self.setLayout(self.navBarUserLayout)
+		self.setIcon(self.userIcon)
+		self.setIconSize(QSize(25, 20))
+		self.setObjectName('navBarUser')
+
+		self.initialization()
+
+	def initialization(self):
+		self.setContextMenuPolicy(Qt.CustomContextMenu)
+		self.customContextMenuRequested.connect(self.showUserOptions)
+
+		profileIcon = QIcon('resources/assets/images/icons/local_library_black.png')
+		logoutIcon = QIcon('resources/assets/images/icons/local_post_office_black.png')
+
+		self.userOptions = QMenu(self)
+		# self.userOptions.addAction(QAction('icon', 'text', 'slot'))
+		self.userOptions.addAction(QAction(QIcon(profileIcon), 'Profile', self))
+		self.userOptions.addAction(QAction(QIcon(logoutIcon), 'Logout', self))
+
+	def showUserOptions(self, point):
+		print(point.x(), point.y())
+
+		point.setX(point.x() - 10)
+		point.setY(point.y())
+
+		print(point.x(), point.y())
+
+		self.userOptions.exec_(self.mapToGlobal(point))
+
+
 class NavBar(QGroupBox):
 	def __init__(self, user):
 		QGroupBox.__init__(self)
 
 		self.user = user
 
+		navSideMargins = pageConfigurations.navSideMargins
+		
 		self.groupLayout = QHBoxLayout()
+		self.groupLayout.setSpacing(15)
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
 
 		blurRadius = 30
-		offSet = 2.1
+		offSet = 0.1
 
 		self.groupGraphicsEffect = QGraphicsDropShadowEffect()
 		self.groupGraphicsEffect.setBlurRadius(blurRadius)
 		self.groupGraphicsEffect.setOffset(offSet)
 
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
-
-		self.setStyleSheet(qss)
 		self.setObjectName('navBar')
 		self.setLayout(self.groupLayout)
 		self.setGraphicsEffect(self.groupGraphicsEffect)
 		self.setFixedHeight(pageConfigurations.navBarHeight)
+
+		self.initialization()
+
+	def initialization(self):
+		self.searchLayout = QHBoxLayout()
+		self.searchLayout.setAlignment(Qt.AlignCenter)
+		self.searchLayout.setSpacing(0)
+		self.searchLayout.setContentsMargins(0, 0, 0, 0)
+
+		height = self.height() * 0.7
+
+		self.searchBox = QLineEdit()
+		self.searchBox.setObjectName('searchBox')
+		self.searchBox.setFixedSize(300, height)
+		self.searchLayout.addWidget(self.searchBox, stretch=0, alignment=Qt.AlignLeft | Qt.AlignVCenter)
+
+		self.searchButton = QPushButton()
+		self.searchButton.setObjectName('login')
+		self.searchButton.setFixedSize(30, height)
+		self.searchLayout.addWidget(self.searchButton, stretch=0, alignment=Qt.AlignLeft | Qt.AlignVCenter)
+
+		self.groupLayout.addLayout(self.searchLayout)
+
+		self.navUser = NavBarUser(self.user)
+		self.groupLayout.addWidget(self.navUser, stretch=0, alignment=Qt.AlignRight | Qt.AlignVCenter)
 
 
 class SideBarTitle(QLabel):
@@ -45,9 +112,6 @@ class SideBarTitle(QLabel):
 
 		self.text = text
 
-		qss = open('resources/assets/qss/boostrap.qss').read()
-
-		self.setStyleSheet(qss)
 		self.setWordWrap(True)
 		self.setMaximumSize(200, 50)
 		self.setText(self.text)
@@ -63,8 +127,6 @@ class SideBarSection(QGroupBox):
 		self.groupLayout.setAlignment(Qt.AlignLeft)
 		self.groupLayout.setSpacing(5)
 
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
-		self.setStyleSheet(qss)
 		self.setFixedWidth(width)
 		self.setObjectName('sideBarSection')
 		self.setLayout(self.groupLayout)
@@ -92,9 +154,10 @@ class SideBarButton(QPushButton):
 	def __init__(self, title, image='resources/assets/images/icons/039-physics.png'):
 		QPushButton.__init__(self, QIcon(image), title)
 
+		self.title = title
+
 		ratio = 0.7
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
-		self.setStyleSheet(qss)
+
 		self.setFixedSize(pageConfigurations.sideBarSize[0] * ratio, pageConfigurations.sideBarButtonHeight)
 		self.setObjectName('sideBarButton')
 
@@ -112,23 +175,13 @@ class SideBar(QScrollArea):
 		self.sideBarGroup.setLayout(self.sideBarLayout)
 		
 		sideBarSize = pageConfigurations.sideBarSize
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
-		
-		self.setStyleSheet(qss)
+
 		self.setWidget(self.sideBarGroup)
 		self.setWidgetResizable(True)
 		self.setMaximumSize(sideBarSize[0], sideBarSize[1])
 		self.setObjectName('sideBarScroll')
 		self.showMaximized()
 
-'''
-	Usage:
-		self.teacherButton = customWidgets.DashButton(
-		buttonText='Teachers',
-		buttonValue=15,
-		buttonIcon='resources/assets/images/icons/local_library_black.png',
-		borderColor='green')
-'''
 
 class DashButton(QPushButton, QHBoxLayout):
 	def __init__(self, buttonText, buttonValue, buttonIcon='resources/assets/images/icons/view.png', borderColor='#1554BD'):
@@ -152,7 +205,7 @@ class DashButton(QPushButton, QHBoxLayout):
 		self.buttonLayout.setAlignment(Qt.AlignTop | Qt.AlignVCenter)
 
 		iconWidth, iconHeight = pageConfigurations.DashButtonSize
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read().split('/* idDashButtonStart */')[1].split('/* idDashButtonStart */')[0].replace('#1554BD', borderColor)
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read().split('/* idDashButtonStart */')[1].split('/* idDashButtonEnd */')[0].replace('#1554BD', self.borderColor)
 
 		self.setStyleSheet(qss)
 		self.setIcon(QIcon(QPixmap(self.buttonIcon)))
@@ -161,7 +214,7 @@ class DashButton(QPushButton, QHBoxLayout):
 		self.setGraphicsEffect(self.groupGraphicsEffect)
 		self.setObjectName('dashButton')
 		self.setIconSize(QSize(iconWidth, iconHeight))
-		self.setMinimumSize(230, 65)
+		self.setMinimumSize(235, 65)
 		self.setMaximumSize(250, 100)
 
 		self.initialization()
@@ -214,15 +267,14 @@ class PopUp(QWidget):
 	def __init__(self, title='School Manager', body='Body', buttonText='&Ok, thanks', parent=None):
 		super(QWidget, self).__init__(parent=None)
 
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
-		self.setStyleSheet(qss)
-
 		self.title = title
 		self.body = body
 		self.buttonText = buttonText
 
 		self.windowLayout = QVBoxLayout()
 
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+		self.setStyleSheet(qss)
 		self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
 		self.resize(300, 170)
 		self.setMaximumSize(600, 600)
@@ -263,10 +315,6 @@ class PageCrumb(QLabel):
 	def __init__(self, title=''):
 		super(PageCrumb, self).__init__(title)
 
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
-		
-		self.setStyleSheet(qss)
-		# self.setMaximumSize(100, 45)
 		self.setFixedSize(500, 45)
 		self.setObjectName('pageCrumb')
 
@@ -292,8 +340,6 @@ class FirstRow(QPushButton):
 		width = 230
 		height = 70
 
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
-		self.setStyleSheet(qss)
 		self.setContentsMargins(0, 0, 0, 0)
 		self.setMinimumSize(width, height)
 		self.setObjectName('firstRow')
@@ -324,7 +370,6 @@ class FirstRow(QPushButton):
 		self.box_icon.setContentsMargins(0, 15, 24, 0)
 		box_icon = QPixmap(self.icn)
 		self.box_icon.setPixmap(box_icon)
-		#self.assist_layout.addWidget(self.box_icon)
 
 		self.setLayout(self.assist_layout)
 
@@ -347,8 +392,6 @@ class SecondRow(QGroupBox):
 
 		width = 480
 
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
-		self.setStyleSheet(qss)
 		self.setContentsMargins(0, 0, 0, 0)
 		self.setMaximumWidth(width)
 		self.setObjectName('secondRow')

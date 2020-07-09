@@ -13,8 +13,11 @@ import cv2
 
 
 # Custom Modules Imports
-
+# - Tools
 from resources.assets.customWidgets import customWidgets
+from views import utils
+
+# - Pages
 from views import pageConfigurations
 from views import DashBoard
 from views import Students
@@ -29,20 +32,22 @@ from views import Teachers
 
 
 class Home(QGroupBox):
-	def __init__(self, pageController, user):
+	def __init__(self, pageController, pageFinders, user):
 		QGroupBox.__init__(self)
 
 		self.pageController = pageController
+		self.pageFinders = pageFinders
 		self.user = user
+		self.rightPageFinders = {
+			'page': [],
+			'index': []
+		}
 
 		self.groupLayout = QVBoxLayout()
 		self.groupLayout.setSpacing(0)
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
 		self.groupLayout.setAlignment(Qt.AlignTop)
 
-		qss = open('resources/assets/qss/boostrap.qss').read()
-
-		self.setStyleSheet(qss)
 		self.setLayout(self.groupLayout)
 		self.setMaximumSize(pageConfigurations.windowWidth, pageConfigurations.windowHeight)
 		self.setObjectName('home')
@@ -102,20 +107,24 @@ class Home(QGroupBox):
 		spacer1.setFixedHeight(60)
 		self.sideBarLayout.addWidget(spacer1)
 
-		self.dashBoard = customWidgets.SideBarButton(title='DashBoard', image='resources/assets/images/icons/dashboard_icn.png')
-		self.sideBarLayout.addWidget(self.dashBoard)
+		self.dashBoardButton = customWidgets.SideBarButton(title='DashBoard', image='resources/assets/images/icons/dashboard_icn.png')
+		self.dashBoardButton.clicked.connect(self.dashBoardButtonView)
+		self.sideBarLayout.addWidget(self.dashBoardButton)
 
 		# Students
 
 		self.studentSection = customWidgets.SideBarSection(title='Student')
 
 		self.admissionButton = customWidgets.SideBarButton(title='Admission', image='resources/assets/images/icons/admission.png')
+		self.admissionButton.clicked.connect(self.admissionButtonView)
 		self.studentSection.widgetLayout.addWidget(self.admissionButton)
 
 		self.studentPromotionButton = customWidgets.SideBarButton(title='Promotion', image='resources/assets/images/icons/promotion.png')
+		self.studentPromotionButton.clicked.connect(self.studentPromotionButtonView)
 		self.studentSection.widgetLayout.addWidget(self.studentPromotionButton)
 
 		self.allStudentsButton = customWidgets.SideBarButton(title='All Students', image='resources/assets/images/icons/all.png')
+		self.allStudentsButton.clicked.connect(self.allStudentsButtonView)
 		self.studentSection.widgetLayout.addWidget(self.allStudentsButton)
 
 		self.sideBarLayout.addWidget(self.studentSection)
@@ -125,17 +134,104 @@ class Home(QGroupBox):
 		self.teacherSection = customWidgets.SideBarSection(title='Teacher')
 
 		self.addTeacherButton = customWidgets.SideBarButton(title='New Teacher', image='resources/assets/images/icons/new_teacher.png')
+		self.addTeacherButton.clicked.connect(self.addTeacherButtonView)
 		self.teacherSection.widgetLayout.addWidget(self.addTeacherButton)
 
 		self.teacherPromotionButton = customWidgets.SideBarButton(title='Promotion', image='resources/assets/images/icons/promotion.png')
+		self.teacherPromotionButton.clicked.connect(self.teacherPromotionButtonView)
 		self.teacherSection.widgetLayout.addWidget(self.teacherPromotionButton)
 
 		self.allTeachersButton = customWidgets.SideBarButton(title='All Teachers', image='resources/assets/images/icons/all.png')
+		self.allTeachersButton.clicked.connect(self.allTeachersButtonView)
 		self.teacherSection.widgetLayout.addWidget(self.allTeachersButton)
 
 		self.sideBarLayout.addWidget(self.teacherSection)
 
 		self.mainPageLayout.addWidget(self.sideBarScroll)
+
+	def dashBoardButtonView(self):
+		text = self.dashBoardButton.text().replace(' ', '')
+		if text in self.rightPageFinders:
+			page = utils.findPage(self.pageFinders, text)
+			self.rightPageStackedWidget.setCurrentIndex(page)
+		else:
+			self.rightPageFinders['page'].append(text)
+			self.rightPageFinders['index'].append(self.rightPageStackedWidget.currentIndex() + 1)
+			
+			self.rightPageStackedWidget.addWidget(DashBoard.DashBoard(self.rightPageStackedWidget, self.rightPageFinders))
+			self.rightPageStackedWidget.setCurrentIndex(self.rightPageStackedWidget.currentIndex() + 1)
+
+	def admissionButtonView(self):
+		text = self.admissionButton.text().replace(' ', '')
+		if text in self.rightPageFinders:
+			page = utils.findPage(self.pageFinders, text)
+			self.rightPageStackedWidget.setCurrentIndex(page)
+		else:
+			self.rightPageFinders['page'].append(text)
+			self.rightPageFinders['index'].append(self.rightPageStackedWidget.currentIndex() + 1)
+			
+			self.rightPageStackedWidget.addWidget(Students.StudentAdmission(self.rightPageStackedWidget, self.pageFinders))
+			self.rightPageStackedWidget.setCurrentIndex(self.rightPageStackedWidget.currentIndex() + 1)
+
+	def studentPromotionButtonView(self):
+		text = self.studentPromotionButton.text().replace(' ', '')
+		if text in self.rightPageFinders:
+			page = utils.findPage(self.pageFinders, text)
+			self.rightPageStackedWidget.setCurrentIndex(page)
+		else:
+			self.rightPageFinders['page'].append(text)
+			self.rightPageFinders['index'].append(self.rightPageStackedWidget.currentIndex() + 1)
+			
+			self.rightPageStackedWidget.addWidget(Students.StudentPromotion(self.rightPageStackedWidget, self.pageFinders))
+			self.rightPageStackedWidget.setCurrentIndex(self.rightPageStackedWidget.currentIndex() + 1)
+
+	def allStudentsButtonView(self):
+		text = self.allStudentsButton.text().replace(' ', '')
+		if text in self.rightPageFinders:
+			page = utils.findPage(self.pageFinders, text)
+			self.rightPageStackedWidget.setCurrentIndex(page)
+		else:
+			self.rightPageFinders['page'].append(text)
+			self.rightPageFinders['index'].append(self.rightPageStackedWidget.currentIndex() + 1)
+			
+			self.rightPageStackedWidget.addWidget(Students.Students(self.rightPageStackedWidget, self.pageFinders))
+			self.rightPageStackedWidget.setCurrentIndex(self.rightPageStackedWidget.currentIndex() + 1)
+
+	def addTeacherButtonView(self):
+		text = self.addTeacherButton.text().replace(' ', '')
+		if text in self.rightPageFinders:
+			page = utils.findPage(self.pageFinders, text)
+			self.rightPageStackedWidget.setCurrentIndex(page)
+		else:
+			self.rightPageFinders['page'].append(text)
+			self.rightPageFinders['index'].append(self.rightPageStackedWidget.currentIndex() + 1)
+			
+			self.rightPageStackedWidget.addWidget(Teachers.TeacherAdmission(self.rightPageStackedWidget, self.pageFinders))
+			self.rightPageStackedWidget.setCurrentIndex(self.rightPageStackedWidget.currentIndex() + 1)
+
+	def teacherPromotionButtonView(self):
+		text = self.teacherPromotionButton.text().replace(' ', '')
+		if text in self.rightPageFinders:
+			page = utils.findPage(self.pageFinders, text)
+			self.rightPageStackedWidget.setCurrentIndex(page)
+		else:
+			self.rightPageFinders['page'].append(text)
+			self.rightPageFinders['index'].append(self.rightPageStackedWidget.currentIndex() + 1)
+			
+			self.rightPageStackedWidget.addWidget(Teachers.TeacherPromotion(self.rightPageStackedWidget, self.pageFinders))
+			self.rightPageStackedWidget.setCurrentIndex(self.rightPageStackedWidget.currentIndex() + 1)
+
+	def allTeachersButtonView(self):
+		text = self.allTeachersButton.text().replace(' ', '')
+		if text in self.rightPageFinders:
+			page = utils.findPage(self.pageFinders, text)
+			self.rightPageStackedWidget.setCurrentIndex(page)
+		else:
+			self.rightPageFinders['page'].append(text)
+			self.rightPageFinders['index'].append(self.rightPageStackedWidget.currentIndex() + 1)
+			
+			self.rightPageStackedWidget.addWidget(Teachers.Teachers(self.rightPageStackedWidget, self.pageFinders))
+			self.rightPageStackedWidget.setCurrentIndex(self.rightPageStackedWidget.currentIndex() + 1)
 
 	def rightPage(self):
 		self.rightPageStackedWidget = QStackedWidget()
@@ -146,16 +242,11 @@ class Home(QGroupBox):
 		self.rightPageLayout.setAlignment(Qt.AlignTop)
 
 		self.rightPageLayout.addWidget(self.rightPageStackedWidget, stretch=0, alignment=Qt.AlignLeft)
-		
-		rightPageFinders = {
-			'page':[],
-			'index':[]
-		}
 
-		rightPageFinders['page'].append('DashBoard')
-		rightPageFinders['index'].append(0)
+		self.rightPageFinders['page'].append('DashBoard')
+		self.rightPageFinders['index'].append(0)
 
-		self.dashBoard = DashBoard.DashBoard(self.rightPageStackedWidget, rightPageFinders)
+		self.dashBoard = DashBoard.DashBoard(self.rightPageStackedWidget, self.rightPageFinders)
 		self.rightPageStackedWidget.addWidget(self.dashBoard)
 
 		self.rightPageGroup = QGroupBox()

@@ -16,11 +16,14 @@ from viewManagers.mainWindowManager import mainWindow
 
 def main():
 	try:
-	    app = QApplication(sys.argv)
-	    window = mainWindow()
-	    window.show()
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
 
-	    sys.exit(app.exec_())
+		app = QApplication(sys.argv)
+		window = mainWindow()
+		window.setStyleSheet(qss)
+		window.show()
+
+		sys.exit(app.exec_())
 	except KeyboardInterrupt:
 		sys.exit()
 

@@ -31,9 +31,6 @@ class Login(QGroupBox):
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
 		self.groupLayout.setAlignment(Qt.AlignCenter)
 
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
-
-		self.setStyleSheet(qss)
 		self.setLayout(self.groupLayout)
 		self.setObjectName('login')
 
@@ -154,6 +151,10 @@ class Login(QGroupBox):
 
 		self.mainPageLayout.addWidget(self.rightPageGroup)
 
+	def keyPressEvent(self, e):
+		if e.key() == Qt.Key_Return:
+			self.loginButtonView()
+
 	def loginButtonView(self):
 		try:
 			from django.contrib.auth.models import User
@@ -201,7 +202,7 @@ class Login(QGroupBox):
 			self.pageFinders['page'].append('homePage')
 			self.pageFinders['index'].append(self.pageController.currentIndex() + 1)
 
-			self.pageController.addWidget(mainWindow.Home(self.pageController, self.get_user))
+			self.pageController.addWidget(mainWindow.Home(self.pageController, self.pageFinders, self.get_user))
 			self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
 		else:
 			page = utils.findPage(self.pageFinders, 'homePage')
@@ -231,9 +232,6 @@ class Register(QGroupBox):
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
 		self.groupLayout.setAlignment(Qt.AlignCenter)
 
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
-
-		self.setStyleSheet(qss)
 		self.setLayout(self.groupLayout)
 		self.setObjectName('login')
 
@@ -379,6 +377,10 @@ class Register(QGroupBox):
 
 		self.mainPageLayout.addWidget(self.rightPageGroup)
 
+	def keyPressEvent(self, e):
+		if e.key() == Qt.Key_Return:
+			self.registerButtonView()
+			
 	def registerButtonView(self):
 		try:
 			from django.contrib.auth.models import User

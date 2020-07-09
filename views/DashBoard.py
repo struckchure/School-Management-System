@@ -33,7 +33,7 @@ class DashBoard(QGroupBox):
 		self.studentButton = customWidgets.DashButton('Students', 100, buttonIcon='resources/assets/images/icons/group1.png')
 		self.teacherButton = customWidgets.DashButton('Teachers', 15, buttonIcon='resources/assets/images/icons/group2.png', borderColor='#7B615C')
 		self.groupButton = customWidgets.DashButton('Groups', 10, buttonIcon='resources/assets/images/icons/group3.png', borderColor='#2C7BA8')
-		self.clubsButton = customWidgets.DashButton('Clubs', 20, buttonIcon='resources/assets/images/icons/group4.png', borderColor='orange')
+		self.clubsButton = customWidgets.DashButton('Clubs', 20, buttonIcon='resources/assets/images/icons/group4.png', borderColor='#6BC10C')
 
 		self.groupLayout.addWidget(self.pageCrumb, 0, 0, 1, 4)
 		self.groupLayout.addWidget(self.studentButton, 1, 0)
@@ -41,9 +41,6 @@ class DashBoard(QGroupBox):
 		self.groupLayout.addWidget(self.groupButton, 1, 2)
 		self.groupLayout.addWidget(self.clubsButton, 1, 3)
 
-		qss = open('resources/assets/qss/boostrap.qss').read()
-
-		self.setStyleSheet(qss)
 		self.setObjectName('noBorderBox')
 		self.setLayout(self.groupLayout)
 

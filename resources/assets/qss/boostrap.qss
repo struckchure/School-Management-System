@@ -34,14 +34,15 @@ QLineEdit {
 	padding: 7px;
 	font-family: Verdana;
 	font-size: 13px;
-	text-align: left
+	text-align: left;
+	border: 1px solid #68B0B3;
 }
 
 QLineEdit:focus {
 	border: 2px solid #68B0B3;
 }
 
-QLineEdit#searchQLineEdit {
+QLineEdit#name {
 	padding: 2px;
 	font-family: Verdana;
 	font-size: 13px;
@@ -49,7 +50,7 @@ QLineEdit#searchQLineEdit {
 	border: 1px solid #68B0B3;
 }
 
-QLineEdit#searchQLineEdit:focus {
+QLineEdit#searchBox:focus {
 	border: 2px solid #68B0B3;
 }
 
@@ -253,15 +254,6 @@ QGroupBox#navBar {
 	padding-right: 15px;
 }
 
-
-QGroupBox#sideBarUser {
-	border: 0px;
-	padding: 5px;
-	border-top: 1px solid white;
-	border-bottom: 1px solid white;
-	background-color: rgba(0, 0, 0, 0);
-}
-
 QGroupBox#sideBarGroup {
 	border: 0px;
 	/* border-bottom-left-radius: 20px; */
@@ -276,10 +268,52 @@ QScrollArea#sideBarScroll {
 }
 
 
+QScrollBar:horizontal{
+    height: 10px;
+    padding: 2px;
+    margin: 0px;
+    border: none;
+    /*background-color: #ECB0B0;*/
+}
+
+QScrollBar:vertical {
+    width: 10px;
+    padding: 2px;
+    margin: 0px;
+    border: none;
+    /*background-color: #ECB0B0;*/
+}
+
+QScrollBar::handle {
+	width: 15px;
+	border-radius: 10px;
+    background-color: #3E63CC;
+    min-width: 2px;
+}
+
+QScrollBar::handle:hover {
+    background-color: black;
+}
+
+QScrollBar::down-arrow, QScrollBar::up-arrow {
+	border: none;
+	color: none;
+	background: none;
+}
+
+QScrollBar::add-line, QScrollBar::sub-line {
+	border: none;
+	background-color: none;
+}
+
+QScrollBar::add-page, QScrollBar::sub-page {
+	border: none;
+	background-color: none;
+}
+
+
 QGroupBox#pageGroup {
 	border: 0px;
-	/* border-bottom-right-radius: 20px; */
-	/* border-top-right-radius: 20px; */
 	background-color: white;
 }
 
@@ -361,72 +395,116 @@ QLabel#pageCrumb {
 }
 
 QPushButton#firstRow {
-	border:0px;
-	border-bottom:3px solid #3E63CC;
-	background-color:white;
-	text-align:right;
-	padding-right:15px;
+	border: 0px;
+	border-bottom: 3px solid #3E63CC;
+	background-color: white;
+	text-align: right;
+	padding-right: 15px;
 }
 
 QGroupBox#secondRow {
-	border:0px;
+	border: 0px;
 }
 
 QLabel#headText {
-	color:#3E63CC;
-	font-size:10px;
-	font-weight:bold;
+	color: #3E63CC;
+	font-size: 10px;
+	font-weight: bold;
 }
 
 QLabel#totalText {
-	color:black;
-	font-size:20px;
+	color: black;
+	font-size: 20px;
 }
 
 QLabel#boxTitle {
  	color: #3E63CC;
-	font-size:12px;
+	font-size: 12px;
 	font-weight: bold;
-	padding-left:10px;
-	background-color:#d9d9d9;
+	padding-left: 10px;
+	background-color: #d9d9d9;
 }
 
 QPushButton#addButton {
-	border:0px;
-	background-color:#d9d9d9;
-	margin:0px;
+	border: 0px;
+	background-color: #d9d9d9;
+	margin: 0px;
 }
+
 QPushButton#addButton:hover {
-	border:1px solid #3E63CC;
+	border: 1px solid #3E63CC;
 }
 
 QLabel#event {
-	color:#1a1a1a;
-	font-size:12px;
+	color: #1a1a1a;
+	font-size: 12px;
 	font-weight: bold;
-	padding-left:10px;
-	border-bottom:1px solid #404040;
-	background-color:white;
+	padding-left: 10px;
+	border-bottom: 1px solid #404040;
+	background-color: white;
 }
 QLabel#event2 {
-	color:#1a1a1a;
-	font-size:12px;
+	color: #1a1a1a;
+	font-size: 12px;
 	font-weight: bold;
-	background-color:white;
-	padding-left:20px;
-	border-bottom:1px solid #404040;
+	background-color: white;
+	padding-left: 20px;
+	border-bottom: 1px solid #404040;
 }
 
 QPushButton#listBtn {
-	border:0px;
-	background-color:white;
+	border: 0px;
+	background-color: white;
 }
 
 QPushButton#listBtn:hover {
-	border:1px solid #3E63CC;
+	border: 1px solid #3E63CC;
 }
 
 QScrollArea#eventScroll {
-	border:0px;
-	background-color:white;
+	border: 0px;
+	background-color: white;
+}
+
+NavBarUser#navBarUser {
+	border: none;
+	border-radius: 20;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+NavBarUser#navBarUser:hover {
+	border: none;
+	background-color: #F3E7E7;
+}
+
+NavBarUser#navBarUser:pressed {
+	border: none;
+}
+
+QMenu {
+	max-width: 180px;
+	max-height: 200px;
+}
+
+QMenu::item {
+	border-bottom: 1px solid #C9EFEF;
+	background-color: : white;
+	font-family: Verdana;
+	min-width: 150px;
+	max-height: 30px;
+	padding: 5px;
+	padding-left: 25px;
+	padding-right: 25px;
+}
+
+QMenu:selected {
+	background-color: : #C9EFEF;
+}
+
+QMenu:hover {
+	background-color: : #C9EFEF;
+}
+
+QMenu:pressed {
+	background-color: : #BDDFDF;
 }

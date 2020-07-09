@@ -2,8 +2,6 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import sys
-import cv2
-
 
 # Custom Modules Imports
 
@@ -14,25 +12,73 @@ from resources.assets.customWidgets import customWidgets
 
 
 '''
-	Students Views
+	Student Views
 '''
 
 
-class Student(QGroupBox):
+class Students(QGroupBox):
 	def __init__(self, stackedWidget, pageFinders):
 		QGroupBox.__init__(self)
 
 		self.stackedWidget = stackedWidget
 		self.pageFinders = pageFinders
 
-		self.groupLayout = QVBoxLayout()
-		self.groupLayout.setConentsMargins(0, 0, 0, 0)
-		self.groupLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
-		self.groupLayout.setSpacing(0)
+		self.groupLayout = QGridLayout()
+		self.groupLayout.setContentsMargins(0, 0, 0, 0)
+		self.groupLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+		self.groupLayout.setSpacing(20)
+		
+		self.pageCrumb = customWidgets.PageCrumb('Students')
+		self.groupLayout.addWidget(self.pageCrumb, 0, 0, 1, 4)
 
-		qss = open('resources/assets/qss/boostrap.qss').read()
+		self.setObjectName('noBorderBox')
+		self.setLayout(self.groupLayout)
 
-		self.setStyleSheet(qss)
+		self.initalization()
+
+	def initalization(self):
+		pass
+
+
+class StudentAdmission(QGroupBox):
+	def __init__(self, stackedWidget, pageFinders):
+		QGroupBox.__init__(self)
+
+		self.stackedWidget = stackedWidget
+		self.pageFinders = pageFinders
+
+		self.groupLayout = QGridLayout()
+		self.groupLayout.setContentsMargins(0, 0, 0, 0)
+		self.groupLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+		self.groupLayout.setSpacing(20)
+		
+		self.pageCrumb = customWidgets.PageCrumb('Student Admission')
+		self.groupLayout.addWidget(self.pageCrumb, 0, 0, 1, 4)
+
+		self.setObjectName('noBorderBox')
+		self.setLayout(self.groupLayout)
+
+		self.initalization()
+
+	def initalization(self):
+		pass
+
+
+class StudentPromotion(QGroupBox):
+	def __init__(self, stackedWidget, pageFinders):
+		QGroupBox.__init__(self)
+
+		self.stackedWidget = stackedWidget
+		self.pageFinders = pageFinders
+
+		self.groupLayout = QGridLayout()
+		self.groupLayout.setContentsMargins(0, 0, 0, 0)
+		self.groupLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+		self.groupLayout.setSpacing(20)
+		
+		self.pageCrumb = customWidgets.PageCrumb('Student Promotion')
+		self.groupLayout.addWidget(self.pageCrumb, 0, 0, 1, 4)
+
 		self.setObjectName('noBorderBox')
 		self.setLayout(self.groupLayout)
 
