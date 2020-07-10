@@ -50,7 +50,20 @@ QLineEdit#name {
 	border: 1px solid #68B0B3;
 }
 
-QLineEdit#searchBox:focus {
+QLineEdit#lineEdit-Normal {
+	border-radius: 0px;
+	padding: 5px;
+	font-family: Verdana;
+	font-size: 13px;
+	text-align: left;
+	border: 1px solid #68B0B3;
+}
+
+QLineEdit#lineEdit-Normal:hover {
+	border: 2px solid #68B0B3;
+}
+
+QLineEdit#lineEdit-Normal:focus {
 	border: 2px solid #68B0B3;
 }
 
@@ -486,6 +499,16 @@ QMenu {
 	max-height: 200px;
 }
 
+
+LineEditButton#lineEditBox {
+	border: 0px;
+	padding: 0px;
+	text-align: center;
+}
+
+
+
+/*
 QMenu::item {
 	border-bottom: 1px solid #C9EFEF;
 	background-color: : white;
@@ -508,3 +531,4 @@ QMenu:hover {
 QMenu:pressed {
 	background-color: : #BDDFDF;
 }
+*/

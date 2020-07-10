@@ -11,10 +11,55 @@ from views import pageConfigurations
 # Custom Modules End
 
 '''
-	Home Views
+    Home Views
 '''
 
-class NavBarUser(QPushButton, QGroupBox):
+
+class LineEditButton(QGroupBox):
+	def __init__(self, placeHolder, icon, iconText=''):
+		super(LineEditButton, self).__init__()
+
+		self.placeHolder = placeHolder
+		self.icon = QIcon(icon)
+		self.iconText = iconText
+
+		self.groupLayout = QHBoxLayout()
+		self.groupLayout.setSpacing(0)
+		self.groupLayout.setAlignment(Qt.AlignTop | Qt.AlignVCenter)
+		self.groupLayout.setContentsMargins(0, 0, 0, 0)
+
+		self.setLayout(self.groupLayout)
+		self.setFixedHeight(30)
+		self.setObjectName('lineEditBox')
+
+		self.initialization()
+
+	def initialization(self):
+		self.linedEdit = QLineEdit()
+		self.linedEdit.setObjectName('lineEdit-Normal')
+		self.linedEdit.setPlaceholderText(self.placeHolder)
+		self.linedEdit.setFixedHeight(self.height())
+		self.linedEdit.setMaximumWidth(250)
+
+		self.groupLayout.addWidget(self.linedEdit)
+
+		self.button = QPushButton(self.icon, self.iconText)
+		self.button.clicked.connect(self.text)
+		self.button.setObjectName('login')
+		self.button.setFixedHeight(self.height())
+		self.button.setMaximumWidth(250)
+		
+		self.groupLayout.addWidget(self.button)
+
+	def keyPressEvent(self, e):
+		if e.key() == Qt.Key_Return:
+			self.text()
+
+	def text(self):
+		return self.linedEdit.text()
+
+
+class NavBarUser(QPushButton, QHBoxLayout):
 	def __init__(self, user, default_image='resources/assets/images/icons/user.png'):
 		super(NavBarUser, self).__init__()
 
@@ -27,7 +72,9 @@ class NavBarUser(QPushButton, QGroupBox):
 		self.navBarUserLayout.setContentsMargins(0, 0, 0, 0)
 
 		self.setLayout(self.navBarUserLayout)
+		self.setMaximumWidth(pageConfigurations.sideBarSize[0])
 		self.setIcon(self.userIcon)
+		self.setText(self.user.get_full_name())
 		self.setIconSize(QSize(25, 20))
 		self.setObjectName('navBarUser')
 
@@ -41,19 +88,27 @@ class NavBarUser(QPushButton, QGroupBox):
 		logoutIcon = QIcon('resources/assets/images/icons/local_post_office_black.png')
 
 		self.userOptions = QMenu(self)
-		# self.userOptions.addAction(QAction('icon', 'text', 'slot'))
-		self.userOptions.addAction(QAction(QIcon(profileIcon), 'Profile', self))
-		self.userOptions.addAction(QAction(QIcon(logoutIcon), 'Logout', self))
+
+		self.profileAction = QAction(QIcon(profileIcon), 'Profile', self)
+		self.profileAction.triggered.connect(self.profileView)
+
+		self.logoutAction = QAction(QIcon(logoutIcon), 'Logout', self)
+		self.logoutAction.triggered.connect(self.logoutView)
+
+		self.userOptions.addAction(self.profileAction)
+		self.userOptions.addAction(self.logoutAction)
 
 	def showUserOptions(self, point):
-		print(point.x(), point.y())
-
 		point.setX(point.x() - 10)
 		point.setY(point.y())
 
-		print(point.x(), point.y())
-
 		self.userOptions.exec_(self.mapToGlobal(point))
+
+	def profileView(self):
+		print('slots')
+
+	def logoutView(self):
+		print('slots')
 
 
 class NavBar(QGroupBox):
@@ -65,7 +120,7 @@ class NavBar(QGroupBox):
 		navSideMargins = pageConfigurations.navSideMargins
 		
 		self.groupLayout = QHBoxLayout()
-		self.groupLayout.setSpacing(15)
+		self.groupLayout.setSpacing(5)
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
 
 		blurRadius = 30
@@ -83,27 +138,28 @@ class NavBar(QGroupBox):
 		self.initialization()
 
 	def initialization(self):
-		self.searchLayout = QHBoxLayout()
-		self.searchLayout.setAlignment(Qt.AlignCenter)
-		self.searchLayout.setSpacing(0)
-		self.searchLayout.setContentsMargins(0, 0, 0, 0)
+		self.navUser = NavBarUser(self.user)
+
+		self.groupLayout.addWidget(
+			self.navUser,
+			stretch=0,
+			alignment=Qt.AlignLeft | Qt.AlignVCenter
+		)
 
 		height = self.height() * 0.7
 
-		self.searchBox = QLineEdit()
-		self.searchBox.setObjectName('searchBox')
-		self.searchBox.setFixedSize(300, height)
-		self.searchLayout.addWidget(self.searchBox, stretch=0, alignment=Qt.AlignLeft | Qt.AlignVCenter)
+		self.searchBox = LineEditButton(
+			placeHolder='search ...',
+			icon='resources/assets/images/icons/ic_keyboard_arrow_right_white_48dp.png',
+		)
+		self.searchBox.linedEdit.setFixedWidth(200)
+		self.searchBox.linedEdit.setToolTip('search')
 
-		self.searchButton = QPushButton()
-		self.searchButton.setObjectName('login')
-		self.searchButton.setFixedSize(30, height)
-		self.searchLayout.addWidget(self.searchButton, stretch=0, alignment=Qt.AlignLeft | Qt.AlignVCenter)
-
-		self.groupLayout.addLayout(self.searchLayout)
-
-		self.navUser = NavBarUser(self.user)
-		self.groupLayout.addWidget(self.navUser, stretch=0, alignment=Qt.AlignRight | Qt.AlignVCenter)
+		self.groupLayout.addWidget(
+			self.searchBox,
+			stretch=0,
+			alignment=Qt.AlignCenter
+		)
 
 
 class SideBarTitle(QLabel):
