@@ -7,6 +7,7 @@ import sys
 # Custom Modules Imports
 
 from views import pageConfigurations
+from views import utils
 
 # Custom Modules End
 
@@ -41,7 +42,7 @@ class LineEditButton(QGroupBox):
 		self.linedEdit.setFixedHeight(self.height())
 		self.linedEdit.setMaximumWidth(250)
 
-		self.groupLayout.addWidget(self.linedEdit)	
+		self.groupLayout.addWidget(self.linedEdit)
 
 		self.button = QPushButton(self.icon, self.iconText)
 		self.button.clicked.connect(self.text)
@@ -112,11 +113,10 @@ class NavBarUser(QPushButton, QHBoxLayout):
 
 
 class NavBar(QGroupBox):
-	def __init__(self, user, schoolName='My School'):
+	def __init__(self, user):
 		QGroupBox.__init__(self)
 
 		self.user = user
-		self.schoolName = schoolName
 
 		navSideMargins = pageConfigurations.navSideMargins
 		
@@ -139,24 +139,6 @@ class NavBar(QGroupBox):
 		self.initialization()
 
 	def initialization(self):
-		self.navUser = NavBarUser(self.user)
-
-		self.groupLayout.addWidget(
-			self.navUser,
-			stretch=0,
-			alignment=Qt.AlignLeft | Qt.AlignVCenter
-		)
-
-		self.titleLabel = QLabel(self.schoolName)
-		self.titleLabel.setObjectName('schoolNameLabel')
-		self.titleLabel.setMaximumSize(500, self.height())
-
-		self.groupLayout.addWidget(
-			self.titleLabel,
-			stretch=0,
-			alignment=Qt.AlignLeft | Qt.AlignVCenter
-		)
-
 		height = self.height() * 0.7
 
 		self.searchBox = LineEditButton(
@@ -169,7 +151,15 @@ class NavBar(QGroupBox):
 		self.groupLayout.addWidget(
 			self.searchBox,
 			stretch=0,
-			alignment=Qt.AlignCenter
+			alignment=Qt.AlignLeft | Qt.AlignVCenter
+		)
+
+		self.navUser = NavBarUser(self.user)
+
+		self.groupLayout.addWidget(
+			self.navUser,
+			stretch=0,
+			alignment=Qt.AlignRight | Qt.AlignVCenter
 		)
 
 
@@ -448,9 +438,8 @@ class Card(QGroupBox):
 
 		self.title = title
 
-		blurradius = 30
+		blurradius = 25
 		offset = 0.1
-		color = QColor(0, 0, 0, 255 * .3)
 
 		self.shadow_effect = QGraphicsDropShadowEffect()
 		self.shadow_effect.setBlurRadius(blurradius)
@@ -490,8 +479,6 @@ class Card(QGroupBox):
 
 		self.cardLayout.addLayout(self.box_heading)
 
-		# self.eventList(self.event)
-
 		self.setLayout(self.cardLayout)
 
 		self.event_layout = QVBoxLayout()
@@ -516,26 +503,45 @@ class Card(QGroupBox):
 		self.cardLayout.addWidget(self.event_scroll)
 
 	def addEvent(self, event):
+		height = 100
+		buttonRatio = 0.3
 
-		height = 50
+		self.eventItemsLayout = QHBoxLayout()
+		self.eventItemsLayout.setSpacing(0)
+		self.eventItemsLayout.setContentsMargins(0, 0, 0, 0)
 
-		self.event_name = QLabel(str(event))
-		self.event_name.setFixedHeight(height)
+		self.eventItemsGroup = QGroupBox()
+		self.eventItemsGroup.setLayout(self.eventItemsLayout)
+		self.eventItemsGroup.setObjectName('cardChildren')
+		self.eventItemsGroup.setMaximumHeight(height)
+
+		self.event_name = QLabel(str(
+			utils.paginator(
+				event,
+				max_word=200,
+				show_end=True,
+				end_length=5
+				)
+			)
+		)
+		self.event_name.setMaximumHeight(height)
 		self.event_name.setMaximumWidth(self.width())
 		self.event_name.setWordWrap(True)
 		self.event_name.setObjectName('event')
-		self.event_layout.addWidget(self.event_name)
+		self.eventItemsLayout.addWidget(self.event_name)
 
 		self.edit_list_btn = QPushButton()
-		self.edit_list_btn.setFixedSize(25, height)
+		self.edit_list_btn.setFixedSize(25, height * buttonRatio)
 		self.edit_list_btn.setIcon(QIcon('resources/assets/images/icons/edit_icon.png'))
 		self.edit_list_btn.setIconSize(QSize(15, 15))
 		self.edit_list_btn.setObjectName('listBtn')
-		self.event_layout.addWidget(self.edit_list_btn)
+		self.eventItemsLayout.addWidget(self.edit_list_btn)
 
 		self.delete_list_btn = QPushButton()
-		self.delete_list_btn.setFixedSize(25, height)
+		self.delete_list_btn.setFixedSize(25, height * buttonRatio)
 		self.delete_list_btn.setIcon(QIcon('resources/assets/images/icons/delete_icon.png'))
 		self.delete_list_btn.setIconSize(QSize(15, 15))
 		self.delete_list_btn.setObjectName('listBtn')
-		self.event_layout.addWidget(self.delete_list_btn)
+		self.eventItemsLayout.addWidget(self.delete_list_btn)
+
+		self.event_layout.addWidget(self.eventItemsGroup)

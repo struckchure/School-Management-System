@@ -43,7 +43,7 @@ class Home(QGroupBox):
 			'index': []
 		}
 
-		self.groupLayout = QVBoxLayout()
+		self.groupLayout = QHBoxLayout()
 		self.groupLayout.setSpacing(0)
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
 		self.groupLayout.setAlignment(Qt.AlignTop)
@@ -60,17 +60,17 @@ class Home(QGroupBox):
 		self.sideBarWidth = pageConfigurations.getSideBarWidth(self.width())
 		self.pageWidth = pageConfigurations.getPageWidth(self.width())
 
-		self.navBar()
-		self.mainPage()
 		self.sideBar()
+		self.mainPage()
+		self.navBar()
 		self.rightPage()
 
 	def navBar(self):
 		self.navBarWidget = customWidgets.NavBar(self.user)
-		self.groupLayout.addWidget(self.navBarWidget)
+		self.mainPageLayout.addWidget(self.navBarWidget)
 
 	def mainPage(self):
-		self.mainPageLayout = QHBoxLayout()
+		self.mainPageLayout = QVBoxLayout()
 		self.mainPageLayout.setSpacing(0)
 		self.mainPageLayout.setContentsMargins(0, 0, 0, 0)
 		self.mainPageLayout.setAlignment(Qt.AlignTop)
@@ -147,7 +147,7 @@ class Home(QGroupBox):
 
 		self.sideBarLayout.addWidget(self.teacherSection)
 
-		self.mainPageLayout.addWidget(self.sideBarScroll)
+		self.groupLayout.addWidget(self.sideBarScroll)
 
 	def dashBoardButtonView(self):
 		text = self.dashBoardButton.text().replace(' ', '')

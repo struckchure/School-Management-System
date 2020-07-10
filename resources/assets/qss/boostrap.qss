@@ -1,3 +1,8 @@
+/*
+	QSS Stylings
+*/
+
+
 QGroupBox#mainPageGroup {
 	border: 0px;
 }
@@ -419,6 +424,13 @@ QGroupBox#card {
 	border: 1px solid #d9d9d9;
 }
 
+QGroupBox#cardChildren {
+	padding: 3px;
+	border: none;
+	border-bottom: 1px solid #404040;
+	background-color: white;
+}
+
 QLabel#headText {
 	color: #3E63CC;
 	font-size: 10px;
@@ -439,21 +451,23 @@ QLabel#boxTitle {
 }
 
 QPushButton#addButton {
-	border: 0px;
+	border: none;
+	border-radius: 20px;
 	background-color: #d9d9d9;
-	margin: 0px;
 }
 
 QPushButton#addButton:hover {
 	border: 1px solid #3E63CC;
 }
 
+QPushButton#addButton:not(focus) {
+	border: none;
+}
+
 QLabel#event {
 	color: #1a1a1a;
 	font-size: 12px;
 	font-weight: bold;
-	padding-left: 10px;
-	border-bottom: 1px solid #404040;
 	background-color: white;
 }
 QLabel#event2 {
