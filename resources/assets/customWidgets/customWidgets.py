@@ -41,7 +41,7 @@ class LineEditButton(QGroupBox):
 		self.linedEdit.setFixedHeight(self.height())
 		self.linedEdit.setMaximumWidth(250)
 
-		self.groupLayout.addWidget(self.linedEdit)
+		self.groupLayout.addWidget(self.linedEdit)	
 
 		self.button = QPushButton(self.icon, self.iconText)
 		self.button.clicked.connect(self.text)
@@ -112,10 +112,11 @@ class NavBarUser(QPushButton, QHBoxLayout):
 
 
 class NavBar(QGroupBox):
-	def __init__(self, user):
+	def __init__(self, user, schoolName='My School'):
 		QGroupBox.__init__(self)
 
 		self.user = user
+		self.schoolName = schoolName
 
 		navSideMargins = pageConfigurations.navSideMargins
 		
@@ -142,6 +143,16 @@ class NavBar(QGroupBox):
 
 		self.groupLayout.addWidget(
 			self.navUser,
+			stretch=0,
+			alignment=Qt.AlignLeft | Qt.AlignVCenter
+		)
+
+		self.titleLabel = QLabel(self.schoolName)
+		self.titleLabel.setObjectName('schoolNameLabel')
+		self.titleLabel.setMaximumSize(500, self.height())
+
+		self.groupLayout.addWidget(
+			self.titleLabel,
 			stretch=0,
 			alignment=Qt.AlignLeft | Qt.AlignVCenter
 		)
@@ -303,7 +314,6 @@ class DashButton(QPushButton, QHBoxLayout):
 
 		buttonRatio = 0.4
 		
-
 		self.buttonTextLabel = QLabel()
 		self.buttonTextLabel.setMaximumSize(self.width() * buttonRatio, self.height() * buttonRatio)
 		self.rightLayout.addWidget(self.buttonTextLabel)
@@ -314,6 +324,7 @@ class DashButton(QPushButton, QHBoxLayout):
 class PushNotification(QSystemTrayIcon):
 	def __init__(self, icon=QIcon('resources/assests/images/heart.png'), parent=None):
 		QSystemTrayIcon.__init__(self, icon, parent)
+		
 		menu = QMenu(parent)
 		exitAction = menu.addAction("Exit")
 		self.setContextMenu(menu)
@@ -430,10 +441,11 @@ class FirstRow(QPushButton):
 		self.setLayout(self.assist_layout)
 
 
-class SecondRow(QGroupBox):
-	def __init__(self, title, eventName):
+class Card(QGroupBox):
+	def __init__(self, title):
 		QGroupBox.__init__(self)
-		self.eventName = eventName
+		
+
 		self.title = title
 
 		blurradius = 30
@@ -443,19 +455,19 @@ class SecondRow(QGroupBox):
 		self.shadow_effect = QGraphicsDropShadowEffect()
 		self.shadow_effect.setBlurRadius(blurradius)
 		self.shadow_effect.setOffset(offset)
-		self.shadow_effect.setColor(color)
-		self.setGraphicsEffect(self.shadow_effect)
 
 		width = 480
 
+		self.setGraphicsEffect(self.shadow_effect)
 		self.setContentsMargins(0, 0, 0, 0)
 		self.setMaximumWidth(width)
-		self.setObjectName('secondRow')
+		self.setFixedHeight(350)
+		self.setObjectName('card')
 
-		self.secondRow = QVBoxLayout()
-		self.secondRow.setAlignment(Qt.AlignTop)
-		self.secondRow.setSpacing(0)
-		self.secondRow.setContentsMargins(0, 0, 0, 0)
+		self.cardLayout = QVBoxLayout()
+		self.cardLayout.setAlignment(Qt.AlignTop)
+		self.cardLayout.setSpacing(0)
+		self.cardLayout.setContentsMargins(0, 0, 0, 0)
 
 		# Layout for title and add button
 
@@ -464,57 +476,66 @@ class SecondRow(QGroupBox):
 		self.box_heading.setContentsMargins(0, 0, 0, 0)
 
 		self.box_title = QLabel(self.title)
-		self.box_title.setFixedSize(self.width(), 35)
 		self.box_title.setObjectName('boxTitle')
+		self.box_title.setFixedSize(self.width(), 35)
 		self.box_heading.addWidget(self.box_title, stretch=0, alignment=Qt.AlignLeft)
 
 		self.add_button = QPushButton()
+		self.add_button.setObjectName('addButton')
 		self.add_button.setIcon(QIcon('resources/assets/images/icons/add_icon.png'))
 		self.add_button.setIconSize(QSize(20, 20))
 		self.add_button.setFixedSize(30, 35)
-		#self.add_button.clicked.connect(self.addEvent)
-		self.add_button.setObjectName('addButton')
+		# self.add_button.clicked.connect(self.addEvent)
 		self.box_heading.addWidget(self.add_button, stretch=0, alignment=Qt.AlignRight)
 
-		self.secondRow.addLayout(self.box_heading)
+		self.cardLayout.addLayout(self.box_heading)
 
-		self.eventList(self.eventName)
+		# self.eventList(self.event)
 
-		self.setLayout(self.secondRow)
+		self.setLayout(self.cardLayout)
 
-	def eventList(self, eventName):
-		# Layout for lists
+		self.event_layout = QVBoxLayout()
+		self.event_layout.setSpacing(0)
+		self.event_layout.setContentsMargins(0, 0, 0, 0)
 
-		self.list_layout = QHBoxLayout()
+		self.list_layout = QVBoxLayout()
 		self.list_layout.setSpacing(0)
 		self.list_layout.setContentsMargins(0, 0, 0, 0)
 
-		height = 30
+		self.list_layout.addLayout(self.event_layout)
 
-		self.event_name = QLabel(str(eventName))
-		self.event_name.setMinimumHeight(height)
+		self.eventGroup = QGroupBox()
+		self.eventGroup.setObjectName('noBorderBox')
+		self.eventGroup.setLayout(self.list_layout)
+
+		self.event_scroll = QScrollArea()
+		self.event_scroll.setObjectName('eventScroll')
+		self.event_scroll.setWidget(self.eventGroup)
+		self.event_scroll.setWidgetResizable(True)
+
+		self.cardLayout.addWidget(self.event_scroll)
+
+	def addEvent(self, event):
+
+		height = 50
+
+		self.event_name = QLabel(str(event))
+		self.event_name.setFixedHeight(height)
+		self.event_name.setMaximumWidth(self.width())
 		self.event_name.setWordWrap(True)
 		self.event_name.setObjectName('event')
-		self.list_layout.addWidget(self.event_name)
+		self.event_layout.addWidget(self.event_name)
 
 		self.edit_list_btn = QPushButton()
 		self.edit_list_btn.setFixedSize(25, height)
 		self.edit_list_btn.setIcon(QIcon('resources/assets/images/icons/edit_icon.png'))
 		self.edit_list_btn.setIconSize(QSize(15, 15))
 		self.edit_list_btn.setObjectName('listBtn')
-		self.list_layout.addWidget(self.edit_list_btn)
+		self.event_layout.addWidget(self.edit_list_btn)
 
 		self.delete_list_btn = QPushButton()
 		self.delete_list_btn.setFixedSize(25, height)
 		self.delete_list_btn.setIcon(QIcon('resources/assets/images/icons/delete_icon.png'))
 		self.delete_list_btn.setIconSize(QSize(15, 15))
 		self.delete_list_btn.setObjectName('listBtn')
-		self.list_layout.addWidget(self.delete_list_btn)
-
-		self.event_scroll = QScrollArea()
-		self.event_scroll.setMaximumHeight(50)
-		self.event_scroll.setWidgetResizable(True)
-		self.event_scroll.setObjectName('eventScroll')
-		self.event_scroll.setLayout(self.list_layout)
-
-		self.secondRow.addWidget(self.event_scroll)
+		self.event_layout.addWidget(self.delete_list_btn)

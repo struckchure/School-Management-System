@@ -19,3 +19,9 @@
 	staff to students
 	class teacher to class students
 	And all chats can be disabled by school admin
+
+7. Students requirements
+	 Uniforms, List of Books, Events, Class Notifications, Bills
+
+8. Pop Quiz
+	...

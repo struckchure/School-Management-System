@@ -25,15 +25,34 @@ class DashBoard(QGroupBox):
 
 		self.groupLayout = QGridLayout()
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
-		self.groupLayout.setAlignment(Qt.AlignTop | Qt.AlignCenter)
-		self.groupLayout.setSpacing(20)
+		self.groupLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
+		self.groupLayout.setSpacing(15)
 		
 		self.pageCrumb = customWidgets.PageCrumb('DashBoard')
 
-		self.studentButton = customWidgets.DashButton('Students', 100, buttonIcon='resources/assets/images/icons/group1.png')
-		self.teacherButton = customWidgets.DashButton('Teachers', 15, buttonIcon='resources/assets/images/icons/group2.png', borderColor='#7B615C')
-		self.groupButton = customWidgets.DashButton('Groups', 10, buttonIcon='resources/assets/images/icons/group3.png', borderColor='#2C7BA8')
-		self.clubsButton = customWidgets.DashButton('Clubs', 20, buttonIcon='resources/assets/images/icons/group4.png', borderColor='#6BC10C')
+		self.studentButton = customWidgets.DashButton(
+			'Students',
+			100,
+			buttonIcon='resources/assets/images/icons/group1.png'
+		)
+		self.teacherButton = customWidgets.DashButton(
+			'Teachers',
+			15,
+			buttonIcon='resources/assets/images/icons/group2.png',
+			borderColor='#7B615C'
+		)
+		self.groupButton = customWidgets.DashButton(
+			'Groups',
+			10,
+			buttonIcon='resources/assets/images/icons/group3.png',
+			borderColor='#2C7BA8'
+		)
+		self.clubsButton = customWidgets.DashButton(
+			'Clubs',
+			20,
+			buttonIcon='resources/assets/images/icons/group4.png',
+			borderColor='#6BC10C'
+		)
 
 		self.groupLayout.addWidget(self.pageCrumb, 0, 0, 1, 4)
 		self.groupLayout.addWidget(self.studentButton, 1, 0)
@@ -51,20 +70,26 @@ class DashBoard(QGroupBox):
 		self.pageContentsLayout.setAlignment(Qt.AlignLeft)
 		self.pageContentsLayout.setContentsMargins(0, 40, 0, 0)
 
-		self.upcomingEvents = customWidgets.SecondRow(title="Upcoming Events", eventName="Inter house Sport Inter house Sport Inter house Sport Inter house Sport")
+		self.upcomingEvents = customWidgets.Card(
+			title="Upcoming Events",
+		)
 
-		self.eventDate = QLabel("12 November")
-		self.eventDate.setMinimumSize(120, 35)
-		self.eventDate.setObjectName('event2')
-		self.upcomingEvents.list_layout.addWidget(self.eventDate)
+		self.upcomingEvents.addEvent(event='Hey There, we are opening next year :)')
+		self.upcomingEvents.addEvent(event='Hey There, we are opening next year :)')
+		self.upcomingEvents.addEvent(event='Hey There, we are opening next year :)')
+		self.upcomingEvents.addEvent(event='Hey There, we are opening next year :)')
+		self.upcomingEvents.addEvent(event='Hey There, we are opening next year :)')
+		self.upcomingEvents.addEvent(event='Hey There, we are opening next year :)')
+		self.upcomingEvents.addEvent(event='Hey There, we are opening next year :)')
+		self.upcomingEvents.addEvent(event='Hey There, we are opening next year :)')
+		self.upcomingEvents.addEvent(event='Hey There, we are opening next year :)')
+		self.upcomingEvents.addEvent(event='Hey There, we are opening next year :)')
+		self.upcomingEvents.addEvent(event='Hey There, we are opening next year :)')
+		self.upcomingEvents.addEvent(event='Hey There, we are opening next year :)')
 
-		editButton = self.upcomingEvents.edit_list_btn
-		deleteButton = self.upcomingEvents.delete_list_btn
-		
-		self.upcomingEvents.list_layout.addWidget(editButton)
-		self.upcomingEvents.list_layout.addWidget(deleteButton)
-
-		self.notice_board = customWidgets.SecondRow(title="Notice Board", eventName="WAEC/NECO Exam")
+		self.notice_board = customWidgets.Card(
+			title="Notice Board",
+		)
 
 		self.pageContentsLayout.addWidget(self.upcomingEvents)
 		self.pageContentsLayout.addWidget(self.notice_board)

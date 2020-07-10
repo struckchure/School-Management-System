@@ -415,8 +415,8 @@ QPushButton#firstRow {
 	padding-right: 15px;
 }
 
-QGroupBox#secondRow {
-	border: 0px;
+QGroupBox#card {
+	border: 1px solid #d9d9d9;
 }
 
 QLabel#headText {
@@ -506,7 +506,12 @@ LineEditButton#lineEditBox {
 	text-align: center;
 }
 
-
+QLabel#schoolNameLabel {
+	border: 0px;
+	color: black;
+	font-size: 13px;
+	font-weight: bold;
+}
 
 /*
 QMenu::item {
