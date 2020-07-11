@@ -37,7 +37,20 @@ class Teachers(QGroupBox):
 		self.initalization()
 
 	def initalization(self):
-		pass
+		self.allTeacherstable()
+
+	def allTeacherstable(self):
+		self.teacherTables = customWidgets.Table(
+			[
+				'Name',
+				'Age',
+				'Name',
+				'Age',
+				'Name',
+				'Age',
+			]
+		)
+		self.groupLayout.addWidget(self.teacherTables)
 
 
 class TeacherAdmission(QGroupBox):

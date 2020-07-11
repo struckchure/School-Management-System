@@ -9,6 +9,11 @@ user_types = (
 	('Student', 'Student'),
 )
 
+notification_types = (
+	('Events', 'Events'),
+	('Notice', 'Notice'),
+)
+
 
 class Profile(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -35,3 +40,19 @@ class Class(models.Model):
 	class Meta:
 		verbose_name = "Class"
 		verbose_name_plural = "Classes"
+
+
+class Notification(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	notification_type = models.CharField(max_length=20, choices=notification_types, blank=False)
+	notification_title = models.CharField(max_length=200, blank=False)
+	notification_content = models.TextField(blank=False)
+	notification_date = models.DateTimeField(default=timezone.now)
+	notification_expiry_date = models.DateTimeField(default=timezone.now)
+
+	def _str__(self):
+		return self.notification_type + ' ' + self.notification_title
+
+	class Meta:
+		verbose_name = 'Notification'
+		verbose_name_plural = 'Notifications'

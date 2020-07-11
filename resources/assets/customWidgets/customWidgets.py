@@ -11,9 +11,34 @@ from views import utils
 
 # Custom Modules End
 
-'''
-    Home Views
-'''
+
+class SleepCells(QThread):
+	finished = pyqtSignal()
+	intReady = pyqtSignal(int)
+
+	@pyqtSlot()
+	def procCounter(self):
+		for i in range(1):
+			self.intReady.emit(i)
+		
+		self.finished.emit()
+
+
+class Cell(SleepCells):
+	def __init__(self, function):
+		SleepCells.__init__(self)
+
+		self.function = function
+		self.cellThread = QThread()
+
+		self.intReady.connect(self.function)
+		self.moveToThread(self.cellThread)
+		self.finished.connect(self.cellThread.quit)
+
+		self.cellThread.started.connect(self.procCounter)
+
+	def startCell(self):
+		self.cellThread.start()
 
 
 class LineEditButton(QGroupBox):
@@ -581,18 +606,56 @@ class Card(QGroupBox):
 		self.notice_name.setObjectName('event')
 		self.noticeItemsLayout.addWidget(self.notice_name)
 
-		# self.edit_list_btn = QPushButton()
-		# self.edit_list_btn.setFixedSize(25, height * buttonRatio)
-		# self.edit_list_btn.setIcon(QIcon('resources/assets/images/icons/edit_icon.png'))
-		# self.edit_list_btn.setIconSize(QSize(15, 15))
-		# self.edit_list_btn.setObjectName('listBtn')
-		# self.noticeItemsLayout.addWidget(self.edit_list_btn)
-
-		# self.delete_list_btn = QPushButton()
-		# self.delete_list_btn.setFixedSize(25, height * buttonRatio)
-		# self.delete_list_btn.setIcon(QIcon('resources/assets/images/icons/delete_icon.png'))
-		# self.delete_list_btn.setIconSize(QSize(15, 15))
-		# self.delete_list_btn.setObjectName('listBtn')
-		# self.noticeItemsLayout.addWidget(self.delete_list_btn)
-
 		self.event_layout.addWidget(self.noticeItemsGroup)
+
+
+class Tableheader(QLabel):
+	def __init__(self, text):
+		QLabel.__init__(self, str(text))
+
+
+class TableItem(QLabel):
+	def __init__(self, text):
+		QLabel.__init__(self, str(text))
+
+
+class Table(QGroupBox):
+	def __init__(self, tableRows: list, showIndex=True, index='s/n'):
+		QGroupBox.__init__(self)
+
+		self.tableRows = tableRows
+		self.showIndex = showIndex
+		self.index = index
+
+		self.tableLayout = QVBoxLayout()
+		self.tableLayout.setContentsMargins(0, 0, 0, 0)
+		self.tableLayout.setAlignment(Qt.AlignTop)
+
+		self.setObjectName('tableGroup')
+		self.setLayout(self.tableLayout)
+
+		self.initialization()
+
+	def initialization(self):
+		self.createRowsCell = Cell(self.createRows)
+		self.createRowsCell.startCell()
+
+	def createRows(self):
+		self.tableContentLayout = QGridLayout()
+		self.tableContentLayout.setContentsMargins(0, 0, 0, 0)
+		self.tableContentLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+		self.tableLayout.addLayout(self.tableContentLayout)
+
+		m, n = 0, 0
+
+		if self.showIndex:
+			self.tableContentLayout.addWidget(Tableheader(self.index), m, n)
+			n += 1
+
+		for i in self.tableRows:
+			self.tableContentLayout.addWidget(Tableheader(i), m, n)
+			n += 1
+		m += 1
+
+	def addRow(self, row: list):
+		pass
