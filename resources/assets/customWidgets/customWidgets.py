@@ -146,7 +146,7 @@ class NavBar(QGroupBox):
 			icon='resources/assets/images/icons/ic_keyboard_arrow_right_white_48dp.png',
 		)
 		self.searchBox.linedEdit.setFixedWidth(200)
-		self.searchBox.linedEdit.setToolTip('search')
+		self.searchBox.button.setToolTip('search')
 
 		self.groupLayout.addWidget(
 			self.searchBox,
@@ -482,10 +482,16 @@ class Card(QGroupBox):
 		self.setLayout(self.cardLayout)
 
 		self.event_layout = QVBoxLayout()
+		self.event_layout.setAlignment(Qt.AlignTop)
 		self.event_layout.setSpacing(0)
 		self.event_layout.setContentsMargins(0, 0, 0, 0)
 
+		# self.notice_layout = QVBoxLayout()
+		# self.notice_layout.setSpacing(0)
+		# self.notice_layout.setContentsMargins(0, 0, 0, 0)
+
 		self.list_layout = QVBoxLayout()
+		self.list_layout.setAlignment(Qt.AlignTop)
 		self.list_layout.setSpacing(0)
 		self.list_layout.setContentsMargins(0, 0, 0, 0)
 
@@ -545,3 +551,48 @@ class Card(QGroupBox):
 		self.eventItemsLayout.addWidget(self.delete_list_btn)
 
 		self.event_layout.addWidget(self.eventItemsGroup)
+
+	def addNotice(self, notice):
+		height = 100
+		buttonRatio = 0.3
+
+		self.noticeItemsLayout = QHBoxLayout()
+		self.noticeItemsLayout.setSpacing(0)
+		self.noticeItemsLayout.setContentsMargins(0, 0, 0, 0)
+
+		self.noticeItemsGroup = QGroupBox()
+		self.noticeItemsGroup.setLayout(self.noticeItemsLayout)
+		self.noticeItemsGroup.setObjectName('cardChildren')
+		self.noticeItemsGroup.setFixedHeight(height * 0.6)
+		self.noticeItemsGroup.setMaximumHeight(height)
+
+		self.notice_name = QLabel(str(
+			utils.paginator(
+				notice,
+				max_word=300,
+				show_end=True,
+				end_length=5
+				)
+			)
+		)
+		self.notice_name.setMaximumHeight(height)
+		self.notice_name.setMaximumWidth(self.width())
+		self.notice_name.setWordWrap(True)
+		self.notice_name.setObjectName('event')
+		self.noticeItemsLayout.addWidget(self.notice_name)
+
+		# self.edit_list_btn = QPushButton()
+		# self.edit_list_btn.setFixedSize(25, height * buttonRatio)
+		# self.edit_list_btn.setIcon(QIcon('resources/assets/images/icons/edit_icon.png'))
+		# self.edit_list_btn.setIconSize(QSize(15, 15))
+		# self.edit_list_btn.setObjectName('listBtn')
+		# self.noticeItemsLayout.addWidget(self.edit_list_btn)
+
+		# self.delete_list_btn = QPushButton()
+		# self.delete_list_btn.setFixedSize(25, height * buttonRatio)
+		# self.delete_list_btn.setIcon(QIcon('resources/assets/images/icons/delete_icon.png'))
+		# self.delete_list_btn.setIconSize(QSize(15, 15))
+		# self.delete_list_btn.setObjectName('listBtn')
+		# self.noticeItemsLayout.addWidget(self.delete_list_btn)
+
+		self.event_layout.addWidget(self.noticeItemsGroup)

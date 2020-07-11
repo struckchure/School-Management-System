@@ -198,7 +198,7 @@ QPushButton#sideBarButton:not(focus) {
 
 QGroupBox#widgetGroup {
 	padding: 0px;
-	padding-left: 10px;
+	/*padding-left: 10px;*/
 	border: 0px;
 }
 
