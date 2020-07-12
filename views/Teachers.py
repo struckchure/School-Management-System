@@ -1,11 +1,10 @@
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-import sys
 
 # Custom Modules Imports
 
-from views import pageConfigurations
+from views import utils
 from resources.assets.customWidgets import customWidgets
 
 # Custom Modules End
@@ -42,15 +41,38 @@ class Teachers(QGroupBox):
 	def allTeacherstable(self):
 		self.teacherTables = customWidgets.Table(
 			[
-				'Name',
-				'Age',
-				'Name',
-				'Age',
-				'Name',
-				'Age',
+				'First name',
+				'Last name',
+				'Username',
+				'E-Mail',
+				'Registered By',
+				'Date Joined'
 			]
 		)
+
+		self.teacherCell = customWidgets.Cell(self.getAllTeachers)
+		self.teacherCell.startCell()
+
 		self.groupLayout.addWidget(self.teacherTables)
+
+	def getAllTeachers(self):
+		# for teacher in allTeachers:
+		# 	pass
+		self.teacherTables.addRow(
+			[
+				'Mohammed',
+				'Ameen',
+				'MD',
+				utils.paginator(
+					'ameenmohammed2311@gmail.com',
+					max_word=10,
+					show_end=True,
+					end_length=3
+					),
+				'MD',
+				'12/07/20'
+			]
+		)
 
 
 class TeacherAdmission(QGroupBox):

@@ -25,6 +25,7 @@ sideBarWidgetWidthRatio = 0.71
 sideBarButtonRatio = sideBarWidgetWidthRatio
 sideBarSize = [230, 900]
 
+
 def getSideBarWidth(windowWidth):
 	return windowWidth * sideBarWidth
 
@@ -34,6 +35,7 @@ def getPageWidth(windowWidth):
 
 # Authentification settings
 
+
 minPasswordLength = 6
 cardWidthRatio = 1.2
 cardHeightRatio = 0.8
@@ -41,3 +43,8 @@ cardHeightRatio = 0.8
 # DashBoard settings
 
 DashButtonSize = [120, 120]
+
+
+# Table configurations
+
+tableSize = [300, 50]

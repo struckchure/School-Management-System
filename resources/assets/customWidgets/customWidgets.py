@@ -124,6 +124,10 @@ class NavBarUser(QPushButton, QHBoxLayout):
 		self.userOptions.addAction(self.profileAction)
 		self.userOptions.addAction(self.logoutAction)
 
+	# def keyPressEvent(self, e):
+	# 	if e.key() == Qt.RightButton:
+	# 		self.showUserOptions()
+
 	def showUserOptions(self, point):
 		point.setX(point.x() - 10)
 		point.setY(point.y())
@@ -609,14 +613,73 @@ class Card(QGroupBox):
 		self.event_layout.addWidget(self.noticeItemsGroup)
 
 
-class Tableheader(QLabel):
+'''
+	Table
+'''
+
+
+class TableHeader(QLabel):
 	def __init__(self, text):
 		QLabel.__init__(self, str(text))
+
+		self.setObjectName('tableHeader')
+		self.setMaximumSize(pageConfigurations.tableSize[0], pageConfigurations.tableSize[1])
 
 
 class TableItem(QLabel):
-	def __init__(self, text):
+	def __init__(self, text, bold=False):
 		QLabel.__init__(self, str(text))
+
+		self.setObjectName('tableItem')
+		self.setMaximumSize(pageConfigurations.tableSize[0], pageConfigurations.tableSize[1])
+
+
+class TableRow(QGroupBox):
+	def __init__(self, row: list, showIndex=True, index='s/n', header=False):
+		QGroupBox.__init__(self)
+
+		self.row = row
+		self.showIndex = showIndex
+		self.index = index
+		self.header = header
+
+		self.tableRowLayout = QGridLayout()
+		self.tableRowLayout.setSpacing(0)
+		self.tableRowLayout.setContentsMargins(0, 0, 0, 0)
+		self.tableRowLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+
+		self.setLayout(self.tableRowLayout)
+		self.setObjectName('tableRow')
+		self.setMaximumHeight(pageConfigurations.tableSize[0])
+
+		self.initialization()
+ 
+	def initialization(self):
+		self.m, self.n = 0, 0
+
+		self.createRowsCell = Cell(self.createRows)
+		self.createRowsCell.startCell()
+
+	def createRows(self):
+		if self.header:
+			if self.showIndex:
+				self.tableRowLayout.addWidget(TableHeader(self.index), self.m, self.n)
+				self.n += 1
+
+			for i in self.row:
+				self.tableRowLayout.addWidget(TableHeader(i), self.m, self.n)
+				self.n += 1
+		else:
+			if self.showIndex:
+				self.tableRowLayout.addWidget(TableItem(self.index), self.m, self.n)
+				self.n += 1
+
+			for i in self.row:
+				self.tableRowLayout.addWidget(TableItem(i), self.m, self.n)
+				self.n += 1
+
+		self.m += 1
+		self.n = 0
 
 
 class Table(QGroupBox):
@@ -626,36 +689,47 @@ class Table(QGroupBox):
 		self.tableRows = tableRows
 		self.showIndex = showIndex
 		self.index = index
+		self.currentIndex = 1
 
-		self.tableLayout = QVBoxLayout()
+		self.tableLayout = QGridLayout()
+		self.tableLayout.setSpacing(0)
 		self.tableLayout.setContentsMargins(0, 0, 0, 0)
 		self.tableLayout.setAlignment(Qt.AlignTop)
 
-		self.setObjectName('tableGroup')
+		self.setObjectName('table')
 		self.setLayout(self.tableLayout)
 
 		self.initialization()
 
 	def initialization(self):
+		self.m, self.n = 1, 0
+
 		self.createRowsCell = Cell(self.createRows)
 		self.createRowsCell.startCell()
 
 	def createRows(self):
-		self.tableContentLayout = QGridLayout()
-		self.tableContentLayout.setContentsMargins(0, 0, 0, 0)
-		self.tableContentLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
-		self.tableLayout.addLayout(self.tableContentLayout)
-
 		m, n = 0, 0
 
 		if self.showIndex:
-			self.tableContentLayout.addWidget(Tableheader(self.index), m, n)
+			self.tableLayout.addWidget(TableHeader(self.index), m, n)
 			n += 1
 
 		for i in self.tableRows:
-			self.tableContentLayout.addWidget(Tableheader(i), m, n)
+			self.tableLayout.addWidget(TableHeader(i), m, n)
 			n += 1
-		m += 1
 
-	def addRow(self, row: list):
-		pass
+		m += 1
+		n = 0
+
+	def addRow(self, row):
+		if self.showIndex:
+			self.tableLayout.addWidget(TableItem(self.currentIndex), self.m, self.n)
+			self.currentIndex += 1
+			self.n += 1
+
+		for i in row:
+			self.tableLayout.addWidget(TableItem(i), self.m, self.n)
+			self.n += 1
+
+		self.m += 1
+		self.n = 0

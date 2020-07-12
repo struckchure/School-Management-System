@@ -527,6 +527,41 @@ QLabel#schoolNameLabel {
 	font-weight: bold;
 }
 
+QGroupBox#table {
+	border: 0px;
+	padding: 15px;
+}
+
+QScrollArea#table {
+	border: 0px;
+}
+
+QGroupBox#tableRow {
+	border: 0px;
+}
+
+QLabel#tableHeader {
+	font-size: 15px;
+	font-family: Verdana;
+	font-weight: bold;
+	color: black;
+	padding: 5px;
+	border: 1px solid #404040;
+	/*border: 0px;
+	border-top: 1px solid #404040;
+	border-bottom: 1px solid #404040;*/
+}
+
+QLabel#tableItem {
+	font-size: 15px;
+	font-family: Verdana;
+	color: black;
+	padding: 5px;
+	border: 1px solid #404040;
+	/*border-bottom: 1px solid #404040;*/
+}
+
+
 /*
 QMenu::item {
 	border-bottom: 1px solid #C9EFEF;
