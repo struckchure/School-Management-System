@@ -527,6 +527,8 @@ QLabel#schoolNameLabel {
 	font-weight: bold;
 }
 
+/*Tables*/
+
 QGroupBox#table {
 	border: 0px;
 	padding: 15px;
@@ -540,16 +542,18 @@ QGroupBox#tableRow {
 	border: 0px;
 }
 
-QLabel#tableHeader {
+QLabel#tableHeader, QPushButton#tableButton {
+	/*tableAccentStart*/
+	background-color: rgba(0, 0, 0, 0);
+	/*tableAccentEnd*/
+	padding: 5px;
+	border: 0px;
+	border-top: 1px solid #404040;
+	border-bottom: 1px solid #404040;
 	font-size: 15px;
 	font-family: Verdana;
 	font-weight: bold;
 	color: black;
-	padding: 5px;
-	border: 1px solid #404040;
-	/*border: 0px;
-	border-top: 1px solid #404040;
-	border-bottom: 1px solid #404040;*/
 }
 
 QLabel#tableItem {
@@ -557,10 +561,29 @@ QLabel#tableItem {
 	font-family: Verdana;
 	color: black;
 	padding: 5px;
-	border: 1px solid #404040;
-	/*border-bottom: 1px solid #404040;*/
+	border: 0px;
+	border-bottom: 1px solid #404040;
 }
 
+QPushButton#tableButtonChild {
+	/*tableButtonAccentStart*/
+	background-color: rgba(0, 0, 0, 0);
+	/*tableButtonAccentEnd*/
+	font-size: 15px;
+	font-family: Verdana;
+	font-weight: bold;
+	color: white;
+	border: 0px;
+	border-radius: 3px;
+}
+
+QPushButton#tableButtonChild:hover {
+	border: 2px solid #CA5940;
+}
+
+QPushButton#tableButtonChild:pressed {
+	border: 2px solid #CA5948;
+}
 
 /*
 QMenu::item {

@@ -16,8 +16,8 @@ def findPage(pageFinders, pageName):
 
 
 def paginator(line, max_word=70, show_end=False, end_length=10):
-	line_copy = line
-	if len(line) > max_word:
+	line_copy = str(line)
+	if len(str(line)) > max_word:
 		line = line[:max_word] + ' ... '
 		if show_end:
 			line += line_copy[-end_length:]

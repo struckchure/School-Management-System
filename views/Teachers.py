@@ -46,7 +46,8 @@ class Teachers(QGroupBox):
 				'Username',
 				'E-Mail',
 				'Registered By',
-				'Date Joined'
+				'Date Joined',
+				'View'
 			]
 		)
 
@@ -58,21 +59,23 @@ class Teachers(QGroupBox):
 	def getAllTeachers(self):
 		# for teacher in allTeachers:
 		# 	pass
+
 		self.teacherTables.addRow(
 			[
 				'Mohammed',
 				'Ameen',
 				'MD',
-				utils.paginator(
-					'ameenmohammed2311@gmail.com',
-					max_word=10,
-					show_end=True,
-					end_length=3
-					),
+				'ameenmohammed2311@gmail.com',
 				'MD',
 				'12/07/20'
+			],
+			[
+				('View', self.viewUser, '#C13A3A')
 			]
 		)
+
+	def viewUser(self):
+		pass
 
 
 class TeacherAdmission(QGroupBox):

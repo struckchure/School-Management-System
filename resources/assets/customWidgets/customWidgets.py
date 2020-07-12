@@ -620,18 +620,107 @@ class Card(QGroupBox):
 
 class TableHeader(QLabel):
 	def __init__(self, text):
+		real_text = str(text)
+		text = utils.paginator(
+			text,
+			max_word=10,
+			show_end=True,
+			end_length=3
+		)
+
 		QLabel.__init__(self, str(text))
 
 		self.setObjectName('tableHeader')
+		# self.setToolTip(real_text)
 		self.setMaximumSize(pageConfigurations.tableSize[0], pageConfigurations.tableSize[1])
 
 
 class TableItem(QLabel):
-	def __init__(self, text, bold=False):
+	def __init__(
+		self,
+		text,
+		bold=False,
+		tableAccent='background-color: rgba(0, 0, 0, 0);'
+		):
+		real_text = str(text)
+		text = utils.paginator(
+			text,
+			max_word=10,
+			show_end=True,
+			end_length=3
+		)
+
 		QLabel.__init__(self, str(text))
 
+		if tableAccent != 'background-color: rgba(0, 0, 0, 0)':
+			qss = open('resources/assets/qss/boostrap.qss', 'r').read().split(
+				'/*tableAccentStart*/'
+				)[1].split(
+				'/*tableAccentEnd*/'
+				)[0].replace(
+				'background-color: rgba(0, 0, 0, 0);',
+				f'background-color: {tableAccent};'
+			)
+
+		self.setStyleSheet(qss)
 		self.setObjectName('tableItem')
-		self.setMaximumSize(pageConfigurations.tableSize[0], pageConfigurations.tableSize[1])
+		# self.setToolTip(real_text)
+		self.setMaximumSize(
+			pageConfigurations.tableSize[0],
+			pageConfigurations.tableSize[1]
+		)
+
+
+class TableButton(QPushButton):
+	def __init__(self, text, slot, icon='', color='rgba(0, 0, 0, 0)', tableAccent=''):
+		QPushButton.__init__(self)
+
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read().split(
+			'/*tableAccentStart*/'
+			)[1].split(
+			'/*tableAccentEnd*/'
+			)[0].replace(
+			'background-color: rgba(0, 0, 0, 0);',
+			f'background-color: {tableAccent};'
+		)
+		print(qss)
+		# print(
+		# 	qss.split(
+		# 		'/*tableButtonAccentStart*/'
+		# 	)
+		# )
+		qss = qss.split(
+			'/*tableButtonAccentStart*/'
+			)[1].split(
+			'/*tableButtonAccentEnd*/'
+			)[0].replace(
+			'background-color: rgba(0, 0, 0, 0);',
+			f'background-color: {color};'
+		)
+
+		buttonRatio = 0.8
+
+		self.buttonLayout = QVBoxLayout()
+		self.buttonLayout.setAlignment(Qt.AlignCenter)
+
+		self.tableButton = QPushButton(text)
+		self.tableButton.setIcon(QIcon(icon))
+		self.tableButton.setObjectName('tableButtonChild')
+		self.tableButton.clicked.connect(slot)
+		self.tableButton.setMaximumSize(
+			pageConfigurations.tableSize[0],
+			pageConfigurations.tableSize[1]
+		)
+
+		self.buttonLayout.addWidget(self.tableButton)
+
+		self.setObjectName('tableButton')
+		self.setCheckable(False)
+		self.setLayout(self.buttonLayout)
+		self.setMaximumSize(
+			pageConfigurations.tableSize[0],
+			pageConfigurations.tableSize[1]
+		)
 
 
 class TableRow(QGroupBox):
@@ -683,10 +772,11 @@ class TableRow(QGroupBox):
 
 
 class Table(QGroupBox):
-	def __init__(self, tableRows: list, showIndex=True, index='s/n'):
+	def __init__(self, tableRows: list, tableButtons=[], showIndex=True, index='s/n'):
 		QGroupBox.__init__(self)
 
 		self.tableRows = tableRows
+		self.tableButtons = tableButtons
 		self.showIndex = showIndex
 		self.index = index
 		self.currentIndex = 1
@@ -718,17 +808,54 @@ class Table(QGroupBox):
 			self.tableLayout.addWidget(TableHeader(i), m, n)
 			n += 1
 
+		for i in self.tableButtons:
+			self.tableLayout.addWidget(TableHeader(i), m, n)
+			n += 1
+
 		m += 1
 		n = 0
 
-	def addRow(self, row):
+	def addRow(self, row, buttons=[]):
+		if self.m % 2 == 1:
+			tableAccent = '#F1D4D4'
+		else:
+			tableAccent = '#FFFFFF'
+	
 		if self.showIndex:
-			self.tableLayout.addWidget(TableItem(self.currentIndex), self.m, self.n)
+			self.tableLayout.addWidget(
+				TableItem(
+					self.currentIndex,
+					tableAccent=tableAccent
+					),
+				self.m,
+				self.n
+			)
 			self.currentIndex += 1
 			self.n += 1
 
 		for i in row:
-			self.tableLayout.addWidget(TableItem(i), self.m, self.n)
+			self.tableLayout.addWidget(
+				TableItem(
+					i,
+					tableAccent=tableAccent
+					),
+				self.m,
+				self.n
+			)
+			self.n += 1
+
+		for i in buttons:
+			self.tableLayout.addWidget(
+				TableButton(
+					i[0],
+					slot=i[1],
+					# color=i[2],
+					color='red',
+					tableAccent=tableAccent
+					),
+				self.m,
+				self.n
+			)
 			self.n += 1
 
 		self.m += 1
