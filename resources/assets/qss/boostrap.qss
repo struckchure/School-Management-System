@@ -158,6 +158,7 @@ QLabel#sideBarTitle {
 	padding: 5px;
 	font-weight: bold;
 	color: white;
+	text-align: center;
 }
 
 QLabel#userInfo {

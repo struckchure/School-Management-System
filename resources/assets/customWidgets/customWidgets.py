@@ -199,7 +199,7 @@ class SideBarTitle(QLabel):
 		self.text = text
 
 		self.setWordWrap(True)
-		self.setMaximumSize(200, 50)
+		self.setMaximumSize(pageConfigurations.sideBarSectionWidth * 0.4, 70)
 		self.setText(self.text)
 		self.setAlignment(Qt.AlignCenter)
 		self.setObjectName('sideBarTitle')
@@ -220,7 +220,7 @@ class SideBarSection(QGroupBox):
 		self.titleLabel = QLabel(f'{title}')
 		self.titleLabel.setAlignment(Qt.AlignLeft)
 		self.titleLabel.setObjectName('sideBarSectionTitle')
-		self.titleLabel.setFixedSize(width * 0.85, 30)
+		self.titleLabel.setFixedSize(width * 0.2, 30)
 		self.groupLayout.addWidget(self.titleLabel, stretch=0, alignment=Qt.AlignLeft)
 
 		self.initialization()
@@ -246,6 +246,7 @@ class SideBarButton(QPushButton):
 
 		self.setFixedSize(pageConfigurations.sideBarSize[0] * ratio, pageConfigurations.sideBarButtonHeight)
 		self.setObjectName('sideBarButton')
+		self.setIconSize(QSize(20, 20))
 
 
 class SideBar(QScrollArea):

@@ -107,6 +107,13 @@ class Home(QGroupBox):
 		spacer1.setFixedHeight(60)
 		self.sideBarLayout.addWidget(spacer1)
 
+		if self.user.is_staff:
+			self.adminAccess()
+		self.nonAdminAcsess()
+
+		self.groupLayout.addWidget(self.sideBarScroll)
+
+	def adminAccess(self):
 		self.dashBoardButton = customWidgets.SideBarButton(title='DashBoard', image='resources/assets/images/icons/dashboard_icn.png')
 		self.dashBoardButton.clicked.connect(self.dashBoardButtonView)
 		self.sideBarLayout.addWidget(self.dashBoardButton)
@@ -147,7 +154,34 @@ class Home(QGroupBox):
 
 		self.sideBarLayout.addWidget(self.teacherSection)
 
-		self.groupLayout.addWidget(self.sideBarScroll)
+	def nonAdminAcsess(self):
+		# Time Table
+
+		self.timetableSection = customWidgets.SideBarSection(title='Time Table')
+
+		self.checkTimetableButton = customWidgets.SideBarButton(title='My Time Table', image='resources/assets/images/icons/calendar-alt.svg')
+		self.checkTimetableButton.clicked.connect(self.checkTimetableButtonView)
+		self.timetableSection.widgetLayout.addWidget(self.checkTimetableButton)
+
+		if self.user.is_staff:
+			self.addTimetableButton = customWidgets.SideBarButton(title='Add Time Table', image='resources/assets/images/icons/calendar-plus.svg')
+			self.addTimetableButton.clicked.connect(self.addTimetableButtonView)
+			self.timetableSection.widgetLayout.addWidget(self.addTimetableButton)
+
+			self.deleteTimetableButton = customWidgets.SideBarButton(title='Delete Time Table', image='resources/assets/images/icons/calendar-minus.svg')
+			self.deleteTimetableButton.clicked.connect(self.deleteTimetableButtonView)
+			self.timetableSection.widgetLayout.addWidget(self.deleteTimetableButton)
+
+		self.sideBarLayout.addWidget(self.timetableSection)
+
+	def checkTimetableButtonView(self):
+		pass
+
+	def addTimetableButtonView(self):
+		pass
+
+	def deleteTimetableButtonView(self):
+		pass
 
 	def dashBoardButtonView(self):
 		text = self.dashBoardButton.text().replace(' ', '')

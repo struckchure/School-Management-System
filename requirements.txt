@@ -1,5 +1,5 @@
 PyQt5
-SQLAlchemy
-MySQL-connector
-bcrypt
+django
+django-pyqt
 opencv-python
+QtAwesome==0.7.2
