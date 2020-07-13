@@ -46,7 +46,7 @@ class Teachers(QGroupBox):
 				'Username',
 				'E-Mail',
 				'Date',
-				'View'
+				'View',
 			]
 		)
 
@@ -68,25 +68,12 @@ class Teachers(QGroupBox):
 				'12/07/20'
 			],
 			[
-				('View', self.viewUser, '#C13A3A')
+				('View', self.viewUser('User'), 'black'),
 			]
 		)
 
-		self.teacherTables.addRow(
-			[
-				'Mohammed',
-				'Ameen',
-				'MD',
-				'ameenmohammed2311@gmail.com',
-				'12/07/20'
-			],
-			[
-				('View', self.viewUser, '#C13A3A')
-			]
-		)
-
-	def viewUser(self):
-		pass
+	def viewUser(self, user):
+		print(user)
 
 
 class TeacherAdmission(QGroupBox):

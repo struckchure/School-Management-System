@@ -666,37 +666,49 @@ class TableItem(QLabel):
 
 
 class TableButtonChild(QPushButton):
-	def __init__(self, text, slot, icon='', color='rgba(0, 0, 0, 0)'):
+	def __init__(
+		self,
+		text,
+		slot,
+		icon='resources/assets/images/icons/ic_event_note_white_48dp.png',
+		color='#3E63CC'
+		):
 		QPushButton.__init__(self, QIcon(icon), text)
 
+		self.slot = slot
+
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read().split(
-			'/*tableButtonAccentStart*/'
+			'/*tableButtonChildAccentStart*/'
 			)[1].split(
-			'/*tableButtonAccentEnd*/'
+			'/*tableButtonChildAccentEnd*/'
 			)[0].replace(
-			'background-color: rgba(0, 0, 0, 0);',
-			f'background-color: {color};'
+			'#3E63CC;',
+			f'{color};'
 			)
+		# qss = open('resources/assets/qss/boostrap.qss', 'r').read()
 
 		self.setStyleSheet(qss)
 		self.setObjectName('tableButtonChild')
-		self.clicked.connect(slot)
+		self.clicked.connect(self.buttonSlot)
 		self.setMaximumSize(
 			pageConfigurations.tableSize[0],
 			pageConfigurations.tableSize[1]
 		)
 
+	def buttonSlot(self):
+		return self.slot
 
-class TableButton(QPushButton):
+
+class TableButton(QGroupBox):
 	def __init__(
 		self,
 		text,
 		slot,
-		icon='resources/assets/images/icons/edit_icon.png',
+		icon='resources/assets/images/icons/ic_event_note_white_48dp.png',
 		color='rgba(0, 0, 0, 0)',
 		tableAccent=''
 		):
-		QPushButton.__init__(self)
+		QGroupBox.__init__(self)
 
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read().split(
 			'/*tableAccentStart*/'
@@ -858,8 +870,7 @@ class Table(QGroupBox):
 				TableButton(
 					i[0],
 					slot=i[1],
-					# color=i[2],
-					color='red',
+					color=i[2],
 					tableAccent=tableAccent
 					),
 				self.m,

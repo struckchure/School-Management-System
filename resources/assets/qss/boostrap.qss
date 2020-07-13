@@ -565,34 +565,36 @@ QLabel#tableItem {
 	border-bottom: 1px solid #404040;
 }
 
-QPushButton#tableButton {
+QPushButton#tableButton, QGroupBox#tableButton {
 	font-size: 15px;
 	font-family: Verdana;
 	color: black;
 	border: 0px;
 	border-bottom: 1px solid #404040;
+	padding: 5px;
 }
 
 QPushButton#tableButtonChild {
-	/*tableButtonAccentStart*/
-	background-color: rgba(0, 0, 0, 0);
-	/*tableButtonAccentEnd*/
-	font-size: 13px;
-	padding: 1px;
+	border-radius: 4px;
+	padding: 3px;
+	margin: 1px;
 	font-family: Verdana;
-	font-weight: bold;
+	font-size: 13px;
+	text-align: center;
 	color: white;
-	border: 0px;
-	border-radius: 3px;
-}
-
-QPushButton#tableButtonChild:hover {
-	/*border: 2px solid #CA5940;*/
+	/*tableButtonChildAccentStart*/
+	background-color: #3E63CC;
+	/*tableButtonChildAccentEnd*/
 }
 
 QPushButton#tableButtonChild:pressed {
-	border: 2px solid #CA5948;
+	border: 2px solid #68B0B3;
 }
+
+QPushButton#tableButtonChild:not(focus) {
+	border: 0px;
+}
+
 
 /*
 QMenu::item {
