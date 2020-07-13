@@ -47,6 +47,7 @@ class Teachers(QGroupBox):
 				'E-Mail',
 				'Date',
 				'View',
+				'Delete',
 			]
 		)
 
@@ -68,12 +69,10 @@ class Teachers(QGroupBox):
 				'12/07/20'
 			],
 			[
-				('View', self.viewUser('User'), 'black'),
+				('View', 'black', 'User', 'view'),
+				('Delete', 'orange', 'User', 'delete'),
 			]
 		)
-
-	def viewUser(self, user):
-		print(user)
 
 
 class TeacherAdmission(QGroupBox):

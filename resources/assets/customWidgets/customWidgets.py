@@ -405,61 +405,6 @@ class PageCrumb(QLabel):
 		self.setObjectName('pageCrumb')
 
 
-class FirstRow(QPushButton):
-	def __init__(self, head, total_no, icon='resources/assets/images/icons/group.png'):
-		QPushButton.__init__(self)
-
-		self.hd = head
-		self.tln = total_no
-		self.icn = icon
-
-		blurradius = 30
-		offset = 0.1
-		color = QColor(0, 0, 0, 255 * .3)
-
-		self.shadow_effect = QGraphicsDropShadowEffect()
-		self.shadow_effect.setBlurRadius(blurradius)
-		self.shadow_effect.setOffset(offset)
-		self.shadow_effect.setColor(color)
-		self.setGraphicsEffect(self.shadow_effect)
-
-		width = 230
-		height = 70
-
-		self.setContentsMargins(0, 0, 0, 0)
-		self.setMinimumSize(width, height)
-		self.setObjectName('firstRow')
-		self.setIcon(QIcon(self.icn))
-		self.setIconSize(QSize(50, 50))
-
-		self.assist_layout = QHBoxLayout()
-		self.assist_layout.setContentsMargins(0, 0, 0, 0)
-
-		self.firstRow = QVBoxLayout()
-		self.firstRow.setSpacing(0)
-		self.firstRow.setContentsMargins(0, 0, 0, 0)
-
-		self.head = QLabel(str(self.hd))
-		self.head.setMaximumHeight(11)
-		self.head.setObjectName("headText")
-		self.firstRow.addWidget(self.head)
-
-		self.total = QLabel(str(self.tln))
-		self.total.setMaximumHeight(20)
-		self.total.setObjectName("totalText")
-		self.firstRow.addWidget(self.total)
-
-		self.assist_layout.addLayout(self.firstRow)
-
-		self.box_icon = QLabel()
-		self.box_icon.setAlignment(Qt.AlignRight)
-		self.box_icon.setContentsMargins(0, 15, 24, 0)
-		box_icon = QPixmap(self.icn)
-		self.box_icon.setPixmap(box_icon)
-
-		self.setLayout(self.assist_layout)
-
-
 class Card(QGroupBox):
 	def __init__(self, title):
 		QGroupBox.__init__(self)
@@ -669,13 +614,15 @@ class TableButtonChild(QPushButton):
 	def __init__(
 		self,
 		text,
-		slot,
 		icon='resources/assets/images/icons/ic_event_note_white_48dp.png',
-		color='#3E63CC'
+		color='#3E63CC',
+		data='',
+		mode=''
 		):
 		QPushButton.__init__(self, QIcon(icon), text)
 
-		self.slot = slot
+		self.data = data
+		self.mode = mode
 
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read().split(
 			'/*tableButtonChildAccentStart*/'
@@ -685,8 +632,14 @@ class TableButtonChild(QPushButton):
 			'#3E63CC;',
 			f'{color};'
 			)
-		# qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+		blurRadius = 10
+		offSet = 0.1
 
+		self.groupGraphicsEffect = QGraphicsDropShadowEffect()
+		self.groupGraphicsEffect.setBlurRadius(blurRadius)
+		self.groupGraphicsEffect.setOffset(offSet)
+
+		self.setGraphicsEffect(self.groupGraphicsEffect)
 		self.setStyleSheet(qss)
 		self.setObjectName('tableButtonChild')
 		self.clicked.connect(self.buttonSlot)
@@ -696,19 +649,24 @@ class TableButtonChild(QPushButton):
 		)
 
 	def buttonSlot(self):
-		return self.slot
+		if self.mode == 'delete':
+			pass
+		elif self.mode == 'view':
+			pass
 
 
 class TableButton(QGroupBox):
 	def __init__(
 		self,
 		text,
-		slot,
 		icon='resources/assets/images/icons/ic_event_note_white_48dp.png',
 		color='rgba(0, 0, 0, 0)',
-		tableAccent=''
+		tableAccent='',
+		data=''
 		):
 		QGroupBox.__init__(self)
+
+		self.data = data
 
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read().split(
 			'/*tableAccentStart*/'
@@ -728,7 +686,6 @@ class TableButton(QGroupBox):
 		self.buttonLayout.addWidget(
 			TableButtonChild(
 				text,
-				slot,
 				icon=icon,
 				color=color
 				)
@@ -869,9 +826,10 @@ class Table(QGroupBox):
 			self.tableLayout.addWidget(
 				TableButton(
 					i[0],
-					slot=i[1],
-					color=i[2],
-					tableAccent=tableAccent
+					color=i[1],
+					tableAccent=tableAccent,
+					data=i[2],
+					mode=i[3]
 					),
 				self.m,
 				self.n
