@@ -542,7 +542,7 @@ QGroupBox#tableRow {
 	border: 0px;
 }
 
-QLabel#tableHeader, QPushButton#tableButton {
+QLabel#tableHeader {
 	/*tableAccentStart*/
 	background-color: rgba(0, 0, 0, 0);
 	/*tableAccentEnd*/
@@ -565,11 +565,20 @@ QLabel#tableItem {
 	border-bottom: 1px solid #404040;
 }
 
+QPushButton#tableButton {
+	font-size: 15px;
+	font-family: Verdana;
+	color: black;
+	border: 0px;
+	border-bottom: 1px solid #404040;
+}
+
 QPushButton#tableButtonChild {
 	/*tableButtonAccentStart*/
 	background-color: rgba(0, 0, 0, 0);
 	/*tableButtonAccentEnd*/
-	font-size: 15px;
+	font-size: 13px;
+	padding: 1px;
 	font-family: Verdana;
 	font-weight: bold;
 	color: white;
@@ -578,7 +587,7 @@ QPushButton#tableButtonChild {
 }
 
 QPushButton#tableButtonChild:hover {
-	border: 2px solid #CA5940;
+	/*border: 2px solid #CA5940;*/
 }
 
 QPushButton#tableButtonChild:pressed {

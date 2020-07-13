@@ -45,8 +45,7 @@ class Teachers(QGroupBox):
 				'Last name',
 				'Username',
 				'E-Mail',
-				'Registered By',
-				'Date Joined',
+				'Date',
 				'View'
 			]
 		)
@@ -66,7 +65,19 @@ class Teachers(QGroupBox):
 				'Ameen',
 				'MD',
 				'ameenmohammed2311@gmail.com',
+				'12/07/20'
+			],
+			[
+				('View', self.viewUser, '#C13A3A')
+			]
+		)
+
+		self.teacherTables.addRow(
+			[
+				'Mohammed',
+				'Ameen',
 				'MD',
+				'ameenmohammed2311@gmail.com',
 				'12/07/20'
 			],
 			[

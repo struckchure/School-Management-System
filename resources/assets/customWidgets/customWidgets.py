@@ -464,7 +464,6 @@ class Card(QGroupBox):
 	def __init__(self, title):
 		QGroupBox.__init__(self)
 		
-
 		self.title = title
 
 		blurradius = 25
@@ -514,10 +513,6 @@ class Card(QGroupBox):
 		self.event_layout.setAlignment(Qt.AlignTop)
 		self.event_layout.setSpacing(0)
 		self.event_layout.setContentsMargins(0, 0, 0, 0)
-
-		# self.notice_layout = QVBoxLayout()
-		# self.notice_layout.setSpacing(0)
-		# self.notice_layout.setContentsMargins(0, 0, 0, 0)
 
 		self.list_layout = QVBoxLayout()
 		self.list_layout.setAlignment(Qt.AlignTop)
@@ -592,7 +587,6 @@ class Card(QGroupBox):
 		self.noticeItemsGroup = QGroupBox()
 		self.noticeItemsGroup.setLayout(self.noticeItemsLayout)
 		self.noticeItemsGroup.setObjectName('cardChildren')
-		self.noticeItemsGroup.setFixedHeight(height * 0.6)
 		self.noticeItemsGroup.setMaximumHeight(height)
 
 		self.notice_name = QLabel(str(
@@ -671,8 +665,37 @@ class TableItem(QLabel):
 		)
 
 
+class TableButtonChild(QPushButton):
+	def __init__(self, text, slot, icon='', color='rgba(0, 0, 0, 0)'):
+		QPushButton.__init__(self, QIcon(icon), text)
+
+		qss = open('resources/assets/qss/boostrap.qss', 'r').read().split(
+			'/*tableButtonAccentStart*/'
+			)[1].split(
+			'/*tableButtonAccentEnd*/'
+			)[0].replace(
+			'background-color: rgba(0, 0, 0, 0);',
+			f'background-color: {color};'
+			)
+
+		self.setStyleSheet(qss)
+		self.setObjectName('tableButtonChild')
+		self.clicked.connect(slot)
+		self.setMaximumSize(
+			pageConfigurations.tableSize[0],
+			pageConfigurations.tableSize[1]
+		)
+
+
 class TableButton(QPushButton):
-	def __init__(self, text, slot, icon='', color='rgba(0, 0, 0, 0)', tableAccent=''):
+	def __init__(
+		self,
+		text,
+		slot,
+		icon='resources/assets/images/icons/edit_icon.png',
+		color='rgba(0, 0, 0, 0)',
+		tableAccent=''
+		):
 		QPushButton.__init__(self)
 
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read().split(
@@ -682,38 +705,24 @@ class TableButton(QPushButton):
 			)[0].replace(
 			'background-color: rgba(0, 0, 0, 0);',
 			f'background-color: {tableAccent};'
-		)
-		print(qss)
-		# print(
-		# 	qss.split(
-		# 		'/*tableButtonAccentStart*/'
-		# 	)
-		# )
-		qss = qss.split(
-			'/*tableButtonAccentStart*/'
-			)[1].split(
-			'/*tableButtonAccentEnd*/'
-			)[0].replace(
-			'background-color: rgba(0, 0, 0, 0);',
-			f'background-color: {color};'
-		)
+			)
 
 		buttonRatio = 0.8
 
 		self.buttonLayout = QVBoxLayout()
+		self.buttonLayout.setContentsMargins(0, 0, 0, 0)
 		self.buttonLayout.setAlignment(Qt.AlignCenter)
 
-		self.tableButton = QPushButton(text)
-		self.tableButton.setIcon(QIcon(icon))
-		self.tableButton.setObjectName('tableButtonChild')
-		self.tableButton.clicked.connect(slot)
-		self.tableButton.setMaximumSize(
-			pageConfigurations.tableSize[0],
-			pageConfigurations.tableSize[1]
-		)
+		self.buttonLayout.addWidget(
+			TableButtonChild(
+				text,
+				slot,
+				icon=icon,
+				color=color
+				)
+			)
 
-		self.buttonLayout.addWidget(self.tableButton)
-
+		self.setStyleSheet(qss)
 		self.setObjectName('tableButton')
 		self.setCheckable(False)
 		self.setLayout(self.buttonLayout)
