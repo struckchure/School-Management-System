@@ -663,7 +663,8 @@ class TableButton(QGroupBox):
 		icon='resources/assets/images/icons/ic_event_note_white_48dp.png',
 		color='rgba(0, 0, 0, 0)',
 		tableAccent='',
-		data=''
+		data='',
+		mode=''
 		):
 		QGroupBox.__init__(self)
 
@@ -796,7 +797,7 @@ class Table(QGroupBox):
 
 	def addRow(self, row, buttons=[]):
 		if self.m % 2 == 1:
-			tableAccent = '#F1D4D4'
+			tableAccent = '#E6E8FF'
 		else:
 			tableAccent = '#FFFFFF'
 	
