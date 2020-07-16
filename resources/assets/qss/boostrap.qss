@@ -2,7 +2,6 @@
 	QSS Stylings
 */
 
-
 QGroupBox#mainPageGroup {
 	border: 0px;
 }

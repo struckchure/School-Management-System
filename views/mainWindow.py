@@ -104,7 +104,7 @@ class Home(QGroupBox):
 		self.sideBarLayout.addWidget(self.sideBarTitle)
 
 		spacer1 = QLabel()
-		spacer1.setFixedHeight(60)
+		spacer1.setFixedHeight(45)
 		self.sideBarLayout.addWidget(spacer1)
 
 		if self.user.is_staff:
@@ -114,7 +114,7 @@ class Home(QGroupBox):
 		self.groupLayout.addWidget(self.sideBarScroll)
 
 	def adminAccess(self):
-		self.dashBoardButton = customWidgets.SideBarButton(title='DashBoard', image='resources/assets/images/icons/dashboard_icn.png')
+		self.dashBoardButton = customWidgets.SideBarButton(title='DashBoard', image='fa.dashboard')
 		self.dashBoardButton.clicked.connect(self.dashBoardButtonView)
 		self.sideBarLayout.addWidget(self.dashBoardButton)
 
@@ -122,15 +122,15 @@ class Home(QGroupBox):
 
 		self.studentSection = customWidgets.SideBarSection(title='Student')
 
-		self.admissionButton = customWidgets.SideBarButton(title='Admission', image='resources/assets/images/icons/admission.png')
+		self.admissionButton = customWidgets.SideBarButton(title='Admission', image='fa.user-plus')
 		self.admissionButton.clicked.connect(self.admissionButtonView)
 		self.studentSection.widgetLayout.addWidget(self.admissionButton)
 
-		self.studentPromotionButton = customWidgets.SideBarButton(title='Promotion', image='resources/assets/images/icons/promotion.png')
+		self.studentPromotionButton = customWidgets.SideBarButton(title='Promotion', image='fa.angle-double-up')
 		self.studentPromotionButton.clicked.connect(self.studentPromotionButtonView)
 		self.studentSection.widgetLayout.addWidget(self.studentPromotionButton)
 
-		self.allStudentsButton = customWidgets.SideBarButton(title='All Students', image='resources/assets/images/icons/all.png')
+		self.allStudentsButton = customWidgets.SideBarButton(title='All Students', image='fa.user')
 		self.allStudentsButton.clicked.connect(self.allStudentsButtonView)
 		self.studentSection.widgetLayout.addWidget(self.allStudentsButton)
 
@@ -140,15 +140,15 @@ class Home(QGroupBox):
 		
 		self.teacherSection = customWidgets.SideBarSection(title='Teacher')
 
-		self.addTeacherButton = customWidgets.SideBarButton(title='New Teacher', image='resources/assets/images/icons/new_teacher.png')
+		self.addTeacherButton = customWidgets.SideBarButton(title='New Teacher', image='fa.user-plus')
 		self.addTeacherButton.clicked.connect(self.addTeacherButtonView)
 		self.teacherSection.widgetLayout.addWidget(self.addTeacherButton)
 
-		self.teacherPromotionButton = customWidgets.SideBarButton(title='Promotion', image='resources/assets/images/icons/promotion.png')
+		self.teacherPromotionButton = customWidgets.SideBarButton(title='Promotion', image='fa.angle-double-up')
 		self.teacherPromotionButton.clicked.connect(self.teacherPromotionButtonView)
 		self.teacherSection.widgetLayout.addWidget(self.teacherPromotionButton)
 
-		self.allTeachersButton = customWidgets.SideBarButton(title='All Teachers', image='resources/assets/images/icons/all.png')
+		self.allTeachersButton = customWidgets.SideBarButton(title='All Teachers', image='fa.user')
 		self.allTeachersButton.clicked.connect(self.allTeachersButtonView)
 		self.teacherSection.widgetLayout.addWidget(self.allTeachersButton)
 
@@ -159,16 +159,16 @@ class Home(QGroupBox):
 
 		self.timetableSection = customWidgets.SideBarSection(title='Time Table')
 
-		self.checkTimetableButton = customWidgets.SideBarButton(title='My Time Table', image='resources/assets/images/icons/calendar-alt.svg')
+		self.checkTimetableButton = customWidgets.SideBarButton(title='My Time Table', image='fa5.calendar-alt')
 		self.checkTimetableButton.clicked.connect(self.checkTimetableButtonView)
 		self.timetableSection.widgetLayout.addWidget(self.checkTimetableButton)
 
 		if self.user.is_staff:
-			self.addTimetableButton = customWidgets.SideBarButton(title='Add Time Table', image='resources/assets/images/icons/calendar-plus.svg')
+			self.addTimetableButton = customWidgets.SideBarButton(title='Add Time Table', image='fa5.calendar-plus')
 			self.addTimetableButton.clicked.connect(self.addTimetableButtonView)
 			self.timetableSection.widgetLayout.addWidget(self.addTimetableButton)
 
-			self.deleteTimetableButton = customWidgets.SideBarButton(title='Delete Time Table', image='resources/assets/images/icons/calendar-minus.svg')
+			self.deleteTimetableButton = customWidgets.SideBarButton(title='Delete Time Table', image='fa5.calendar-times')
 			self.deleteTimetableButton.clicked.connect(self.deleteTimetableButtonView)
 			self.timetableSection.widgetLayout.addWidget(self.deleteTimetableButton)
 

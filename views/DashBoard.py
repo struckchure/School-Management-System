@@ -33,24 +33,24 @@ class DashBoard(QGroupBox):
 		self.studentButton = customWidgets.DashButton(
 			'Students',
 			100,
-			buttonIcon='resources/assets/images/icons/group1.png'
+			buttonIcon='fa.users'
 		)
 		self.teacherButton = customWidgets.DashButton(
 			'Teachers',
 			15,
-			buttonIcon='resources/assets/images/icons/group2.png',
+			buttonIcon='fa.users',
 			borderColor='#7B615C'
 		)
 		self.groupButton = customWidgets.DashButton(
 			'Groups',
 			10,
-			buttonIcon='resources/assets/images/icons/group3.png',
+			buttonIcon='fa.users',
 			borderColor='#2C7BA8'
 		)
 		self.clubsButton = customWidgets.DashButton(
 			'Clubs',
 			20,
-			buttonIcon='resources/assets/images/icons/group4.png',
+			buttonIcon='fa.users',
 			borderColor='#6BC10C'
 		)
 

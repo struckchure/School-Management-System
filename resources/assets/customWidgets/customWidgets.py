@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+import qtawesome as qta
 import sys
 
 
@@ -42,11 +43,11 @@ class Cell(SleepCells):
 
 
 class LineEditButton(QGroupBox):
-	def __init__(self, placeHolder, icon, iconText=''):
+	def __init__(self, placeHolder, icon, iconText='', iconColor='white'):
 		super(LineEditButton, self).__init__()
 
 		self.placeHolder = placeHolder
-		self.icon = QIcon(icon)
+		self.icon = qta.icon(icon, color=iconColor)
 		self.iconText = iconText
 
 		self.groupLayout = QHBoxLayout()
@@ -86,11 +87,11 @@ class LineEditButton(QGroupBox):
 
 
 class NavBarUser(QPushButton, QHBoxLayout):
-	def __init__(self, user, default_image='resources/assets/images/icons/user.png'):
+	def __init__(self, user, default_image='fa.user-circle'):
 		super(NavBarUser, self).__init__()
 
 		self.user = user
-		self.userIcon = QIcon(default_image)
+		self.userIcon = qta.icon(default_image, color='black')
 
 		navSideMargins = pageConfigurations.navSideMargins
 
@@ -110,15 +111,15 @@ class NavBarUser(QPushButton, QHBoxLayout):
 		self.setContextMenuPolicy(Qt.CustomContextMenu)
 		self.customContextMenuRequested.connect(self.showUserOptions)
 
-		profileIcon = QIcon('resources/assets/images/icons/local_library_black.png')
-		logoutIcon = QIcon('resources/assets/images/icons/local_post_office_black.png')
+		profileIcon = qta.icon('fa.user', color='black')
+		logoutIcon = qta.icon('fa5s.door-open', color='black')
 
 		self.userOptions = QMenu(self)
 
-		self.profileAction = QAction(QIcon(profileIcon), 'Profile', self)
+		self.profileAction = QAction(profileIcon, 'Profile', self)
 		self.profileAction.triggered.connect(self.profileView)
 
-		self.logoutAction = QAction(QIcon(logoutIcon), 'Logout', self)
+		self.logoutAction = QAction(logoutIcon, 'Logout', self)
 		self.logoutAction.triggered.connect(self.logoutView)
 
 		self.userOptions.addAction(self.profileAction)
@@ -172,7 +173,7 @@ class NavBar(QGroupBox):
 
 		self.searchBox = LineEditButton(
 			placeHolder='search ...',
-			icon='resources/assets/images/icons/ic_keyboard_arrow_right_white_48dp.png',
+			icon='fa.search',
 		)
 		self.searchBox.linedEdit.setFixedWidth(200)
 		self.searchBox.button.setToolTip('search')
@@ -237,10 +238,12 @@ class SideBarSection(QGroupBox):
 
 
 class SideBarButton(QPushButton):
-	def __init__(self, title, image='resources/assets/images/icons/039-physics.png'):
-		QPushButton.__init__(self, QIcon(image), title)
-
-		self.title = title
+	def __init__(self, title, image, color='white'):
+		image = qta.icon(
+			image,
+			color=color
+		)
+		QPushButton.__init__(self, image, title)
 
 		ratio = 0.7
 
@@ -276,7 +279,15 @@ class DashButton(QPushButton, QHBoxLayout):
 
 		self.buttonText = str(buttonText)
 		self.buttonValue = str(buttonValue)
-		self.buttonIcon = buttonIcon
+		self.buttonIcon = qta.icon(
+			buttonIcon,
+			color=borderColor,
+			options=[
+					{
+						'scale_factor': 0.7
+					}
+				]
+			)
 		self.borderColor = str(borderColor)
 		
 		blurRadius = 20
@@ -293,9 +304,11 @@ class DashButton(QPushButton, QHBoxLayout):
 
 		iconWidth, iconHeight = pageConfigurations.DashButtonSize
 		qss = open('resources/assets/qss/boostrap.qss', 'r').read().split('/* idDashButtonStart */')[1].split('/* idDashButtonEnd */')[0].replace('#1554BD', self.borderColor)
+		size = 15
 
 		self.setStyleSheet(qss)
-		self.setIcon(QIcon(QPixmap(self.buttonIcon)))
+		self.setIcon(self.buttonIcon)
+		self.setIconSize(QSize(size, size))
 		self.setLayout(self.buttonLayout)
 		self.setContentsMargins(0, 0, 0, 0)
 		self.setGraphicsEffect(self.groupGraphicsEffect)
@@ -420,6 +433,8 @@ class Card(QGroupBox):
 		self.shadow_effect.setOffset(offset)
 
 		width = 480
+		self.color = '#1554BD'
+		self.iconColor = self.color
 
 		self.setGraphicsEffect(self.shadow_effect)
 		self.setContentsMargins(0, 0, 0, 0)
@@ -445,7 +460,12 @@ class Card(QGroupBox):
 
 		self.add_button = QPushButton()
 		self.add_button.setObjectName('addButton')
-		self.add_button.setIcon(QIcon('resources/assets/images/icons/add_icon.png'))
+		self.add_button.setIcon(
+			qta.icon(
+				'fa.plus-circle',
+				color=self.color
+			)
+		)
 		self.add_button.setIconSize(QSize(20, 20))
 		self.add_button.setFixedSize(30, 35)
 		# self.add_button.clicked.connect(self.addEvent)
@@ -508,14 +528,24 @@ class Card(QGroupBox):
 
 		self.edit_list_btn = QPushButton()
 		self.edit_list_btn.setFixedSize(25, height * buttonRatio)
-		self.edit_list_btn.setIcon(QIcon('resources/assets/images/icons/edit_icon.png'))
+		self.edit_list_btn.setIcon(
+			qta.icon(
+				'fa.edit',
+				color=self.iconColor
+			)
+		)
 		self.edit_list_btn.setIconSize(QSize(15, 15))
 		self.edit_list_btn.setObjectName('listBtn')
 		self.eventItemsLayout.addWidget(self.edit_list_btn)
 
 		self.delete_list_btn = QPushButton()
 		self.delete_list_btn.setFixedSize(25, height * buttonRatio)
-		self.delete_list_btn.setIcon(QIcon('resources/assets/images/icons/delete_icon.png'))
+		self.delete_list_btn.setIcon(
+			qta.icon(
+				'mdi.delete',
+				color=self.iconColor
+			)
+		)
 		self.delete_list_btn.setIconSize(QSize(15, 15))
 		self.delete_list_btn.setObjectName('listBtn')
 		self.eventItemsLayout.addWidget(self.delete_list_btn)

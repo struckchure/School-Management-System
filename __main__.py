@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import os
 import sys
+# import sass
+
 
 try:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
@@ -16,11 +18,17 @@ from viewManagers.mainWindowManager import mainWindow
 
 def main():
 	try:
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+		# theme = sass.compile_string(
+		# 	open('resources/assets/qss/theme.qss', 'r').read().encode('utf-8')
+		# ).decode()
+		
+		# theme += open('resources/assets/qss/boostrap.qss', 'r').read()
+
+		theme = open('resources/assets/qss/boostrap.qss', 'r').read()
 
 		app = QApplication(sys.argv)
 		window = mainWindow()
-		window.setStyleSheet(qss)
+		window.setStyleSheet(theme)
 		window.show()
 
 		sys.exit(app.exec_())
@@ -29,4 +37,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+	main()
