@@ -25,8 +25,9 @@ class DashBoard(QGroupBox):
 
 		self.groupLayout = QGridLayout()
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
-		self.groupLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
+		self.groupLayout.setAlignment(Qt.AlignCenter)
 		self.groupLayout.setSpacing(15)
+
 		
 		self.pageCrumb = customWidgets.PageCrumb('DashBoard')
 
@@ -55,12 +56,18 @@ class DashBoard(QGroupBox):
 		)
 
 		self.groupLayout.addWidget(self.pageCrumb, 0, 0, 1, 4)
-		self.groupLayout.addWidget(self.studentButton, 1, 0)
-		self.groupLayout.addWidget(self.teacherButton, 1, 1)
-		self.groupLayout.addWidget(self.groupButton, 1, 2)
-		self.groupLayout.addWidget(self.clubsButton, 1, 3)
+		self.groupLayout.addWidget(self.studentButton, 1, 0, 1, 1)
+		self.groupLayout.addWidget(self.teacherButton, 1, 1, 1, 1)
+		self.groupLayout.addWidget(self.groupButton, 1, 2, 1, 1)
+		self.groupLayout.addWidget(self.clubsButton, 1, 3, 1, 1)
 
 		self.setObjectName('noBorderBox')
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setLayout(self.groupLayout)
 
 		self.initalization()

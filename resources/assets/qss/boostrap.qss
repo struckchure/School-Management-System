@@ -2,6 +2,9 @@
 	QSS Stylings
 */
 
+$authBG : url(resources/assets/images/home_bg_color_particles.jpg);
+$rightPageBG : rgba(0, 0, 0, 0.35);
+
 QGroupBox#mainPageGroup {
 	border: 0px;
 }
@@ -14,14 +17,14 @@ QScrollArea#mainPageScroll {
 
 QGroupBox#login {
 	border: 0px;
-	background-image: url(resources/assets/images/home_bg_color_particles.jpg);
+	background-image: $authBG;
 	background-repeat: no-repeat;
 	background-position: center;
 }
 
 QGroupBox#rightPageGroup {
 	border: 0px;
-	background-color: rgba(0, 0, 0, 0.35);
+	background-color: $rightPageBG;
 	border-bottom-left-radius: 40;
 	border-top-right-radius: 40px;
 }
@@ -147,7 +150,7 @@ QLabel#pageTitle-sm {
 }
 
 QGroupBox#sideBar {
-	background-color: blue;
+	background-color: red;
 	border: 0px;
 }
 
@@ -368,6 +371,7 @@ QGroupBox#noBorderBox {
 
 QGroupBox#rightMainGroup {
 	border: 0px;
+	margin: 10px;
 	padding: 35px;
 }
 
@@ -595,6 +599,38 @@ QPushButton#tableButtonChild:not(focus) {
 	border: 0px;
 }
 
+/*Cards*/
+
+QGroupBox#cardBasic {
+	/*cardBasicAccent*/
+	background-color: rgba(255, 255, 255, 0.85);
+	border: 0px;
+	border-top: 2px solid orange;
+	border-radius: 4px;
+	padding: 0px;
+	/*cardBasicAccent*/
+}
+
+QLabel#cardHeader {
+	/*cardHeaderAccent*/
+	background-color: #ABF0E1;
+	border: 0px;
+	/*border-radius: 3px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;*/
+	padding: 5px;
+	/*cardHeaderAccent*/
+}
+
+QGroupBox#cardContent {
+	/*cardBasicAccent*/
+	background-color: rgba(255, 255, 255, 0.5);
+	border: 0px;
+	border-top: 2px solid orange;
+	border-radius: 3px;
+	padding: 0px;
+	/*cardBasicAccent*/
+}
 
 /*
 QMenu::item {

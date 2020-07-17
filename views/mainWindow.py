@@ -50,6 +50,12 @@ class Home(QGroupBox):
 
 		self.setLayout(self.groupLayout)
 		self.setMaximumSize(pageConfigurations.windowWidth, pageConfigurations.windowHeight)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setObjectName('home')
 		self.showMaximized()
 
@@ -269,13 +275,20 @@ class Home(QGroupBox):
 
 	def rightPage(self):
 		self.rightPageStackedWidget = QStackedWidget()
+		self.rightPageStackedWidget.setContentsMargins(0, 0, 0, 0)
+		self.rightPageStackedWidget.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 
 		self.rightPageLayout = QVBoxLayout()
 		self.rightPageLayout.setContentsMargins(0, 0, 0, 0)
 		self.rightPageLayout.setSpacing(0)
-		self.rightPageLayout.setAlignment(Qt.AlignTop)
+		self.rightPageLayout.setAlignment(Qt.AlignCenter)
 
-		self.rightPageLayout.addWidget(self.rightPageStackedWidget, stretch=0, alignment=Qt.AlignLeft)
+		self.rightPageLayout.addWidget(self.rightPageStackedWidget)
 
 		self.rightPageFinders['page'].append('DashBoard')
 		self.rightPageFinders['index'].append(0)
@@ -284,13 +297,14 @@ class Home(QGroupBox):
 		self.rightPageStackedWidget.addWidget(self.dashBoard)
 
 		self.rightPageGroup = QGroupBox()
-		self.rightPageGroup.setMaximumSize(1500, 900)
+		self.rightPageGroup.setMaximumSize(900, 800)
 		self.rightPageGroup.setObjectName('rightMainGroup')
 		self.rightPageGroup.setLayout(self.rightPageLayout)
 
 		self.rightPageScroll = QScrollArea()
 		self.rightPageScroll.setObjectName('rightMainScroll')
 		self.rightPageScroll.setWidgetResizable(True)
+		self.rightPageGroup.setMaximumSize(1000, 800)
 		self.rightPageScroll.setWidget(self.rightPageGroup)
 
 		self.mainPageLayout.addWidget(self.rightPageScroll)

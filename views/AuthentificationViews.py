@@ -32,6 +32,12 @@ class Login(QGroupBox):
 		self.groupLayout.setAlignment(Qt.AlignCenter)
 
 		self.setLayout(self.groupLayout)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setObjectName('login')
 
 		self.initialization()
@@ -202,7 +208,9 @@ class Login(QGroupBox):
 			self.pageFinders['page'].append('homePage')
 			self.pageFinders['index'].append(self.pageController.currentIndex() + 1)
 
-			self.pageController.addWidget(mainWindow.Home(self.pageController, self.pageFinders, self.get_user))
+			self.pageController.addWidget(
+				mainWindow.Home(self.pageController, self.pageFinders, self.get_user)
+			)
 			self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
 		else:
 			page = utils.findPage(self.pageFinders, 'homePage')
@@ -233,6 +241,12 @@ class Register(QGroupBox):
 		self.groupLayout.setAlignment(Qt.AlignCenter)
 
 		self.setLayout(self.groupLayout)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setObjectName('login')
 
 		self.initialization()

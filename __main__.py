@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import os
 import sys
-# import sass
 
 
 try:
@@ -14,17 +13,12 @@ except Exception as e:
 
 from PyQt5.QtWidgets import QApplication
 from viewManagers.mainWindowManager import mainWindow
+from views import utils
 
 
 def main():
 	try:
-		# theme = sass.compile_string(
-		# 	open('resources/assets/qss/theme.qss', 'r').read().encode('utf-8')
-		# ).decode()
-		
-		# theme += open('resources/assets/qss/boostrap.qss', 'r').read()
-
-		theme = open('resources/assets/qss/boostrap.qss', 'r').read()
+		theme = utils.readQSS()
 
 		app = QApplication(sys.argv)
 		window = mainWindow()

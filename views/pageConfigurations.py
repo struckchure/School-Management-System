@@ -1,8 +1,8 @@
 # Page configurations
 
 pageFinders = {
-	'page':[],
-	'index':[]
+	'page': [],
+	'index': []
 }
 
 # Window settings
@@ -17,13 +17,13 @@ navSideMargins = 20
 
 # SideBar settings
 
-sideBarWidth = 0.75
+sideBarWidth = 0.7
 pageWidth = 1 - sideBarWidth
 sideBarButtonHeight = 35
-sideBarSectionWidth = 0.6 * windowWidth
-sideBarWidgetWidthRatio = 0.71
+sideBarSectionWidth = 0.5 * windowWidth
+sideBarWidgetWidthRatio = 0.45
 sideBarButtonRatio = sideBarWidgetWidthRatio
-sideBarSize = [250, 900]
+sideBarSize = [230, 900]
 
 
 def getSideBarWidth(windowWidth):
@@ -42,7 +42,7 @@ cardHeightRatio = 0.8
 
 # DashBoard settings
 
-DashButtonSize = [120, 120]
+DashButtonSize = [115, 120]
 
 
 # Table configurations

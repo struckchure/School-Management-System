@@ -1,9 +1,11 @@
+import sass
+
+
 '''
 	
 	Custom Utilities
 
 '''
-
 
 
 def findPage(pageFinders, pageName):
@@ -25,3 +27,24 @@ def paginator(line, max_word=70, show_end=False, end_length=10):
 		line = line
 
 	return line
+
+
+def findReplace(old, new, keywords, qss='resources/assets/qss/boostrap.qss'):
+	qss = open(qss, mode='r')
+	qss = qss.read().split(keywords)[1].split(keywords)[0].replace(
+		f'{old}',
+		f'{new}'
+	)
+
+	return qss
+
+
+def readQSS(file='resources/assets/qss/boostrap.qss'):
+	theme = open(file, 'r').read()
+	scss = open('resources/assets/scss/boostrap.scss', mode='w')
+	scss.write(theme)
+
+	sass.compile(dirname=('resources/assets/scss', 'resources/assets/qss'), output_style='compressed')
+	css = open('resources/assets/qss/boostrap.css', 'r').read()
+	
+	return css

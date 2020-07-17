@@ -314,8 +314,13 @@ class DashButton(QPushButton, QHBoxLayout):
 		self.setGraphicsEffect(self.groupGraphicsEffect)
 		self.setObjectName('dashButton')
 		self.setIconSize(QSize(iconWidth, iconHeight))
-		self.setMinimumSize(235, 65)
 		self.setMaximumSize(250, 100)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 
 		self.initialization()
 
@@ -417,6 +422,12 @@ class PageCrumb(QLabel):
 
 		self.setFixedSize(500, 45)
 		self.setObjectName('pageCrumb')
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 
 
 class Card(QGroupBox):
@@ -870,3 +881,93 @@ class Table(QGroupBox):
 
 		self.m += 1
 		self.n = 0
+
+
+'''
+	Cards
+'''
+
+
+class CardBasic(QGroupBox):
+	def __init__(self, width=200, height=200, accent='blue'):
+		QGroupBox.__init__(self)
+
+		self.accent = accent
+
+		qss = utils.findReplace(
+			f'orange;',
+			f'{accent};',
+			'/*cardBasicAccent*/'
+		)
+
+		self.cardLayout = QVBoxLayout()
+		self.cardLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+		self.cardLayout.setSpacing(0)
+		self.cardLayout.setContentsMargins(0, 0, 0, 0)
+
+		blurRadius = 10
+		offSet = 0.1
+
+		self.cardShadow = QGraphicsDropShadowEffect()
+		self.cardShadow.setBlurRadius(blurRadius)
+		self.cardShadow.setOffset(offSet)
+
+		self.setStyleSheet(qss)
+		self.setObjectName('cardBasic')
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+		self.setLayout(self.cardLayout)
+		self.setGraphicsEffect(self.cardShadow)
+		# self.setFixedSize(width, height)
+		# self.setMinimumSize(width, height)
+		self.setMaximumSize(width, height * 3)
+
+
+class CardHeader(QLabel):
+	def __init__(self, text, width=200, height=50, accent='blue'):
+		QLabel.__init__(self, text)
+
+		self.accent = accent
+
+		self.setObjectName('cardHeader')
+		self.setMaximumHeight(height)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+
+
+class CardContent(QGroupBox):
+	def __init__(self, width=200, height=200, accent='blue'):
+		QGroupBox.__init__(self)
+
+		self.accent = accent
+
+		self.cardLayout = QVBoxLayout()
+		self.cardLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+		self.cardLayout.setSpacing(0)
+		self.cardLayout.setContentsMargins(0, 0, 0, 0)
+
+		blurRadius = 10
+		offSet = 0.1
+
+		self.cardShadow = QGraphicsDropShadowEffect()
+		self.cardShadow.setBlurRadius(blurRadius)
+		self.cardShadow.setOffset(offSet)
+
+		self.setObjectName('cardContent')
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+		self.setLayout(self.cardLayout)
+		self.setGraphicsEffect(self.cardShadow)
+		self.setMaximumSize(width, height * 3)

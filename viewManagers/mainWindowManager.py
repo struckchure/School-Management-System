@@ -25,7 +25,13 @@ class mainWindow(QWidget):
 		self.setStyleSheet(qss)
 		self.setLayout(self.main_layout)
 		self.setObjectName('index')
-		self.setMaximumSize(1350, 900)
+		self.setMaximumSize(1500, 1500)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setWindowTitle('School Management System')
 		self.showMaximized()
 
