@@ -82,7 +82,7 @@ class Home(QGroupBox):
 		self.mainPageLayout.setAlignment(Qt.AlignTop)
 
 		self.mainPageGroup = QGroupBox()
-		self.mainPageGroup.setObjectName('mainPageGroup')
+		self.mainPageGroup.setObjectName('mainPage')
 		self.mainPageGroup.setLayout(self.mainPageLayout)
 
 		self.mainPageScroll = QScrollArea()

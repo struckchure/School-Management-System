@@ -57,6 +57,12 @@ class LineEditButton(QGroupBox):
 
 		self.setLayout(self.groupLayout)
 		self.setFixedHeight(30)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setObjectName('lineEditBox')
 
 		self.initialization()
@@ -99,6 +105,12 @@ class NavBarUser(QPushButton, QHBoxLayout):
 		self.navBarUserLayout.setContentsMargins(0, 0, 0, 0)
 
 		self.setLayout(self.navBarUserLayout)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setMaximumWidth(pageConfigurations.sideBarSize[0])
 		self.setIcon(self.userIcon)
 		self.setText(self.user.get_full_name())
@@ -164,6 +176,12 @@ class NavBar(QGroupBox):
 		self.setObjectName('navBar')
 		self.setLayout(self.groupLayout)
 		self.setGraphicsEffect(self.groupGraphicsEffect)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setFixedHeight(pageConfigurations.navBarHeight)
 
 		self.initialization()
@@ -200,6 +218,12 @@ class SideBarTitle(QLabel):
 		self.text = text
 
 		self.setWordWrap(True)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setMaximumSize(pageConfigurations.sideBarSectionWidth * 0.4, 70)
 		self.setText(self.text)
 		self.setAlignment(Qt.AlignCenter)
@@ -215,6 +239,12 @@ class SideBarSection(QGroupBox):
 		self.groupLayout.setSpacing(5)
 
 		self.setFixedWidth(width)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setObjectName('sideBarSection')
 		self.setLayout(self.groupLayout)
 
@@ -249,6 +279,12 @@ class SideBarButton(QPushButton):
 
 		self.setFixedSize(pageConfigurations.sideBarSize[0] * ratio, pageConfigurations.sideBarButtonHeight)
 		self.setObjectName('sideBarButton')
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setIconSize(QSize(20, 20))
 
 
@@ -268,6 +304,12 @@ class SideBar(QScrollArea):
 
 		self.setWidget(self.sideBarGroup)
 		self.setWidgetResizable(True)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setMaximumSize(sideBarSize[0], sideBarSize[1])
 		self.setObjectName('sideBarScroll')
 		self.showMaximized()
@@ -303,7 +345,7 @@ class DashButton(QPushButton, QHBoxLayout):
 		self.buttonLayout.setAlignment(Qt.AlignTop | Qt.AlignVCenter)
 
 		iconWidth, iconHeight = pageConfigurations.DashButtonSize
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read().split('/* idDashButtonStart */')[1].split('/* idDashButtonEnd */')[0].replace('#1554BD', self.borderColor)
+		qss = utils.findReplace('#1554BD', self.borderColor, '/* idDashButton */')
 		size = 15
 
 		self.setStyleSheet(qss)
@@ -378,11 +420,17 @@ class PopUp(QWidget):
 
 		self.windowLayout = QVBoxLayout()
 
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
+		qss = utils.readQSS()
 		self.setStyleSheet(qss)
 		self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
 		self.resize(300, 170)
 		self.setMaximumSize(600, 600)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		resolution = QDesktopWidget().availableGeometry().center()
 		qr = self.frameGeometry()
 		qr.moveCenter(resolution)
@@ -449,6 +497,12 @@ class Card(QGroupBox):
 
 		self.setGraphicsEffect(self.shadow_effect)
 		self.setContentsMargins(0, 0, 0, 0)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setMaximumWidth(width)
 		self.setFixedHeight(350)
 		self.setObjectName('card')
@@ -613,6 +667,12 @@ class TableHeader(QLabel):
 
 		self.setObjectName('tableHeader')
 		# self.setToolTip(real_text)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setMaximumSize(pageConfigurations.tableSize[0], pageConfigurations.tableSize[1])
 
 
@@ -634,18 +694,21 @@ class TableItem(QLabel):
 		QLabel.__init__(self, str(text))
 
 		if tableAccent != 'background-color: rgba(0, 0, 0, 0)':
-			qss = open('resources/assets/qss/boostrap.qss', 'r').read().split(
-				'/*tableAccentStart*/'
-				)[1].split(
-				'/*tableAccentEnd*/'
-				)[0].replace(
+			qss = utils.findReplace(
 				'background-color: rgba(0, 0, 0, 0);',
-				f'background-color: {tableAccent};'
+				f'background-color: {tableAccent};',
+				'/*tableAccent*/'
 			)
 
 		self.setStyleSheet(qss)
 		self.setObjectName('tableItem')
 		# self.setToolTip(real_text)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setMaximumSize(
 			pageConfigurations.tableSize[0],
 			pageConfigurations.tableSize[1]
@@ -666,14 +729,11 @@ class TableButtonChild(QPushButton):
 		self.data = data
 		self.mode = mode
 
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read().split(
-			'/*tableButtonChildAccentStart*/'
-			)[1].split(
-			'/*tableButtonChildAccentEnd*/'
-			)[0].replace(
+		qss = utils.findReplace(
 			'#3E63CC;',
-			f'{color};'
-			)
+			f'{color};',
+			'/*tableButtonChildAccent*/'
+		)
 		blurRadius = 10
 		offSet = 0.1
 
@@ -685,6 +745,12 @@ class TableButtonChild(QPushButton):
 		self.setStyleSheet(qss)
 		self.setObjectName('tableButtonChild')
 		self.clicked.connect(self.buttonSlot)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setMaximumSize(
 			pageConfigurations.tableSize[0],
 			pageConfigurations.tableSize[1]
@@ -711,14 +777,11 @@ class TableButton(QGroupBox):
 
 		self.data = data
 
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read().split(
-			'/*tableAccentStart*/'
-			)[1].split(
-			'/*tableAccentEnd*/'
-			)[0].replace(
+		qss = utils.findReplace(
 			'background-color: rgba(0, 0, 0, 0);',
-			f'background-color: {tableAccent};'
-			)
+			f'background-color: {tableAccent};',
+			'/*tableAccent*/'
+		)
 
 		buttonRatio = 0.8
 
@@ -738,6 +801,12 @@ class TableButton(QGroupBox):
 		self.setObjectName('tableButton')
 		self.setCheckable(False)
 		self.setLayout(self.buttonLayout)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setMaximumSize(
 			pageConfigurations.tableSize[0],
 			pageConfigurations.tableSize[1]
@@ -760,6 +829,12 @@ class TableRow(QGroupBox):
 
 		self.setLayout(self.tableRowLayout)
 		self.setObjectName('tableRow')
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setMaximumHeight(pageConfigurations.tableSize[0])
 
 		self.initialization()
@@ -808,6 +883,12 @@ class Table(QGroupBox):
 		self.tableLayout.setAlignment(Qt.AlignTop)
 
 		self.setObjectName('table')
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.setLayout(self.tableLayout)
 
 		self.initialization()
@@ -961,6 +1042,13 @@ class CardContent(QGroupBox):
 		self.cardShadow.setBlurRadius(blurRadius)
 		self.cardShadow.setOffset(offSet)
 
+		qss = utils.findReplace(
+			f'orange;',
+			f'{self.accent};',
+			'/*cardContentAccent*/'
+		)
+
+		self.setStyleSheet(qss)
 		self.setObjectName('cardContent')
 		self.setSizePolicy(
 			QSizePolicy(

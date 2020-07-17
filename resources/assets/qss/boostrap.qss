@@ -2,11 +2,22 @@
 	QSS Stylings
 */
 
-$authBG : url(resources/assets/images/home_bg_color_particles.jpg);
+$authBG : url(resources/assets/images/bg.jpg);
 $rightPageBG : rgba(0, 0, 0, 0.35);
+$navTheme : white;
+$rightPageTheme : rgba(0, 0, 0, 0);
+$sideBarTheme : #3E63CC;
+$buttonTheme : $sideBarTheme;
+
+
+QGroupBox#mainPage {
+	border: 0px;
+	background-color: $rightPageTheme;
+}
 
 QGroupBox#mainPageGroup {
 	border: 0px;
+	background-color: rgba(0, 0, 0, 0);
 }
 
 QScrollArea#mainPageScroll {
@@ -82,7 +93,7 @@ QPushButton#login {
 	font-size: 13px;
 	text-align: center;
 	color: white;
-	background-color: #3E63CC;
+	background-color: $buttonTheme;
 }
 
 
@@ -150,7 +161,7 @@ QLabel#pageTitle-sm {
 }
 
 QGroupBox#sideBar {
-	background-color: red;
+	background-color: blue;
 	border: 0px;
 }
 
@@ -269,7 +280,7 @@ QGroupBox#home {
 
 QGroupBox#navBar {
 	border: 0px;
-	background-color: white;
+	background-color: $navTheme;
 	padding: 0px;
 	padding-left: 15px;
 	padding-right: 15px;
@@ -279,7 +290,7 @@ QGroupBox#sideBarGroup {
 	border: 0px;
 	/* border-bottom-left-radius: 20px; */
 	/* border-top-left-radius: 20px; */
-	background-color: #3E63CC;
+	background-color: $sideBarTheme;
 }
 
 
@@ -293,7 +304,7 @@ QScrollBar:horizontal{
     height: 10px;
     padding: 2px;
     margin: 0px;
-    border: none;
+    border: 0px;
     /*background-color: #ECB0B0;*/
 }
 
@@ -301,7 +312,7 @@ QScrollBar:vertical {
     width: 10px;
     padding: 2px;
     margin: 0px;
-    border: none;
+    border: 0px;
     /*background-color: #ECB0B0;*/
 }
 
@@ -317,18 +328,18 @@ QScrollBar::handle:hover {
 }
 
 QScrollBar::down-arrow, QScrollBar::up-arrow {
-	border: none;
+	border: 0px;
 	color: none;
 	background: none;
 }
 
 QScrollBar::add-line, QScrollBar::sub-line {
-	border: none;
+	border: 0px;
 	background-color: none;
 }
 
 QScrollBar::add-page, QScrollBar::sub-page {
-	border: none;
+	border: 0px;
 	background-color: none;
 }
 
@@ -380,7 +391,7 @@ QScrollArea#rightMainScroll {
 	background-color: rgba(0, 0, 0, 0);
 }
 
-/* idDashButtonStart */
+/* idDashButton */
 
 DashButton#dashButton {
 	border: 0px;
@@ -407,7 +418,7 @@ QLabel#dashValue {
 	font-size: 30px;
 }
 
-/* idDashButtonEnd */
+/* idDashButton */
 
 
 QLabel#pageCrumb {
@@ -547,9 +558,9 @@ QGroupBox#tableRow {
 }
 
 QLabel#tableHeader {
-	/*tableAccentStart*/
+	/*tableAccent*/
 	background-color: rgba(0, 0, 0, 0);
-	/*tableAccentEnd*/
+	/*tableAccent*/
 	padding: 5px;
 	border: 0px;
 	border-top: 1px solid #404040;
@@ -586,9 +597,9 @@ QPushButton#tableButtonChild {
 	font-size: 13px;
 	text-align: center;
 	color: white;
-	/*tableButtonChildAccentStart*/
+	/*tableButtonChildAccent*/
 	background-color: #3E63CC;
-	/*tableButtonChildAccentEnd*/
+	/*tableButtonChildAccent*/
 }
 
 QPushButton#tableButtonChild:pressed {
@@ -623,13 +634,13 @@ QLabel#cardHeader {
 }
 
 QGroupBox#cardContent {
-	/*cardBasicAccent*/
+	/*cardContentAccent*/
 	background-color: rgba(255, 255, 255, 0.5);
 	border: 0px;
 	border-top: 2px solid orange;
 	border-radius: 3px;
 	padding: 0px;
-	/*cardBasicAccent*/
+	/*cardContentAccent*/
 }
 
 /*
