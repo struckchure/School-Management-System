@@ -18,7 +18,7 @@ QScrollArea#mainPageScroll {
 
 QGroupBox#login {
   border: 0px;
-  background-image: url(resources/assets/images/home_bg_color_particles.jpg);
+  background-image: url(resources/assets/images/bg.jpg);
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -603,13 +603,13 @@ QLabel#cardHeader {
 }
 
 QGroupBox#cardContent {
-  /*cardBasicAccent*/
+  /*cardContentAccent*/
   background-color: rgba(255, 255, 255, 0.5);
   border: 0px;
   border-top: 2px solid orange;
   border-radius: 3px;
   padding: 0px;
-  /*cardBasicAccent*/
+  /*cardContentAccent*/
 }
 
 /*
