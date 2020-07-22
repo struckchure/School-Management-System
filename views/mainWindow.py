@@ -297,14 +297,26 @@ class Home(QGroupBox):
 		self.rightPageStackedWidget.addWidget(self.dashBoard)
 
 		self.rightPageGroup = QGroupBox()
-		self.rightPageGroup.setMaximumSize(900, 800)
+		self.rightPageGroup.setMaximumSize(1500, 800)
 		self.rightPageGroup.setObjectName('rightMainGroup')
+		self.rightPageGroup.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
 		self.rightPageGroup.setLayout(self.rightPageLayout)
 
 		self.rightPageScroll = QScrollArea()
 		self.rightPageScroll.setObjectName('rightMainScroll')
 		self.rightPageScroll.setWidgetResizable(True)
-		self.rightPageGroup.setMaximumSize(1000, 800)
+		self.rightPageScroll.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+		self.rightPageGroup.setMaximumSize(1500, 800)
 		self.rightPageScroll.setWidget(self.rightPageGroup)
 
 		self.mainPageLayout.addWidget(self.rightPageScroll)

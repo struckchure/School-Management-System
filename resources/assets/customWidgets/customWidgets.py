@@ -344,9 +344,8 @@ class DashButton(QPushButton, QHBoxLayout):
 		self.buttonLayout = QHBoxLayout()
 		self.buttonLayout.setAlignment(Qt.AlignTop | Qt.AlignVCenter)
 
-		iconWidth, iconHeight = pageConfigurations.DashButtonSize
 		qss = utils.findReplace('#1554BD', self.borderColor, '/* idDashButton */')
-		size = 15
+		size = 90
 
 		self.setStyleSheet(qss)
 		self.setIcon(self.buttonIcon)
@@ -355,8 +354,7 @@ class DashButton(QPushButton, QHBoxLayout):
 		self.setContentsMargins(0, 0, 0, 0)
 		self.setGraphicsEffect(self.groupGraphicsEffect)
 		self.setObjectName('dashButton')
-		self.setIconSize(QSize(iconWidth, iconHeight))
-		self.setMaximumSize(250, 100)
+		self.setMaximumSize(pageConfigurations.DashButtonSize[0], pageConfigurations.DashButtonSize[1])
 		self.setSizePolicy(
 			QSizePolicy(
 				QSizePolicy.MinimumExpanding,
@@ -1005,7 +1003,7 @@ class CardBasic(QGroupBox):
 		self.setGraphicsEffect(self.cardShadow)
 		# self.setFixedSize(width, height)
 		# self.setMinimumSize(width, height)
-		self.setMaximumSize(width, height * 3)
+		self.setMaximumSize(width, height)
 
 
 class CardHeader(QLabel):
@@ -1059,3 +1057,90 @@ class CardContent(QGroupBox):
 		self.setLayout(self.cardLayout)
 		self.setGraphicsEffect(self.cardShadow)
 		self.setMaximumSize(width, height * 3)
+
+
+'''
+	Tabs
+'''
+
+
+class TabCardBasic(QGroupBox):
+	def __init__(self, width=200, height=200):
+		QGroupBox.__init__(self)
+
+		self.cardLayout = QVBoxLayout()
+		self.cardLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+		self.cardLayout.setSpacing(0)
+		self.cardLayout.setContentsMargins(0, 0, 0, 0)
+
+		blurRadius = 10
+		offSet = 0.1
+
+		self.cardShadow = QGraphicsDropShadowEffect()
+		self.cardShadow.setBlurRadius(blurRadius)
+		self.cardShadow.setOffset(offSet)
+
+		self.setObjectName('tabCardBasic')
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+		self.setLayout(self.cardLayout)
+		self.setGraphicsEffect(self.cardShadow)
+		# self.setFixedSize(width, height)
+		# self.setMinimumSize(width, height)
+		self.setMaximumSize(width, height)
+
+
+class TabBasic(QTabWidget):
+	def __init__(self):
+		QTabWidget.__init__(self)
+
+		width, height = 900, 900
+
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+		self.setMinimumWidth(700)
+		self.setMaximumSize(width, height)
+
+		self.initialization()
+
+	def initialization(self):
+		pass
+
+	def addTabWidget(self, widget, title='Tab'):
+		self.addTab(widget, widget.tabTitle)
+
+
+class Tab(QGroupBox):
+	def __init__(self, tabTitle, width=500, height=400):
+		QGroupBox.__init__(self)
+
+		self.tabTitle = tabTitle
+		self.width = 1000
+		self.height = 400
+
+		self.groupLayout = QVBoxLayout()
+		self.groupLayout.setSpacing(0)
+		self.groupLayout.setAlignment(Qt.AlignTop)
+
+		# self.setObjectName('cardContent')
+		self.setMaximumSize(width, height)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+		self.setLayout(self.groupLayout)
+
+		self.initialization()
+
+	def initialization(self):
+		pass

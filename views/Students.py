@@ -37,12 +37,15 @@ class Students(QGroupBox):
 		self.initalization()
 
 	def initalization(self):
-		self.infoCardWidth = 600
+		self.infoCardWidth = self.width() * 5
+		self.infoCardHeight = self.height() * 5
+		rightRatio = 0.1
+		leftRatio = 1 - rightRatio
 
 		self.studentInfo = customWidgets.CardBasic(
-			width=self.infoCardWidth,
-			height=200,
-			accent='blue'
+			width=self.infoCardWidth * rightRatio,
+			height=self.infoCardHeight,
+			accent='orange'
 		)
 
 		self.studentInfoHeader = customWidgets.CardHeader(
@@ -53,34 +56,10 @@ class Students(QGroupBox):
 
 		self.studentInfo.cardLayout.addWidget(self.studentInfoHeader)
 
-		self.studentExtras = customWidgets.CardBasic(
-			width=self.infoCardWidth,
-			height=420,
-			accent='blue'
-		)
-
-		self.studentExtrasHeader = customWidgets.CardHeader(
-			'Extras',
-			width=self.studentExtras.width(),
-			height=50,
-		)
-
-		self.studentExtrasContent = customWidgets.CardContent(
-			width=100,
-			height=50,
-		)
-
-		self.studentExtras.cardLayout.addWidget(self.studentExtrasHeader)
-		self.studentExtras.cardLayout.addWidget(
-			self.studentExtrasContent,
-			stretch=0,
-			alignment=Qt.AlignCenter
-		)
-
 		self.studentSiblings = customWidgets.CardBasic(
-			width=self.infoCardWidth,
-			height=200,
-			accent='blue'
+			width=self.infoCardWidth * rightRatio,
+			height=self.infoCardHeight,
+			accent='orange'
 		)
 
 		self.studentSiblingsHeader = customWidgets.CardHeader(
@@ -91,9 +70,34 @@ class Students(QGroupBox):
 
 		self.studentSiblings.cardLayout.addWidget(self.studentSiblingsHeader)
 
+		self.studentExtras = customWidgets.TabCardBasic(
+			width=(self.infoCardWidth * leftRatio) * 3,
+			height=self.infoCardHeight
+		)
+
+		self.studentExtrasTab = customWidgets.TabBasic()
+
+		self.profile = customWidgets.Tab('Profile')
+		self.studentExtrasTab.addTabWidget(self.profile)
+
+		self.fees = customWidgets.Tab('Fees')
+		self.studentExtrasTab.addTabWidget(self.fees)
+
+		self.exam = customWidgets.Tab('Exam')
+		self.studentExtrasTab.addTabWidget(self.exam)
+
+		self.reports = customWidgets.Tab('Reports')
+		self.studentExtrasTab.addTabWidget(self.reports)
+
+		self.studentExtras.cardLayout.addWidget(
+			self.studentExtrasTab,
+			stretch=0,
+			alignment=Qt.AlignCenter
+		)
+
 		self.groupLayout.addWidget(self.studentInfo, 1, 0)
+		self.groupLayout.addWidget(self.studentExtras, 1, 1, 2, 1)
 		self.groupLayout.addWidget(self.studentSiblings, 2, 0)
-		self.groupLayout.addWidget(self.studentExtras, 1, 1, 2, 2)
 
 
 class StudentAdmission(QGroupBox):

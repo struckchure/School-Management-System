@@ -377,13 +377,13 @@ QLabel#popUpTitle {
 
 QGroupBox#noBorderBox {
 	border: 0px;
-	padding: 15px;
+	padding: 10px;
 }
 
 QGroupBox#rightMainGroup {
 	border: 0px;
-	margin: 10px;
-	padding: 35px;
+	margin: 5px;
+	padding: 25px;
 }
 
 QScrollArea#rightMainScroll {
@@ -617,7 +617,7 @@ QGroupBox#cardBasic {
 	background-color: rgba(255, 255, 255, 0.85);
 	border: 0px;
 	border-top: 2px solid orange;
-	border-radius: 4px;
+	/*border-radius: 4px;*/
 	padding: 0px;
 	/*cardBasicAccent*/
 }
@@ -626,9 +626,6 @@ QLabel#cardHeader {
 	/*cardHeaderAccent*/
 	background-color: #ABF0E1;
 	border: 0px;
-	/*border-radius: 3px;
-	border-bottom-left-radius: 0px;
-	border-bottom-right-radius: 0px;*/
 	padding: 5px;
 	/*cardHeaderAccent*/
 }
@@ -638,10 +635,56 @@ QGroupBox#cardContent {
 	background-color: rgba(255, 255, 255, 0.5);
 	border: 0px;
 	border-top: 2px solid orange;
-	border-radius: 3px;
+	/*border-radius: 3px;*/
 	padding: 0px;
 	/*cardContentAccent*/
 }
+
+/*Tab*/
+
+
+QGroupBox#tabCardBasic {
+	/*tabCardBasicAccent*/
+	background-color: white;
+	border: 0px;
+	/*border-radius: 4px;*/
+	padding: 0px;
+	/*tabCardBasicAccent*/
+}
+
+QTabWidget::pane, QTabWidget::tab-bar {
+	border: 0px;
+	padding: 0px;
+	background-color: white;
+}
+
+QTabBar::tab {
+	border: 0px;
+	border-radius: 0px;
+	background-color: rgba(0, 0, 0, 0);
+	padding: 5px;
+	width: 100px;
+}
+
+/*QTabBar::tab:first:selected, QTabBar::tab:first {
+	border-left: 2px solid #C3F8F7;
+	border: 0px;
+}
+
+QTabBar::tab:last:selected, QTabBar::tab:last {
+	border-right: 2px solid #C3F8F7;
+}*/
+
+QTabBar::tab:selected {
+	border: 0px;
+	border-top: 3px solid orange;
+	border-bottom: 0px;
+}
+
+QTabBar::tab:selected:hover, QTabBar::tab:hover {
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
 
 /*
 QMenu::item {
