@@ -1001,8 +1001,6 @@ class CardBasic(QGroupBox):
 		)
 		self.setLayout(self.cardLayout)
 		self.setGraphicsEffect(self.cardShadow)
-		# self.setFixedSize(width, height)
-		# self.setMinimumSize(width, height)
 		self.setMaximumSize(width, height)
 
 
@@ -1098,15 +1096,15 @@ class TabBasic(QTabWidget):
 	def __init__(self):
 		QTabWidget.__init__(self)
 
-		width, height = 900, 900
+		width, height = 1200, 1200
 
 		self.setSizePolicy(
 			QSizePolicy(
-				QSizePolicy.MinimumExpanding,
-				QSizePolicy.MinimumExpanding
+				QSizePolicy.Maximum,
+				QSizePolicy.Maximum
 			)
 		)
-		self.setMinimumWidth(700)
+		# self.setMinimumWidth(700)
 		self.setMaximumSize(width, height)
 
 		self.initialization()
@@ -1124,14 +1122,13 @@ class Tab(QGroupBox):
 
 		self.tabTitle = tabTitle
 		self.width = 1000
-		self.height = 400
+		self.height = 900
 
 		self.groupLayout = QVBoxLayout()
 		self.groupLayout.setSpacing(0)
 		self.groupLayout.setAlignment(Qt.AlignTop)
 
-		# self.setObjectName('cardContent')
-		self.setMaximumSize(width, height)
+		self.setObjectName('tabContent')
 		self.setSizePolicy(
 			QSizePolicy(
 				QSizePolicy.MinimumExpanding,
@@ -1139,6 +1136,8 @@ class Tab(QGroupBox):
 			)
 		)
 		self.setLayout(self.groupLayout)
+		# self.setMinimumSize(width * 0.8, height * 0.2)
+		self.setMaximumSize(width, height)
 
 		self.initialization()
 

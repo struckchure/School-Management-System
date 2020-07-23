@@ -37,7 +37,7 @@ def paginator(line, max_word=70, show_end=False, end_length=10):
 
 # 	sass.compile(dirname=('resources/assets/scss', 'resources/assets/qss'), output_style='expanded')
 # 	css = open('resources/assets/qss/boostrap.css', 'r').read()
-	
+
 # 	return css
 
 
@@ -49,7 +49,12 @@ def readQSS(qss='resources/assets/qss/boostrap.qss', qssVariables=qssVariables.v
 
 	for i in variables:
 		qss = qss.replace(f'${i}', values[variables.index(i)])
-		
+	
+	theme = open('resources/assets/qss/boostrap.css', mode='w')
+	theme.write(qss)
+
+	qss = open('resources/assets/qss/boostrap.css', mode='r').read()
+
 	return qss
 
 

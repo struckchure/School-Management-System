@@ -72,6 +72,8 @@ class Students(QGroupBox):
 
 		self.studentSiblings.cardLayout.addWidget(self.studentSiblingsHeader)
 
+		self.tabCardWidth, self.tabCardHeight = 500, 400
+
 		self.studentExtras = customWidgets.TabCardBasic(
 			width=(self.infoCardWidth * leftRatio) * 3,
 			height=self.infoCardHeight
@@ -80,15 +82,27 @@ class Students(QGroupBox):
 		self.studentExtrasTab = customWidgets.TabBasic()
 
 		self.profile = customWidgets.Tab('Profile')
+
+		self.profileContent = customWidgets.CardBasic(
+			width=self.tabCardWidth,
+			height=self.tabCardHeight,
+			accent='rgba(0, 0, 0, 0)'
+		)
+		self.profileContent.setMinimumSize(400, 500)
+
+		self.profile.groupLayout.addWidget(self.profileContent)
 		self.studentExtrasTab.addTabWidget(self.profile)
 
 		self.fees = customWidgets.Tab('Fees')
+		self.fees.groupLayout.addWidget(QLabel('Fees'))
 		self.studentExtrasTab.addTabWidget(self.fees)
 
 		self.exam = customWidgets.Tab('Exam')
+		self.exam.groupLayout.addWidget(QLabel('Exam'))
 		self.studentExtrasTab.addTabWidget(self.exam)
 
 		self.reports = customWidgets.Tab('Reports')
+		self.reports.groupLayout.addWidget(QLabel('Reports'))
 		self.studentExtrasTab.addTabWidget(self.reports)
 
 		self.studentExtras.cardLayout.addWidget(
