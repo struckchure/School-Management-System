@@ -42,6 +42,8 @@ class Students(QGroupBox):
 		rightRatio = 0.1
 		leftRatio = 1 - rightRatio
 
+		headerHeight = 30
+
 		self.studentInfo = customWidgets.CardBasic(
 			width=self.infoCardWidth * rightRatio,
 			height=self.infoCardHeight,
@@ -51,7 +53,7 @@ class Students(QGroupBox):
 		self.studentInfoHeader = customWidgets.CardHeader(
 			'Student Information',
 			width=self.studentInfo.width(),
-			height=50,
+			height=headerHeight,
 		)
 
 		self.studentInfo.cardLayout.addWidget(self.studentInfoHeader)
@@ -65,7 +67,7 @@ class Students(QGroupBox):
 		self.studentSiblingsHeader = customWidgets.CardHeader(
 			'Student Siblings',
 			width=self.studentSiblings.width(),
-			height=50,
+			height=headerHeight,
 		)
 
 		self.studentSiblings.cardLayout.addWidget(self.studentSiblingsHeader)

@@ -1007,7 +1007,7 @@ class CardBasic(QGroupBox):
 
 
 class CardHeader(QLabel):
-	def __init__(self, text, width=200, height=50, accent='blue'):
+	def __init__(self, text, width=200, height=30, accent='blue'):
 		QLabel.__init__(self, text)
 
 		self.accent = accent

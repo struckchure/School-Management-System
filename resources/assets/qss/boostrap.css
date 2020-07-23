@@ -583,7 +583,7 @@ QPushButton#tableButtonChild:not(focus) {
 /*Cards*/
 QGroupBox#cardBasic {
   /*cardBasicAccent*/
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: white;
   border: 0px;
   border-top: 2px solid orange;
   /*border-radius: 4px;*/
@@ -595,13 +595,15 @@ QLabel#cardHeader {
   /*cardHeaderAccent*/
   background-color: #ABF0E1;
   border: 0px;
+  border-bottom: 5px solid black;
   padding: 5px;
+  color: blue;
   /*cardHeaderAccent*/
 }
 
 QGroupBox#cardContent {
   /*cardContentAccent*/
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: white;
   border: 0px;
   border-top: 2px solid orange;
   /*border-radius: 3px;*/
@@ -645,6 +647,7 @@ QTabBar::tab:selected {
   border: 0px;
   border-top: 3px solid orange;
   border-bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.02);
 }
 
 QTabBar::tab:selected:hover, QTabBar::tab:hover {

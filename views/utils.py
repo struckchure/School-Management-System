@@ -1,4 +1,5 @@
-import sass
+# import sass
+from resources.assets.qss import qssVariables
 
 
 '''
@@ -29,15 +30,27 @@ def paginator(line, max_word=70, show_end=False, end_length=10):
 	return line
 
 
-def readQSS(file='resources/assets/qss/boostrap.qss'):
-	theme = open(file, 'r').read()
-	scss = open('resources/assets/scss/boostrap.scss', mode='w')
-	scss.write(theme)
+# def readQSS(file='resources/assets/qss/boostrap.qss'):
+# 	theme = open(file, 'r').read()
+# 	scss = open('resources/assets/scss/boostrap.scss', mode='w')
+# 	scss.write(theme)
 
-	sass.compile(dirname=('resources/assets/scss', 'resources/assets/qss'), output_style='expanded')
-	css = open('resources/assets/qss/boostrap.css', 'r').read()
+# 	sass.compile(dirname=('resources/assets/scss', 'resources/assets/qss'), output_style='expanded')
+# 	css = open('resources/assets/qss/boostrap.css', 'r').read()
 	
-	return css
+# 	return css
+
+
+def readQSS(qss='resources/assets/qss/boostrap.qss', qssVariables=qssVariables.variables):
+	qss = open(qss, mode='r').read()
+
+	variables = list(qssVariables.keys())
+	values = list(qssVariables.values())
+
+	for i in variables:
+		qss = qss.replace(f'${i}', values[variables.index(i)])
+		
+	return qss
 
 
 def findReplace(old, new, keywords):
