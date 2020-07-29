@@ -15,6 +15,7 @@ import cv2
 # Custom Modules Imports
 # - Tools
 from resources.assets.customWidgets import customWidgets
+from resources.assets.customWidgets.CDWidgets.CDrawer import CDrawer
 from views import utils
 
 # - Pages
@@ -66,13 +67,23 @@ class Home(QGroupBox):
 		self.sideBarWidth = pageConfigurations.getSideBarWidth(self.width())
 		self.pageWidth = pageConfigurations.getPageWidth(self.width())
 
-		self.sideBar()
+		# self.sideBar()
 		self.mainPage()
 		self.navBar()
 		self.rightPage()
 
 	def navBar(self):
 		self.navBarWidget = customWidgets.NavBar(self.user)
+		
+		menuIcon = customWidgets.qta.icon('fa.bars', color='white')
+
+		self.menuBar = QPushButton()
+		self.menuBar.setMaximumSize(30, 25)
+		self.menuBar.setObjectName('login')
+		self.menuBar.setIcon(menuIcon)
+		self.menuBar.clicked.connect(self.sideBar)
+
+		self.navBarWidget.iconLayout.addWidget(self.menuBar)
 		self.mainPageLayout.addWidget(self.navBarWidget)
 
 	def mainPage(self):
@@ -117,7 +128,12 @@ class Home(QGroupBox):
 			self.adminAccess()
 		self.nonAdminAcsess()
 
-		self.groupLayout.addWidget(self.sideBarScroll)
+		# self.groupLayout.addWidget(self.sideBarScroll)
+
+		if not hasattr(self, 'topDrawer'):
+			self.sideDrawer = CDrawer(self, direction=CDrawer.LEFT)
+			self.sideDrawer.setWidget(self.sideBarScroll)
+		self.sideDrawer.show()
 
 	def adminAccess(self):
 		self.dashBoardButton = customWidgets.SideBarButton(title='DashBoard', image='fa.dashboard')

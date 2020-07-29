@@ -169,6 +169,12 @@ class NavBar(QGroupBox):
 		blurRadius = 30
 		offSet = 0.1
 
+		self.iconLayout = QHBoxLayout()
+		self.iconLayout.setSpacing(5)
+		self.iconLayout.setContentsMargins(0, 0, 0, 0)
+
+		self.groupLayout.addLayout(self.iconLayout)
+
 		self.groupGraphicsEffect = QGraphicsDropShadowEffect()
 		self.groupGraphicsEffect.setBlurRadius(blurRadius)
 		self.groupGraphicsEffect.setOffset(offSet)
@@ -199,7 +205,7 @@ class NavBar(QGroupBox):
 		self.groupLayout.addWidget(
 			self.searchBox,
 			stretch=0,
-			alignment=Qt.AlignLeft | Qt.AlignVCenter
+			alignment=Qt.AlignCenter
 		)
 
 		self.navUser = NavBarUser(self.user)

@@ -75,8 +75,8 @@ class Students(QGroupBox):
 		self.tabCardWidth, self.tabCardHeight = 500, 400
 
 		self.studentExtras = customWidgets.TabCardBasic(
-			width=(self.infoCardWidth * leftRatio) * 3,
-			height=self.infoCardHeight
+			width=900,
+			height=900
 		)
 
 		self.studentExtrasTab = customWidgets.TabBasic()
@@ -88,7 +88,6 @@ class Students(QGroupBox):
 			height=self.tabCardHeight,
 			accent='rgba(0, 0, 0, 0)'
 		)
-		self.profileContent.setMinimumSize(400, 500)
 
 		self.profile.groupLayout.addWidget(self.profileContent)
 		self.studentExtrasTab.addTabWidget(self.profile)

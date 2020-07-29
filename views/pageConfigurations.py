@@ -18,12 +18,12 @@ navSideMargins = 20
 # SideBar settings
 
 sideBarWidth = 0.7
+sideBarSize = [260, 900]
 pageWidth = 1 - sideBarWidth
 sideBarButtonHeight = 35
-sideBarSectionWidth = 0.5 * windowWidth
+sideBarSectionWidth = sideBarSize[0] * 5
 sideBarWidgetWidthRatio = 0.45
 sideBarButtonRatio = sideBarWidgetWidthRatio
-sideBarSize = [230, 900]
 
 
 def getSideBarWidth(windowWidth):

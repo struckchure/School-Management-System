@@ -649,8 +649,6 @@ QGroupBox#tabCardBasic {
 QTabWidget::pane {
 	border: 0px;
 	padding: 0px;
-	width: 100%;
-	height: 100%;
 	margin: 5px;
 	background-color: white;
 }
