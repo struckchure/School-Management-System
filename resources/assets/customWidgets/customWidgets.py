@@ -2,13 +2,15 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import qtawesome as qta
-import sys
+import sys, os
+import cv2
 
 
 # Custom Modules Imports
 
 from views import pageConfigurations
 from views import utils
+from resources.assets.customWidgets.CDWidgets.CAvatar import CAvatar
 
 # Custom Modules End
 
@@ -93,16 +95,30 @@ class LineEditButton(QGroupBox):
 
 
 class NavBarUser(QPushButton, QHBoxLayout):
-	def __init__(self, user, default_image='fa.user-circle'):
+	def __init__(self, user, default_image=None):
 		super(NavBarUser, self).__init__()
 
+		size = [500, 500]
+
 		self.user = user
-		self.userIcon = qta.icon(default_image, color='black')
+		if default_image:
+			default_image = f'{default_image}-temp.png'
+			if not os.path.exists(default_image):
+				cv2.imwrite(cv2.resize((size[0], size[1]), cv2.imread(default_image)), default_image)
+		self.userIcon = default_image
 
 		navSideMargins = pageConfigurations.navSideMargins
 
 		self.navBarUserLayout = QGridLayout()
 		self.navBarUserLayout.setContentsMargins(0, 0, 0, 0)
+
+		self.navBarUserLayout.addWidget(CAvatar(
+            self,
+            shape=CAvatar.Circle,
+            animation=True,
+            url=self.userIcon
+            ), 0, 0
+		)
 
 		self.setLayout(self.navBarUserLayout)
 		self.setSizePolicy(
@@ -112,7 +128,7 @@ class NavBarUser(QPushButton, QHBoxLayout):
 			)
 		)
 		self.setMaximumWidth(pageConfigurations.sideBarSize[0])
-		self.setIcon(self.userIcon)
+		# self.setIcon(self.userIcon)
 		self.setText(self.user.get_full_name())
 		self.setIconSize(QSize(25, 20))
 		self.setObjectName('navBarUser')
@@ -208,7 +224,7 @@ class NavBar(QGroupBox):
 			alignment=Qt.AlignCenter
 		)
 
-		self.navUser = NavBarUser(self.user)
+		self.navUser = NavBarUser(self.user, 'resources/assets/images/1.jpg')
 
 		self.groupLayout.addWidget(
 			self.navUser,

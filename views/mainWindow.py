@@ -128,8 +128,6 @@ class Home(QGroupBox):
 			self.adminAccess()
 		self.nonAdminAcsess()
 
-		# self.groupLayout.addWidget(self.sideBarScroll)
-
 		if not hasattr(self, 'topDrawer'):
 			self.sideDrawer = CDrawer(self, direction=CDrawer.LEFT)
 			self.sideDrawer.setWidget(self.sideBarScroll)

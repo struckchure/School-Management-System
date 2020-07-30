@@ -21,7 +21,7 @@ sideBarWidth = 0.7
 sideBarSize = [260, 900]
 pageWidth = 1 - sideBarWidth
 sideBarButtonHeight = 35
-sideBarSectionWidth = sideBarSize[0] * 5
+sideBarSectionWidth = sideBarSize[0] * 8
 sideBarWidgetWidthRatio = 0.45
 sideBarButtonRatio = sideBarWidgetWidthRatio
 
