@@ -42,7 +42,7 @@ cardHeightRatio = 0.8
 
 # DashBoard settings
 
-DashButtonSize = [230, 100]
+DashButtonSize = [150, 100]
 
 
 # Table configurations

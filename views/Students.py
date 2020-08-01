@@ -47,7 +47,7 @@ class Students(QGroupBox):
 		self.studentInfo = customWidgets.CardBasic(
 			width=self.infoCardWidth * rightRatio,
 			height=self.infoCardHeight,
-			accent='orange'
+			# accent='orange'
 		)
 
 		self.studentInfoHeader = customWidgets.CardHeader(
@@ -61,7 +61,7 @@ class Students(QGroupBox):
 		self.studentSiblings = customWidgets.CardBasic(
 			width=self.infoCardWidth * rightRatio,
 			height=self.infoCardHeight,
-			accent='orange'
+			# accent='orange'
 		)
 
 		self.studentSiblingsHeader = customWidgets.CardHeader(
@@ -136,7 +136,51 @@ class StudentAdmission(QGroupBox):
 		self.initalization()
 
 	def initalization(self):
-		pass
+		self.infoCardWidth = self.width() * 7
+		self.infoCardHeight = self.height() * 5
+
+		self.page()
+
+	def page(self):
+		rightRatio = 0.1
+		leftRatio = 1 - rightRatio
+		headerHeight = 30
+		self.headerHeight = headerHeight
+
+		self.pageLayout = QVBoxLayout()
+		self.pageLayout.setSpacing(0)
+		self.pageLayout.setContentsMargins(0, 0, 0, 0)
+		self.pageLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
+
+		self.groupLayout.addLayout(self.pageLayout, 1, 0)
+
+		self.admissionCard = self.studentSiblings = customWidgets.CardBasic(
+			accent='white',
+			width=self.infoCardWidth,
+			height=self.infoCardHeight,
+		)
+
+		self.admissionForm()
+
+		self.pageLayout.addWidget(self.admissionCard)
+
+	def admissionForm(self):
+		self.formPanel = customWidgets.CardBasic(
+			width=self.infoCardWidth,
+			height=self.infoCardHeight * 0.5,
+			accent='rgba(0, 0, 0, 0.5)'
+		)
+
+		self.formPanelHeader = customWidgets.CardHeader(
+			'Student Admission',
+			width=self.formPanel.width(),
+			height=self.headerHeight,
+			accent='rgba(0, 0, 0, 0)'
+		)
+
+		self.formPanel.cardLayout.addWidget(self.formPanelHeader)
+
+		self.admissionCard.cardLayout.addWidget(self.formPanel)
 
 
 class StudentPromotion(QGroupBox):

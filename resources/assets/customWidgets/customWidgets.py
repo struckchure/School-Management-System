@@ -322,6 +322,7 @@ class SideBar(QScrollArea):
 		QScrollArea.__init__(self)
 
 		self.sideBarLayout = QVBoxLayout()
+		self.sideBarLayout.setSpacing(20)
 		self.sideBarLayout.setAlignment(Qt.AlignTop)
 
 		self.sideBarGroup = QGroupBox()
@@ -383,7 +384,8 @@ class DashButton(QPushButton, QHBoxLayout):
 		self.setContentsMargins(0, 0, 0, 0)
 		self.setGraphicsEffect(self.groupGraphicsEffect)
 		self.setObjectName('dashButton')
-		self.setMaximumSize(pageConfigurations.DashButtonSize[0], pageConfigurations.DashButtonSize[1])
+		# self.setMaximumSize(pageConfigurations.DashButtonSize[0], pageConfigurations.DashButtonSize[1])
+		self.setMaximumSize(pageConfigurations.DashButtonSize[0] * 2, pageConfigurations.DashButtonSize[1])
 		self.setSizePolicy(
 			QSizePolicy(
 				QSizePolicy.MinimumExpanding,
@@ -506,19 +508,24 @@ class PageCrumb(QLabel):
 
 
 class Card(QGroupBox):
-	def __init__(self, title):
+	def __init__(
+		self,
+		title,
+		width=pageConfigurations.DashButtonSize[0] * 4,
+		height=pageConfigurations.DashButtonSize[1]
+		):
 		QGroupBox.__init__(self)
 		
 		self.title = title
 
-		blurradius = 25
+		blurradius = 15
 		offset = 0.1
+		# width *= 0.4
 
 		self.shadow_effect = QGraphicsDropShadowEffect()
 		self.shadow_effect.setBlurRadius(blurradius)
 		self.shadow_effect.setOffset(offset)
-
-		width = 480
+		
 		self.color = '#1554BD'
 		self.iconColor = self.color
 
@@ -530,8 +537,8 @@ class Card(QGroupBox):
 				QSizePolicy.MinimumExpanding
 			)
 		)
-		self.setMaximumWidth(width)
-		self.setFixedHeight(350)
+		self.setMaximumSize(width, height)
+		# self.setFixedHeight(350)
 		self.setObjectName('card')
 
 		self.cardLayout = QVBoxLayout()
@@ -997,16 +1004,18 @@ class Table(QGroupBox):
 
 
 class CardBasic(QGroupBox):
-	def __init__(self, width=200, height=200, accent='blue'):
+	def __init__(self, accent, width=200, height=200):
 		QGroupBox.__init__(self)
 
 		self.accent = accent
 
-		qss = utils.findReplace(
-			f'orange;',
-			f'{accent};',
-			'/*cardBasicAccent*/'
-		)
+		if self.accent:
+			qss = utils.findReplace(
+				f'$theme;',
+				f'{accent};',
+				'/*cardBasicAccent*/'
+			)
+			self.setStyleSheet(qss)
 
 		self.cardLayout = QVBoxLayout()
 		self.cardLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
@@ -1020,7 +1029,6 @@ class CardBasic(QGroupBox):
 		self.cardShadow.setBlurRadius(blurRadius)
 		self.cardShadow.setOffset(offSet)
 
-		self.setStyleSheet(qss)
 		self.setObjectName('cardBasic')
 		self.setSizePolicy(
 			QSizePolicy(
@@ -1034,10 +1042,18 @@ class CardBasic(QGroupBox):
 
 
 class CardHeader(QLabel):
-	def __init__(self, text, width=200, height=30, accent='blue'):
+	def __init__(self, text, accent, width=200, height=30):
 		QLabel.__init__(self, text)
 
 		self.accent = accent
+
+		if self.accent:
+			qss = utils.findReplace(
+				f'rgba(0, 0, 0, 0.8)',
+				f'{accent}',
+				'/*cardHeaderAccent*/'
+			)
+			self.setStyleSheet(qss)
 
 		self.setObjectName('cardHeader')
 		self.setMaximumHeight(height)
@@ -1068,7 +1084,7 @@ class CardContent(QGroupBox):
 		self.cardShadow.setOffset(offSet)
 
 		qss = utils.findReplace(
-			f'orange;',
+			f'$theme;',
 			f'{self.accent};',
 			'/*cardContentAccent*/'
 		)

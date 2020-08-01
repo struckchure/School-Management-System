@@ -25,7 +25,7 @@ class DashBoard(QGroupBox):
 
 		self.groupLayout = QGridLayout()
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
-		self.groupLayout.setAlignment(Qt.AlignCenter)
+		self.groupLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
 		self.groupLayout.setSpacing(15)
 
 		
@@ -61,30 +61,34 @@ class DashBoard(QGroupBox):
 		self.groupLayout.addWidget(self.groupButton, 1, 2, 1, 1)
 		self.groupLayout.addWidget(self.clubsButton, 1, 3, 1, 1)
 
-		self.setObjectName('noBorderBox')
 		self.setSizePolicy(
 			QSizePolicy(
 				QSizePolicy.MinimumExpanding,
 				QSizePolicy.MinimumExpanding
 			)
 		)
+		self.setObjectName('noBorderBox')
 		self.setLayout(self.groupLayout)
 
 		self.initalization()
 
 	def initalization(self):
 		self.pageContentsLayout = QHBoxLayout()
-		self.pageContentsLayout.setAlignment(Qt.AlignLeft)
-		self.pageContentsLayout.setContentsMargins(0, 40, 0, 0)
+		self.pageContentsLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
+		self.pageContentsLayout.setContentsMargins(0, 0, 0, 0)
 
 		self.upcomingEvents = customWidgets.Card(
 			title="Upcoming Events",
+			# width=self.clubsButton.width(),
+			# height=self.clubsButton.height(),
 		)
 
 		self.upcomingEvents.addEvent(event='Hey There, we are opening next year :)')
 
 		self.notice_board = customWidgets.Card(
 			title="Notice Board",
+			# width=self.clubsButton.width(),
+			# height=self.clubsButton.height(),
 		)
 
 		self.notice_board.addNotice(notice='Hey There, Next Year is probably not sure...')

@@ -90,7 +90,7 @@ QPushButton#login {
 	font-size: 13px;
 	text-align: center;
 	color: white;
-	background-color: $buttonTheme;
+	background-color: $theme;
 }
 
 
@@ -614,7 +614,7 @@ QGroupBox#cardBasic {
 	/*cardBasicAccent*/
 	background-color: white;
 	border: 0px;
-	border-top: 2px solid orange;
+	border-top: 2px solid $theme;
 	/*border-radius: 4px;*/
 	padding: 0px;
 	/*cardBasicAccent*/
@@ -622,9 +622,9 @@ QGroupBox#cardBasic {
 
 QLabel#cardHeader {
 	/*cardHeaderAccent*/
-	background-color: #ABF0E1;
+	background-color: rgba(0, 0, 0, 0.8);
 	border: 0px;
-	border-bottom: 5px solid black;
+	border-bottom: 1px solid black;
 	padding: 5px;
 	/*cardHeaderAccent*/
 }
@@ -633,7 +633,7 @@ QGroupBox#cardContent {
 	/*cardContentAccent*/
 	background-color: white;
 	border: 0px;
-	border-top: 2px solid orange;
+	border-top: 2px solid $theme;
 	/*border-radius: 3px;*/
 	padding: 0px;
 	/*cardContentAccent*/
@@ -677,7 +677,7 @@ QTabBar::tab:last:selected, QTabBar::tab:last {
 
 QTabBar::tab:selected {
 	border: 0px;
-	border-top: 3px solid orange;
+	border-top: 3px solid $theme;
 	border-bottom: 0px;
 	background-color: rgba(0, 0, 0, 0.02);
 }

@@ -175,32 +175,6 @@ class Home(QGroupBox):
 		self.sideBarLayout.addWidget(self.teacherSection)
 
 	def nonAdminAcsess(self):
-		# Time Table
-
-		self.timetableSection = customWidgets.SideBarSection(title='Time Table')
-
-		self.checkTimetableButton = customWidgets.SideBarButton(title='My Time Table', image='fa5.calendar-alt')
-		self.checkTimetableButton.clicked.connect(self.checkTimetableButtonView)
-		self.timetableSection.widgetLayout.addWidget(self.checkTimetableButton)
-
-		if self.user.is_staff:
-			self.addTimetableButton = customWidgets.SideBarButton(title='Add Time Table', image='fa5.calendar-plus')
-			self.addTimetableButton.clicked.connect(self.addTimetableButtonView)
-			self.timetableSection.widgetLayout.addWidget(self.addTimetableButton)
-
-			self.deleteTimetableButton = customWidgets.SideBarButton(title='Delete Time Table', image='fa5.calendar-times')
-			self.deleteTimetableButton.clicked.connect(self.deleteTimetableButtonView)
-			self.timetableSection.widgetLayout.addWidget(self.deleteTimetableButton)
-
-		self.sideBarLayout.addWidget(self.timetableSection)
-
-	def checkTimetableButtonView(self):
-		pass
-
-	def addTimetableButtonView(self):
-		pass
-
-	def deleteTimetableButtonView(self):
 		pass
 
 	def dashBoardButtonView(self):

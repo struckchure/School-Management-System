@@ -4,5 +4,5 @@ variables = {
 	'navTheme': 'white',
 	'rightPageTheme': 'rgba(0, 0, 0, 0)',
 	'sideBarTheme': '#3E63CC',
-	'buttonTheme': '#3E63CC'
+	'theme': '#3E63CC',
 }
