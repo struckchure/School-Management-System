@@ -2,6 +2,10 @@
 	QSS Stylings
 */
 
+QWidget#index {
+	border: 0px;
+	padding: 0px;
+}
 
 QGroupBox#mainPage {
 	border: 0px;
@@ -684,6 +688,11 @@ QTabBar::tab:selected:hover, QTabBar::tab:hover {
 
 QGroupBox#tabContent {
 	border: 0px;
+}
+
+QLabel#navBarUserLabel {
+	font-family: Verdana;
+	font-size: 13px;
 }
 
 /*

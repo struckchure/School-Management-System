@@ -20,9 +20,6 @@ class mainWindow(QWidget):
 		self.main_layout.setContentsMargins(0, 0, 0, 0)
 		self.main_layout.setAlignment(Qt.AlignTop)
 		
-		qss = open('resources/assets/qss/boostrap.qss', 'r').read()
-
-		self.setStyleSheet(qss)
 		self.setLayout(self.main_layout)
 		self.setObjectName('index')
 		self.setMaximumSize(1500, 1500)

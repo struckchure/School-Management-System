@@ -28,13 +28,13 @@ class CAvatar(QWidget):
 
     Circle = 0              # 圆圈
     Rectangle = 1           # 圆角矩形
-    SizeLarge = QSize(128, 128)
-    SizeMedium = QSize(64, 64)
-    SizeSmall = QSize(32, 32)
+    SizeLarge = QSize(32, 32)
+    SizeMedium = QSize(16, 16)
+    SizeSmall = QSize(8, 8)
     StartAngle = 0          # 起始旋转角度
     EndAngle = 360          # 结束旋转角度
 
-    def __init__(self, *args, shape=0, url='', cacheDir=False, size=QSize(64, 64), animation=False, **kwargs):
+    def __init__(self, *args, shape=0, url='', cacheDir=False, size=QSize(16, 16), animation=False, **kwargs):
         super(CAvatar, self).__init__(*args, **kwargs)
         self.url = ''
         self._angle = 0             # 角度

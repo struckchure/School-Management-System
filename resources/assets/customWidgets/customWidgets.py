@@ -3,7 +3,6 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import qtawesome as qta
 import sys, os
-import cv2
 
 
 # Custom Modules Imports
@@ -101,10 +100,6 @@ class NavBarUser(QPushButton, QHBoxLayout):
 		size = [500, 500]
 
 		self.user = user
-		if default_image:
-			default_image = f'{default_image}-temp.png'
-			if not os.path.exists(default_image):
-				cv2.imwrite(cv2.resize((size[0], size[1]), cv2.imread(default_image)), default_image)
 		self.userIcon = default_image
 
 		navSideMargins = pageConfigurations.navSideMargins
@@ -112,13 +107,25 @@ class NavBarUser(QPushButton, QHBoxLayout):
 		self.navBarUserLayout = QGridLayout()
 		self.navBarUserLayout.setContentsMargins(0, 0, 0, 0)
 
-		self.navBarUserLayout.addWidget(CAvatar(
+		userImage = CAvatar(
             self,
             shape=CAvatar.Circle,
-            animation=True,
-            url=self.userIcon
-            ), 0, 0
-		)
+            animation=False,
+            url=self.userIcon,
+        )
+
+		# self.userNameLabel = QLabel(self.user.get_full_name())
+		# self.userNameLabel.setMaximumSize(300, 50)
+		# self.userNameLabel.setObjectName('navUserLabel')
+		# self.userNameLabel.setSizePolicy(
+		# 	QSizePolicy(
+		# 		QSizePolicy.MinimumExpanding,
+		# 		QSizePolicy.MinimumExpanding
+		# 	)
+		# )
+
+		# self.navBarUserLayout.addWidget(self.userNameLabel, 0, 0)
+		self.navBarUserLayout.addWidget(userImage, 0, 0)
 
 		self.setLayout(self.navBarUserLayout)
 		self.setSizePolicy(
@@ -129,7 +136,7 @@ class NavBarUser(QPushButton, QHBoxLayout):
 		)
 		self.setMaximumWidth(pageConfigurations.sideBarSize[0])
 		# self.setIcon(self.userIcon)
-		self.setText(self.user.get_full_name())
+		# self.setText(self.user.get_full_name())
 		self.setIconSize(QSize(25, 20))
 		self.setObjectName('navBarUser')
 
