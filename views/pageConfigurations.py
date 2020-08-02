@@ -48,3 +48,9 @@ DashButtonSize = [150, 100]
 # Table configurations
 
 tableSize = [300, 50]
+
+
+# Card Defintions
+
+pageHeaderBG = 'rgba(0, 0, 0, 0.05)'
+pageHeaderBorder = 'rgba(0, 0, 0, 0)'

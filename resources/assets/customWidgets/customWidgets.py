@@ -683,6 +683,86 @@ class Card(QGroupBox):
 
 
 '''
+	Text Input with Label & without Label
+'''
+
+
+class TextInput(QGroupBox):
+	def __init__(
+		self,
+		labelText='',
+		placeHolderText='text input ...',
+		iconName='fa.user',
+		label=False,
+		icon=False,
+		iconColor='black',
+		width=250,
+		height=45,
+		):
+		QGroupBox.__init__(self)
+
+		self.gridLayout = QGridLayout()
+		self.gridLayout.setSpacing(0)
+		self.gridLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+
+		self.icon = icon
+		self.label = label
+		self.labelText = labelText
+
+		self.labelTextLabel = QLabel(str(labelText))
+		self.labelTextLabel.setMaximumSize(width, height)
+		self.labelTextLabel.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+
+		# self.iconWidget = qta.icon(icon, color=iconColor)
+
+		self.textInput = QLineEdit()
+		self.textInput.setObjectName('lineEdit-Normal')
+		self.textInput.setPlaceholderText(str(placeHolderText))
+		self.textInput.setMaximumSize(width, height)
+		self.textInput.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+
+		qss = utils.readQSS()
+		self.setStyleSheet(qss)
+		self.setLayout(self.gridLayout)
+		# self.setObjectName('noBorderBox')
+		self.setMaximumSize(width, height * 2)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+
+		self.initialization()
+
+	def initialization(self):
+		x, y = 0, 0
+
+		if self.label:
+			self.gridLayout.addWidget(self.labelTextLabel, x, y, 1, 2)
+			x += 1
+			y = 0
+
+		# if self.icon:
+		# 	self.textInput.setWindowIcon(self.iconWidget)x<
+
+		self.gridLayout.addWidget(self.textInput, x, y)
+
+	def text(self):
+		return self.textInput.text()
+
+
+'''
 	Table
 '''
 
@@ -1004,15 +1084,15 @@ class Table(QGroupBox):
 
 
 class CardBasic(QGroupBox):
-	def __init__(self, accent, width=200, height=200):
+	def __init__(self, accent='$theme', width=200, height=200):
 		QGroupBox.__init__(self)
 
 		self.accent = accent
 
 		if self.accent:
 			qss = utils.findReplace(
-				f'$theme;',
-				f'{accent};',
+				f'$theme',
+				f'{accent}',
 				'/*cardBasicAccent*/'
 			)
 			self.setStyleSheet(qss)
@@ -1042,7 +1122,7 @@ class CardBasic(QGroupBox):
 
 
 class CardHeader(QLabel):
-	def __init__(self, text, accent, width=200, height=30):
+	def __init__(self, text, accent='$theme', width=1500, height=30):
 		QLabel.__init__(self, text)
 
 		self.accent = accent
@@ -1066,7 +1146,7 @@ class CardHeader(QLabel):
 
 
 class CardContent(QGroupBox):
-	def __init__(self, width=200, height=200, accent='blue'):
+	def __init__(self, width=1500, height=600, accent='rgba(0, 0, 0, 0)'):
 		QGroupBox.__init__(self)
 
 		self.accent = accent

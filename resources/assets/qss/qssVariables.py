@@ -5,4 +5,5 @@ variables = {
 	'rightPageTheme': 'rgba(0, 0, 0, 0)',
 	'sideBarTheme': '#3E63CC',
 	'theme': '#3E63CC',
+	'cardBorderTheme': 'rgba(0, 0, 0, 0)',
 }
