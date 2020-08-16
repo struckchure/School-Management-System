@@ -171,7 +171,12 @@ class StudentAdmission(QGroupBox):
 
 		self.admissionCard.cardLayout.addWidget(self.admissionCardContent)
 		self.pageLayout.addWidget(self.admissionCard)
-		
+
+		self.formLayout = QGridLayout()
+		self.formLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
+		self.formLayout.setSpacing(0)
+		self.formLayout.setContentsMargins(0, 0, 0, 0)
+
 		self.admissionForm()
 
 	def admissionForm(self):
@@ -180,13 +185,79 @@ class StudentAdmission(QGroupBox):
 			accent=self.headerBG,
 		)
 
-		self.textInput = customWidgets.TextInput(
+		self.admissionCardContent.cardLayout.addWidget(self.studentFormDetailsHeader)
+
+		# First row
+
+		self.admission_num = customWidgets.TextInput(
 			labelText='Admission Number',
-			label=True
+			placeHolderText='8642ABC',
+			enabled=False,
 		)
 
-		self.admissionCardContent.cardLayout.addWidget(self.studentFormDetailsHeader)
-		self.admissionCardContent.cardLayout.addWidget(self.textInput)
+		self.school_class = customWidgets.ComboInput(
+			labelText='Class',
+			placeHolderText='select'
+		)
+
+		self.school_class.addItem('SSS 1')
+		self.school_class.addItem('SSS 2')
+		self.school_class.addItem('SSS 3')
+
+		self.gender = customWidgets.ComboInput(
+			labelText='Gender',
+			placeHolderText='select'
+		)
+
+		self.gender.addItem('Male')
+		self.gender.addItem('Female')
+
+		self.section = customWidgets.ComboInput(
+			labelText='Section',
+			placeHolderText='select'
+		)
+
+		self.section.addItem('A')
+		self.section.addItem('B')
+
+		self.image = customWidgets.ImageInput(
+			# labelText='image',
+		)
+
+		self.formLayout.addWidget(self.admission_num, 0, 0)
+		self.formLayout.addWidget(self.school_class, 0, 1)
+		self.formLayout.addWidget(self.gender, 0, 2)
+		self.formLayout.addWidget(self.section, 0, 3)
+		self.formLayout.addWidget(self.image, 0, 4, 2, 2)
+
+		# Second row
+		
+		self.first_name = customWidgets.TextInput(
+			labelText='First Name',
+			placeHolderText='John'
+		)
+
+		self.last_name = customWidgets.TextInput(
+			labelText='Last Name',
+			placeHolderText='Doe'
+		)
+
+		self.phone_number = customWidgets.TextInput(
+			labelText='Mobile Number',
+			placeHolderText='+234 801 234 5678'
+		)
+
+		self.email = customWidgets.TextInput(
+			labelText='E-Mail',
+			placeHolderText='johndoe@school.com'
+		)
+
+		self.formLayout.addWidget(self.first_name, 1, 0)
+		self.formLayout.addWidget(self.last_name, 1, 1)
+		self.formLayout.addWidget(self.phone_number, 1, 2)
+		self.formLayout.addWidget(self.email, 1, 3)
+
+		self.admissionCardContent.cardLayout.addLayout(self.formLayout)
 
 
 class StudentPromotion(QGroupBox):

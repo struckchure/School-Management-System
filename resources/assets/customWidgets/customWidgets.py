@@ -542,7 +542,7 @@ class Card(QGroupBox):
 		self.setObjectName('card')
 
 		self.cardLayout = QVBoxLayout()
-		self.cardLayout.setAlignment(Qt.AlignTop)
+		self.cardLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
 		self.cardLayout.setSpacing(0)
 		self.cardLayout.setContentsMargins(0, 0, 0, 0)
 
@@ -683,19 +683,18 @@ class Card(QGroupBox):
 
 
 '''
-	Text Input with Label & without Label
+	Form Fields with Label & without Label
 '''
 
 
 class TextInput(QGroupBox):
 	def __init__(
 		self,
-		labelText='',
-		placeHolderText='text input ...',
-		iconName='fa.user',
-		label=False,
-		icon=False,
+		labelText=None,
+		placeHolderText=None,
+		iconName=None,
 		iconColor='black',
+		enabled=True,
 		width=250,
 		height=45,
 		):
@@ -705,8 +704,7 @@ class TextInput(QGroupBox):
 		self.gridLayout.setSpacing(0)
 		self.gridLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
 
-		self.icon = icon
-		self.label = label
+		self.placeHolderText = placeHolderText
 		self.labelText = labelText
 
 		self.labelTextLabel = QLabel(str(labelText))
@@ -721,8 +719,8 @@ class TextInput(QGroupBox):
 		# self.iconWidget = qta.icon(icon, color=iconColor)
 
 		self.textInput = QLineEdit()
+		self.textInput.setEnabled(enabled)
 		self.textInput.setObjectName('lineEdit-Normal')
-		self.textInput.setPlaceholderText(str(placeHolderText))
 		self.textInput.setMaximumSize(width, height)
 		self.textInput.setSizePolicy(
 			QSizePolicy(
@@ -748,18 +746,181 @@ class TextInput(QGroupBox):
 	def initialization(self):
 		x, y = 0, 0
 
-		if self.label:
+		if self.labelTextLabel:
 			self.gridLayout.addWidget(self.labelTextLabel, x, y, 1, 2)
 			x += 1
 			y = 0
 
-		# if self.icon:
-		# 	self.textInput.setWindowIcon(self.iconWidget)x<
+		# if self.iconName:
+		# 	self.textInput.setWindowIcon(self.iconWidget)
+
+		if self.placeHolderText:
+			self.textInput.setPlaceholderText(str(self.placeHolderText))
 
 		self.gridLayout.addWidget(self.textInput, x, y)
 
 	def text(self):
 		return self.textInput.text()
+
+
+class ComboInput(QGroupBox):
+	def __init__(
+		self,
+		labelText=None,
+		placeHolderText=None,
+		iconName=None,
+		iconColor='black',
+		enabled=True,
+		width=250,
+		height=45,
+		):
+		QGroupBox.__init__(self)
+
+		self.gridLayout = QGridLayout()
+		self.gridLayout.setSpacing(0)
+		self.gridLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+
+		self.placeHolderText = placeHolderText
+		self.labelText = labelText
+
+		self.labelTextLabel = QLabel(str(labelText))
+		self.labelTextLabel.setMaximumSize(width, height)
+		self.labelTextLabel.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+
+		# self.iconWidget = qta.icon(icon, color=iconColor)
+
+		self.comboInput = QComboBox()
+		self.comboInput.setEnabled(enabled)
+		self.comboInput.setObjectName('comboBox-Normal')
+		self.comboInput.setMaximumSize(width, height)
+		self.comboInput.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+
+		qss = utils.readQSS()
+		self.setStyleSheet(qss)
+		self.setLayout(self.gridLayout)
+		# self.setObjectName('noBorderBox')
+		self.setMaximumSize(width, height * 2)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+
+		self.initialization()
+
+	def initialization(self):
+		x, y = 0, 0
+
+		if self.labelTextLabel:
+			self.gridLayout.addWidget(self.labelTextLabel, x, y, 1, 2)
+			x += 1
+			y = 0
+
+		# if self.iconName:
+		# 	self.comboInput.setWindowIcon(self.iconWidget)
+
+		if self.placeHolderText:
+			self.comboInput.setPlaceholderText(str(self.placeHolderText))
+
+		self.gridLayout.addWidget(self.comboInput, x, y)
+
+	def currentText(self):
+		return self.comboInput.currentText()
+
+	def addItem(self, item):
+		self.comboInput.addItem(item)
+
+
+class ImageInput(QGroupBox):
+	def __init__(
+		self,
+		labelText='Image',
+		iconName=None,
+		iconColor='black',
+		enabled=True,
+		width=250,
+		height=45 * 4,
+		):
+		QGroupBox.__init__(self)
+
+		self.gridLayout = QGridLayout()
+		self.gridLayout.setSpacing(0)
+		self.gridLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+
+		self.labelText = labelText
+
+		self.labelTextLabel = QLabel(str(labelText))
+		self.labelTextLabel.setMaximumSize(width, 45)
+		self.labelTextLabel.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+
+		self.imageInput = QLabel()
+		self.imageInput.setEnabled(enabled)
+		self.imageInput.setObjectName('imageInput-Normal')
+		self.imageInput.setMaximumSize(width, height)
+		self.imageInput.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+
+		qss = utils.readQSS()
+		self.setStyleSheet(qss)
+		self.setLayout(self.gridLayout)
+		# self.setObjectName('noBorderBox')
+		self.setMaximumSize(width, height + 50)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+
+		self.initialization()
+
+	def initialization(self):
+		x, y = 0, 0
+
+		if self.labelTextLabel:
+			self.gridLayout.addWidget(self.labelTextLabel, x, y, 1, 2)
+			x += 1
+			y = 0
+
+		# if self.iconName:
+		# 	self.textInput.setWindowIcon(self.iconWidget)
+
+		# if self.placeHolderText:
+		# 	self.textInput.setPlaceholderText(str(self.placeHolderText))
+
+		self.gridLayout.addWidget(self.imageInput, x, y)
+		x += 1
+		y = 0
+
+		self.fieldButton = LineEditButton(
+			'/user/pictures/image/',
+			icon='fa5.image',
+			iconText='',
+			iconColor='white'
+		)
+		self.gridLayout.addWidget(self.fieldButton, x, y)
+		x += 1
+		y = 0
 
 
 '''
@@ -1098,7 +1259,7 @@ class CardBasic(QGroupBox):
 			self.setStyleSheet(qss)
 
 		self.cardLayout = QVBoxLayout()
-		self.cardLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+		self.cardLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
 		self.cardLayout.setSpacing(0)
 		self.cardLayout.setContentsMargins(0, 0, 0, 0)
 
@@ -1152,7 +1313,7 @@ class CardContent(QGroupBox):
 		self.accent = accent
 
 		self.cardLayout = QVBoxLayout()
-		self.cardLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+		self.cardLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
 		self.cardLayout.setSpacing(0)
 		self.cardLayout.setContentsMargins(0, 0, 0, 0)
 

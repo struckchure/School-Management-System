@@ -77,10 +77,12 @@ class DashBoard(QGroupBox):
 		self.pageContentsLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
 		self.pageContentsLayout.setContentsMargins(0, 0, 0, 0)
 
+		cardHeight = 900
+		
 		self.upcomingEvents = customWidgets.Card(
 			title="Upcoming Events",
 			# width=self.clubsButton.width(),
-			# height=self.clubsButton.height(),
+			height=cardHeight,
 		)
 
 		self.upcomingEvents.addEvent(event='Hey There, we are opening next year :)')
@@ -88,7 +90,7 @@ class DashBoard(QGroupBox):
 		self.notice_board = customWidgets.Card(
 			title="Notice Board",
 			# width=self.clubsButton.width(),
-			# height=self.clubsButton.height(),
+			height=cardHeight,
 		)
 
 		self.notice_board.addNotice(notice='Hey There, Next Year is probably not sure...')
