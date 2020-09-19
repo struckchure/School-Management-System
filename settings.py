@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 # Application definition
 # Add you applications here
 INSTALLED_APPS = [
-    'apps.Home',
+    'Home',
     'django.contrib.auth',
     'django.contrib.contenttypes',
 ]
@@ -46,6 +46,8 @@ MIDDLEWARE = [
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
+
+AUTH_USER_MODEL = 'Home.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
