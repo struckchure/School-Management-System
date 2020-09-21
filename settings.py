@@ -9,10 +9,12 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 # Application definition
 # Add you applications here
+
 INSTALLED_APPS = [
-    'Home',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+
+    'Home.apps.HomeConfig',
 ]
 
 DATABASES = {
