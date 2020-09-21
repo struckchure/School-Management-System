@@ -19,12 +19,13 @@ class User(AbstractBaseUser):
 	email = models.CharField(max_length=100)
 	phone = models.CharField(max_length=100)
 	is_admin = models.BooleanField(default=False)
+	is_staff = models.BooleanField(default=False)
 	is_teacher = models.BooleanField(default=False)
 	is_student = models.BooleanField(default=False)
 	date_joined = models.DateTimeField(auto_now=True)
 	last_updated = models.DateTimeField(auto_now_add=True)
 
-	objects = managers.UserManager
+	objects = managers.UserManager()
 	
 	USERNAME_FIELD = 'username'
 	REQUIRED_FIELDS = []
@@ -37,7 +38,7 @@ class User(AbstractBaseUser):
 
 
 class Class(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	class_teacher = models.ForeignKey(User, on_delete=models.CASCADE)
 	class_name = models.CharField(max_length=30, blank=False, unique=True)
 	date = models.DateTimeField(default=timezone.now)
 
