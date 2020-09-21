@@ -1,6 +1,7 @@
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+from django.contrib.auth import authenticate
 import sys
 
 
@@ -171,9 +172,9 @@ class Login(QGroupBox):
 				if password:
 					if len(password) >= pageConfigurations.minPasswordLength:
 						try:
-							self.get_user = User.objects.get(username=username)
+							self.get_user = authenticate(username=username, password=password)
 
-							if password == self.get_user.password:
+							if self.get_user:
 								self.nextPage()
 
 								msg = f'Welcome Back {self.get_user.first_name} :) '
