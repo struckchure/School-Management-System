@@ -124,7 +124,8 @@ class Home(QGroupBox):
 
 		if self.user.is_staff:
 			self.adminAccess()
-		self.nonAdminAcsess()
+		else:
+			self.nonAdminAcsess()
 
 		if not hasattr(self, 'topDrawer'):
 			self.sideDrawer = CDrawer(self, direction=CDrawer.LEFT)

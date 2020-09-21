@@ -222,13 +222,9 @@ class StudentAdmission(QGroupBox):
 
 		self.image = customWidgets.ImageInput(
 			# labelText='image',
+			width=900,
+			height=self.gender.height() * 8
 		)
-
-		self.formLayout.addWidget(self.admission_num, 0, 0)
-		self.formLayout.addWidget(self.school_class, 0, 1)
-		self.formLayout.addWidget(self.gender, 0, 2)
-		self.formLayout.addWidget(self.section, 0, 3)
-		self.formLayout.addWidget(self.image, 0, 4, 2, 2)
 
 		# Second row
 		
@@ -252,10 +248,16 @@ class StudentAdmission(QGroupBox):
 			placeHolderText='johndoe@school.com'
 		)
 
-		self.formLayout.addWidget(self.first_name, 1, 0)
-		self.formLayout.addWidget(self.last_name, 1, 1)
-		self.formLayout.addWidget(self.phone_number, 1, 2)
-		self.formLayout.addWidget(self.email, 1, 3)
+		self.formLayout.addWidget(self.admission_num, 0, 0)
+		self.formLayout.addWidget(self.school_class, 0, 1)
+		self.formLayout.addWidget(self.gender, 1, 0)
+		self.formLayout.addWidget(self.section, 1, 1)
+		self.formLayout.addWidget(self.image, 0, 4, 4, 4)
+
+		self.formLayout.addWidget(self.first_name, 2, 0)
+		self.formLayout.addWidget(self.last_name, 2, 1)
+		self.formLayout.addWidget(self.phone_number, 3, 0)
+		self.formLayout.addWidget(self.email, 3, 1)
 
 		self.admissionCardContent.cardLayout.addLayout(self.formLayout)
 

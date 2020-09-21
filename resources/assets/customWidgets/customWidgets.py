@@ -73,7 +73,11 @@ class LineEditButton(QGroupBox):
 		self.linedEdit.setObjectName('lineEdit-Normal')
 		self.linedEdit.setPlaceholderText(self.placeHolder)
 		self.linedEdit.setFixedHeight(self.height())
-		self.linedEdit.setMaximumWidth(250)
+		self.linedEdit.setMaximumWidth(450)
+		self.linedEdit.setSizePolicy(
+			QSizePolicy.Expanding,
+			QSizePolicy.Expanding
+		)
 
 		self.groupLayout.addWidget(self.linedEdit)
 
@@ -507,181 +511,6 @@ class PageCrumb(QLabel):
 		)
 
 
-class Card(QGroupBox):
-	def __init__(
-		self,
-		title,
-		width=pageConfigurations.DashButtonSize[0] * 4,
-		height=pageConfigurations.DashButtonSize[1]
-		):
-		QGroupBox.__init__(self)
-		
-		self.title = title
-
-		blurradius = 15
-		offset = 0.1
-		# width *= 0.4
-
-		self.shadow_effect = QGraphicsDropShadowEffect()
-		self.shadow_effect.setBlurRadius(blurradius)
-		self.shadow_effect.setOffset(offset)
-		
-		self.color = '#1554BD'
-		self.iconColor = self.color
-
-		self.setGraphicsEffect(self.shadow_effect)
-		self.setContentsMargins(0, 0, 0, 0)
-		self.setSizePolicy(
-			QSizePolicy(
-				QSizePolicy.MinimumExpanding,
-				QSizePolicy.MinimumExpanding
-			)
-		)
-		self.setMaximumSize(width, height)
-		# self.setFixedHeight(350)
-		self.setObjectName('card')
-
-		self.cardLayout = QVBoxLayout()
-		self.cardLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
-		self.cardLayout.setSpacing(0)
-		self.cardLayout.setContentsMargins(0, 0, 0, 0)
-
-		# Layout for title and add button
-
-		self.box_heading = QHBoxLayout()
-		self.box_heading.setSpacing(0)
-		self.box_heading.setContentsMargins(0, 0, 0, 0)
-
-		self.box_title = QLabel(self.title)
-		self.box_title.setObjectName('boxTitle')
-		self.box_title.setFixedSize(self.width(), 35)
-		self.box_heading.addWidget(self.box_title, stretch=0, alignment=Qt.AlignLeft)
-
-		self.add_button = QPushButton()
-		self.add_button.setObjectName('addButton')
-		self.add_button.setIcon(
-			qta.icon(
-				'fa.plus-circle',
-				color=self.color
-			)
-		)
-		self.add_button.setIconSize(QSize(20, 20))
-		self.add_button.setFixedSize(30, 35)
-		# self.add_button.clicked.connect(self.addEvent)
-		self.box_heading.addWidget(self.add_button, stretch=0, alignment=Qt.AlignRight)
-
-		self.cardLayout.addLayout(self.box_heading)
-
-		self.setLayout(self.cardLayout)
-
-		self.event_layout = QVBoxLayout()
-		self.event_layout.setAlignment(Qt.AlignTop)
-		self.event_layout.setSpacing(0)
-		self.event_layout.setContentsMargins(0, 0, 0, 0)
-
-		self.list_layout = QVBoxLayout()
-		self.list_layout.setAlignment(Qt.AlignTop)
-		self.list_layout.setSpacing(0)
-		self.list_layout.setContentsMargins(0, 0, 0, 0)
-
-		self.list_layout.addLayout(self.event_layout)
-
-		self.eventGroup = QGroupBox()
-		self.eventGroup.setObjectName('noBorderBox')
-		self.eventGroup.setLayout(self.list_layout)
-
-		self.event_scroll = QScrollArea()
-		self.event_scroll.setObjectName('eventScroll')
-		self.event_scroll.setWidget(self.eventGroup)
-		self.event_scroll.setWidgetResizable(True)
-
-		self.cardLayout.addWidget(self.event_scroll)
-
-	def addEvent(self, event):
-		height = 100
-		buttonRatio = 0.3
-
-		self.eventItemsLayout = QHBoxLayout()
-		self.eventItemsLayout.setSpacing(0)
-		self.eventItemsLayout.setContentsMargins(0, 0, 0, 0)
-
-		self.eventItemsGroup = QGroupBox()
-		self.eventItemsGroup.setLayout(self.eventItemsLayout)
-		self.eventItemsGroup.setObjectName('cardChildren')
-		self.eventItemsGroup.setMaximumHeight(height)
-
-		self.event_name = QLabel(str(
-			utils.paginator(
-				event,
-				max_word=200,
-				show_end=True,
-				end_length=5
-				)
-			)
-		)
-		self.event_name.setMaximumHeight(height)
-		self.event_name.setMaximumWidth(self.width())
-		self.event_name.setWordWrap(True)
-		self.event_name.setObjectName('event')
-		self.eventItemsLayout.addWidget(self.event_name)
-
-		self.edit_list_btn = QPushButton()
-		self.edit_list_btn.setFixedSize(25, height * buttonRatio)
-		self.edit_list_btn.setIcon(
-			qta.icon(
-				'fa.edit',
-				color=self.iconColor
-			)
-		)
-		self.edit_list_btn.setIconSize(QSize(15, 15))
-		self.edit_list_btn.setObjectName('listBtn')
-		self.eventItemsLayout.addWidget(self.edit_list_btn)
-
-		self.delete_list_btn = QPushButton()
-		self.delete_list_btn.setFixedSize(25, height * buttonRatio)
-		self.delete_list_btn.setIcon(
-			qta.icon(
-				'mdi.delete',
-				color=self.iconColor
-			)
-		)
-		self.delete_list_btn.setIconSize(QSize(15, 15))
-		self.delete_list_btn.setObjectName('listBtn')
-		self.eventItemsLayout.addWidget(self.delete_list_btn)
-
-		self.event_layout.addWidget(self.eventItemsGroup)
-
-	def addNotice(self, notice):
-		height = 100
-		buttonRatio = 0.3
-
-		self.noticeItemsLayout = QHBoxLayout()
-		self.noticeItemsLayout.setSpacing(0)
-		self.noticeItemsLayout.setContentsMargins(0, 0, 0, 0)
-
-		self.noticeItemsGroup = QGroupBox()
-		self.noticeItemsGroup.setLayout(self.noticeItemsLayout)
-		self.noticeItemsGroup.setObjectName('cardChildren')
-		self.noticeItemsGroup.setMaximumHeight(height)
-
-		self.notice_name = QLabel(str(
-			utils.paginator(
-				notice,
-				max_word=300,
-				show_end=True,
-				end_length=5
-				)
-			)
-		)
-		self.notice_name.setMaximumHeight(height)
-		self.notice_name.setMaximumWidth(self.width())
-		self.notice_name.setWordWrap(True)
-		self.notice_name.setObjectName('event')
-		self.noticeItemsLayout.addWidget(self.notice_name)
-
-		self.event_layout.addWidget(self.noticeItemsGroup)
-
-
 '''
 	Form Fields with Label & without Label
 '''
@@ -695,8 +524,9 @@ class TextInput(QGroupBox):
 		iconName=None,
 		iconColor='black',
 		enabled=True,
-		width=250,
+		width=350,
 		height=45,
+		password=False
 		):
 		QGroupBox.__init__(self)
 
@@ -728,6 +558,9 @@ class TextInput(QGroupBox):
 				QSizePolicy.MinimumExpanding
 			)
 		)
+
+		if password:
+			self.textInput.setEchoMode(QLineEdit.Password)
 
 		qss = utils.readQSS()
 		self.setStyleSheet(qss)
@@ -771,7 +604,7 @@ class ComboInput(QGroupBox):
 		iconName=None,
 		iconColor='black',
 		enabled=True,
-		width=250,
+		width=350,
 		height=45,
 		):
 		QGroupBox.__init__(self)
@@ -1244,6 +1077,181 @@ class Table(QGroupBox):
 '''
 
 
+class Card(QGroupBox):
+	def __init__(
+		self,
+		title,
+		width=pageConfigurations.DashButtonSize[0] * 4,
+		height=pageConfigurations.DashButtonSize[1]
+		):
+		QGroupBox.__init__(self)
+		
+		self.title = title
+
+		blurradius = 15
+		offset = 0.1
+		# width *= 0.4
+
+		self.shadow_effect = QGraphicsDropShadowEffect()
+		self.shadow_effect.setBlurRadius(blurradius)
+		self.shadow_effect.setOffset(offset)
+		
+		self.color = '#1554BD'
+		self.iconColor = self.color
+
+		self.setGraphicsEffect(self.shadow_effect)
+		self.setContentsMargins(0, 0, 0, 0)
+		self.setSizePolicy(
+			QSizePolicy(
+				QSizePolicy.MinimumExpanding,
+				QSizePolicy.MinimumExpanding
+			)
+		)
+		self.setMaximumSize(width, height)
+		# self.setFixedHeight(350)
+		self.setObjectName('card')
+
+		self.cardLayout = QVBoxLayout()
+		self.cardLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
+		self.cardLayout.setSpacing(0)
+		self.cardLayout.setContentsMargins(0, 0, 0, 0)
+
+		# Layout for title and add button
+
+		self.box_heading = QHBoxLayout()
+		self.box_heading.setSpacing(0)
+		self.box_heading.setContentsMargins(0, 0, 0, 0)
+
+		self.box_title = QLabel(self.title)
+		self.box_title.setObjectName('boxTitle')
+		self.box_title.setFixedSize(self.width(), 35)
+		self.box_heading.addWidget(self.box_title, stretch=0, alignment=Qt.AlignLeft)
+
+		self.add_button = QPushButton()
+		self.add_button.setObjectName('addButton')
+		self.add_button.setIcon(
+			qta.icon(
+				'fa.plus-circle',
+				color=self.color
+			)
+		)
+		self.add_button.setIconSize(QSize(20, 20))
+		self.add_button.setFixedSize(30, 35)
+		# self.add_button.clicked.connect(self.addEvent)
+		self.box_heading.addWidget(self.add_button, stretch=0, alignment=Qt.AlignRight)
+
+		self.cardLayout.addLayout(self.box_heading)
+
+		self.setLayout(self.cardLayout)
+
+		self.event_layout = QVBoxLayout()
+		self.event_layout.setAlignment(Qt.AlignTop)
+		self.event_layout.setSpacing(0)
+		self.event_layout.setContentsMargins(0, 0, 0, 0)
+
+		self.list_layout = QVBoxLayout()
+		self.list_layout.setAlignment(Qt.AlignTop)
+		self.list_layout.setSpacing(0)
+		self.list_layout.setContentsMargins(0, 0, 0, 0)
+
+		self.list_layout.addLayout(self.event_layout)
+
+		self.eventGroup = QGroupBox()
+		self.eventGroup.setObjectName('noBorderBox')
+		self.eventGroup.setLayout(self.list_layout)
+
+		self.event_scroll = QScrollArea()
+		self.event_scroll.setObjectName('eventScroll')
+		self.event_scroll.setWidget(self.eventGroup)
+		self.event_scroll.setWidgetResizable(True)
+
+		self.cardLayout.addWidget(self.event_scroll)
+
+	def addEvent(self, event):
+		height = 100
+		buttonRatio = 0.3
+
+		self.eventItemsLayout = QHBoxLayout()
+		self.eventItemsLayout.setSpacing(0)
+		self.eventItemsLayout.setContentsMargins(0, 0, 0, 0)
+
+		self.eventItemsGroup = QGroupBox()
+		self.eventItemsGroup.setLayout(self.eventItemsLayout)
+		self.eventItemsGroup.setObjectName('cardChildren')
+		self.eventItemsGroup.setMaximumHeight(height)
+
+		self.event_name = QLabel(str(
+			utils.paginator(
+				event,
+				max_word=200,
+				show_end=True,
+				end_length=5
+				)
+			)
+		)
+		self.event_name.setMaximumHeight(height)
+		self.event_name.setMaximumWidth(self.width())
+		self.event_name.setWordWrap(True)
+		self.event_name.setObjectName('event')
+		self.eventItemsLayout.addWidget(self.event_name)
+
+		self.edit_list_btn = QPushButton()
+		self.edit_list_btn.setFixedSize(25, height * buttonRatio)
+		self.edit_list_btn.setIcon(
+			qta.icon(
+				'fa.edit',
+				color=self.iconColor
+			)
+		)
+		self.edit_list_btn.setIconSize(QSize(15, 15))
+		self.edit_list_btn.setObjectName('listBtn')
+		self.eventItemsLayout.addWidget(self.edit_list_btn)
+
+		self.delete_list_btn = QPushButton()
+		self.delete_list_btn.setFixedSize(25, height * buttonRatio)
+		self.delete_list_btn.setIcon(
+			qta.icon(
+				'mdi.delete',
+				color=self.iconColor
+			)
+		)
+		self.delete_list_btn.setIconSize(QSize(15, 15))
+		self.delete_list_btn.setObjectName('listBtn')
+		self.eventItemsLayout.addWidget(self.delete_list_btn)
+
+		self.event_layout.addWidget(self.eventItemsGroup)
+
+	def addNotice(self, notice):
+		height = 100
+		buttonRatio = 0.3
+
+		self.noticeItemsLayout = QHBoxLayout()
+		self.noticeItemsLayout.setSpacing(0)
+		self.noticeItemsLayout.setContentsMargins(0, 0, 0, 0)
+
+		self.noticeItemsGroup = QGroupBox()
+		self.noticeItemsGroup.setLayout(self.noticeItemsLayout)
+		self.noticeItemsGroup.setObjectName('cardChildren')
+		self.noticeItemsGroup.setMaximumHeight(height)
+
+		self.notice_name = QLabel(str(
+			utils.paginator(
+				notice,
+				max_word=300,
+				show_end=True,
+				end_length=5
+				)
+			)
+		)
+		self.notice_name.setMaximumHeight(height)
+		self.notice_name.setMaximumWidth(self.width())
+		self.notice_name.setWordWrap(True)
+		self.notice_name.setObjectName('event')
+		self.noticeItemsLayout.addWidget(self.notice_name)
+
+		self.event_layout.addWidget(self.noticeItemsGroup)
+
+
 class CardBasic(QGroupBox):
 	def __init__(self, accent='$theme', width=200, height=200):
 		QGroupBox.__init__(self)
@@ -1273,8 +1281,8 @@ class CardBasic(QGroupBox):
 		self.setObjectName('cardBasic')
 		self.setSizePolicy(
 			QSizePolicy(
-				QSizePolicy.MinimumExpanding,
-				QSizePolicy.MinimumExpanding
+				QSizePolicy.Expanding,
+				QSizePolicy.Expanding
 			)
 		)
 		self.setLayout(self.cardLayout)
@@ -1307,13 +1315,13 @@ class CardHeader(QLabel):
 
 
 class CardContent(QGroupBox):
-	def __init__(self, width=1500, height=600, accent='rgba(0, 0, 0, 0)'):
+	def __init__(self, width=1500, height=600, accent='rgba(0, 0, 0, 0)', alignment=Qt.AlignTop | Qt.AlignHCenter):
 		QGroupBox.__init__(self)
 
 		self.accent = accent
 
 		self.cardLayout = QVBoxLayout()
-		self.cardLayout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
+		self.cardLayout.setAlignment(alignment)
 		self.cardLayout.setSpacing(0)
 		self.cardLayout.setContentsMargins(0, 0, 0, 0)
 
@@ -1334,8 +1342,8 @@ class CardContent(QGroupBox):
 		self.setObjectName('cardContent')
 		self.setSizePolicy(
 			QSizePolicy(
-				QSizePolicy.MinimumExpanding,
-				QSizePolicy.MinimumExpanding
+				QSizePolicy.Expanding,
+				QSizePolicy.Expanding
 			)
 		)
 		self.setLayout(self.cardLayout)

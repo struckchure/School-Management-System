@@ -478,7 +478,6 @@ class Register(QGroupBox):
 			
 			self.pageController.addWidget(Register(self.pageController, self.pageFinders))
 			self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
-
 		else:
 			page = utils.findPage(self.pageFinders, 'signInPage')
 			self.pageController.setCurrentIndex(page)
