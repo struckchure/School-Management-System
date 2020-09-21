@@ -4,3 +4,11 @@
 __main__.spec
 dist
 build
+
+db.sqlite3
+.vscode
+__pycache__
+apps/__pycache__
+apps/Home/__pycache__
+apps/Home/migrations
+apps/Home/management
