@@ -15,6 +15,11 @@ class UserManager(BaseUserManager):
 
 		return user
 
+	def create_admin(self, username, password=None, **extra_fields):
+		extra_fields.setdefault('is_admin', True)
+
+		return self._create_user(username, password, **extra_fields)
+
 	def create_user(self, username, password=None, **extra_fields):
 		extra_fields.setdefault('is_admin', False)
 
