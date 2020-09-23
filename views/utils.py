@@ -1,5 +1,9 @@
 # import sass
 from resources.assets.qss import qssVariables
+import secrets
+import random
+import datetime
+import string
 
 
 '''
@@ -7,6 +11,16 @@ from resources.assets.qss import qssVariables
 	Custom Utilities
 
 '''
+
+signs = [
+	'!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+',
+		'-', '=', '\\', '//', '`', '|'
+	]
+numbers = [i for i in range(0, 9)]
+alphabets_lower = [i for i in string.ascii_lowercase]
+alphabets_upper = [i for i in string.ascii_uppercase]
+
+all_keys = numbers + alphabets_lower + alphabets_upper
 
 
 def findPage(pageFinders, pageName):
@@ -21,11 +35,12 @@ def findPage(pageFinders, pageName):
 def paginator(line, max_word=70, show_end=False, end_length=10):
 	line_copy = str(line)
 	if len(str(line)) > max_word:
+		line = str(line)
 		line = line[:max_word] + ' ... '
 		if show_end:
 			line += line_copy[-end_length:]
 	else:
-		line = line
+		line = str(line)
 
 	return line
 
@@ -66,3 +81,21 @@ def findReplace(old, new, keywords):
 	)
 
 	return qss
+
+
+def generate_admission_number(exisiting_list, length=4):
+	date = datetime.datetime.now()
+	year = date.year
+	extra = ''
+
+	for i in range(length):
+		extra += random.choice(alphabets_upper)
+
+	new_number = f'{year}{extra}'
+	
+	while new_number not in exisiting_list:
+		break
+	else:
+		new_number = f'{year}{extra}'
+	
+	return new_number
