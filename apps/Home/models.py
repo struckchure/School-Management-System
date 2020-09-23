@@ -15,9 +15,9 @@ notification_types = (
 class User(AbstractBaseUser):
 	first_name = models.CharField(max_length=100)
 	last_name = models.CharField(max_length=100)
-	username = models.CharField(max_length=100, unique=True)
-	email = models.CharField(max_length=100)
-	phone = models.CharField(max_length=100)
+	username = models.CharField(max_length=100, unique=True, blank=False)
+	email = models.CharField(max_length=100, blank=False)
+	phone = models.CharField(max_length=100, blank=False)
 	is_admin = models.BooleanField(default=False)
 	is_staff = models.BooleanField(default=False)
 	is_teacher = models.BooleanField(default=False)
