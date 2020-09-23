@@ -331,7 +331,7 @@ class SideBar(QScrollArea):
 
 		self.sideBarGroup = QGroupBox()
 		self.sideBarGroup.setObjectName('sideBarGroup')
-		self.sideBarGroup.setMinimumSize(230, 400)
+		self.sideBarGroup.setMaximumSize(230, 1000)
 		self.sideBarGroup.setLayout(self.sideBarLayout)
 		
 		sideBarSize = pageConfigurations.sideBarSize
@@ -340,8 +340,8 @@ class SideBar(QScrollArea):
 		self.setWidgetResizable(True)
 		self.setSizePolicy(
 			QSizePolicy(
-				QSizePolicy.MinimumExpanding,
-				QSizePolicy.MinimumExpanding
+				QSizePolicy.Expanding,
+				QSizePolicy.Expanding
 			)
 		)
 		self.setMaximumSize(sideBarSize[0], sideBarSize[1])
@@ -799,7 +799,7 @@ class TableItem(QLabel):
 			end_length=3
 		)
 
-		QLabel.__init__(self, str(text))
+		QLabel.__init__(self, str(real_text))
 
 		if tableAccent != 'background-color: rgba(0, 0, 0, 0)':
 			qss = utils.findReplace(
