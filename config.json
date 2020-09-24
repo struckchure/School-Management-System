@@ -6,7 +6,7 @@
         "uic" : ""
     },
     "django" : true,
-    "hidden-imports" : [],
+    "hidden-imports" : ["PyQt5", "qtawesome", "six", "secrets", "uuid", "os"],
     "hidden-example" : ["http.cookies", "html.parser",
         "settings", "django.template.defaulttags",
         "django.templatetags.i18n", "django.template.loader_tags",

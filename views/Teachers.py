@@ -104,7 +104,8 @@ class TeacherAdmission(QGroupBox):
 
 	def initalization(self):
 		# self.infoCardWidth = self.width() * 12
-		self.infoCardWidth = 1800
+		# self.infoCardWidth = 1800
+		self.infoCardWidth = self.width() * 8
 		self.infoCardHeight = self.height() * 5
 
 		self.page()
@@ -181,8 +182,8 @@ class TeacherAdmission(QGroupBox):
 
 		self.image = customWidgets.ImageInput(
 			# labelText='image',
-			width=900,
-			height=self.gender.height() * 8
+			width=320,
+			height=330
 		)
 
 		# Second row
@@ -211,14 +212,14 @@ class TeacherAdmission(QGroupBox):
 
 		self.formLayout.addWidget(self.first_name, 0, 0)
 		self.formLayout.addWidget(self.last_name, 0, 1)
-
-		self.formLayout.addWidget(self.image, 0, 4, 4, 4)
+		self.formLayout.addWidget(self.image, 0, 4, 5, 1)
 
 		self.formLayout.addWidget(self.phone_number, 1, 0)
 		self.formLayout.addWidget(self.email, 1, 1)
 
 		self.formLayout.addWidget(self.username, 2, 0)
 		self.formLayout.addWidget(self.gender, 2, 1)
+
 		self.formLayout.addWidget(self.password1, 3, 0)
 		self.formLayout.addWidget(self.password2, 3, 1)
 		
@@ -238,7 +239,7 @@ class TeacherAdmission(QGroupBox):
 					color: white;
 				}
 				QPushButton:hover {
-					background-color: rgba(0, 0, 0, 0.05);
+					background-color: rgba(0, 0, 0, 0.9);
 				}
 			'''
 		)
@@ -260,42 +261,54 @@ class TeacherAdmission(QGroupBox):
 			password_length = 6
 			all_usernames = list(models.User.objects.values_list('username', flat=True))
 
+			if not self.image.imagePath:
+				self.image.imagePath = '../images/default-avatar.png'
+
 			if self.first_name.text() and self.last_name.text():
 				if self.username.text() not in all_usernames:
-					if len(self.phone_number.text()) > phone_length:
-						if self.email.text():
-							if len(self.password1.text()) > password_length and len(self.password2.text()) > password_length:
-								if self.password1.text() == self.password2.text():
-									new_user = models.User.objects.create(
-										first_name=self.first_name.text(),
-										last_name=self.last_name.text(),
-										username=self.username.text(),
-										email=self.email.text(),
-										phone=self.phone_number.text(),
-										is_teacher=True,
-									)
+					if self.gender.text() != self.gender.placeHolderText:
+						if len(self.phone_number.text()) >= phone_length:
+							if self.email.text():
+								if len(self.password1.text()) >= password_length and len(self.password2.text()) >= password_length:
+									if self.password1.text() == self.password2.text():
+										new_user = models.User.objects.create_teacher(
+											first_name=self.first_name.text(),
+											last_name=self.last_name.text(),
+											avatar=self.image.imagePath(),
+											gender=self.gender.text(),
+											username=self.username.text(),
+											email=self.email.text(),
+											phone=self.phone_number.text(),
+											is_teacher=True,
+										)
 
-									new_user.set_password(self.password1.text())
-									new_user.save()
+										new_user.set_password(self.password1.text())
+										new_user.save()
 
-									message = f'Congratulations !!! \nYour registration was successful'
-									
-									self.messagePopUp = customWidgets.PopUp(title='School Manager', body=message, buttonText='&Ok')
-									self.messagePopUp.show()
+										message = f'Congratulations !!! \nYour registration was successful'
+										
+										self.messagePopUp = customWidgets.PopUp(title='School Manager', body=message, buttonText='&Ok')
+										self.messagePopUp.show()
+
+										self.cleanFormFields()
+									else:
+										message = f'Password mismatch'
+										self.messagePopUp = customWidgets.PopUp(title='School Manager', body=message, buttonText='&Ok')
+										self.messagePopUp.show()
 								else:
-									message = f'Password mismatch'
+									message = f'Password length too short, At least six(6) characters are required'
 									self.messagePopUp = customWidgets.PopUp(title='School Manager', body=message, buttonText='&Ok')
 									self.messagePopUp.show()
 							else:
-								message = f'Password length too short, At least six(6) characters are required'
+								message = f'Enter a valid E-Mail address'
 								self.messagePopUp = customWidgets.PopUp(title='School Manager', body=message, buttonText='&Ok')
 								self.messagePopUp.show()
 						else:
-							message = f'Enter a valid E-Mail address'
+							message = f'Phone number must be at least ten(10) characters'
 							self.messagePopUp = customWidgets.PopUp(title='School Manager', body=message, buttonText='&Ok')
 							self.messagePopUp.show()
 					else:
-						message = f'Phone number must be at least ten(10) characters'
+						message = f'Please select your gender'
 						self.messagePopUp = customWidgets.PopUp(title='School Manager', body=message, buttonText='&Ok')
 						self.messagePopUp.show()
 				else:
@@ -310,6 +323,16 @@ class TeacherAdmission(QGroupBox):
 			message = str(e)
 			self.messagePopUp = customWidgets.PopUp(title='Error Manager', body=message, buttonText='&Ok')
 			self.messagePopUp.show()
+	
+	def cleanFormFields(self):
+		self.first_name.textInput.setText('')
+		self.last_name.textInput.setText('')
+		self.email.textInput.setText('')
+		self.phone_number.textInput.setText('')
+		self.username.textInput.setText('')
+		self.password1.textInput.setText('')
+		self.password2.textInput.setText('')
+		self.image.setPixmap('')
 
 
 class TeacherPromotion(QGroupBox):

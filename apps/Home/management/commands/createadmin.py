@@ -24,13 +24,18 @@ class Command(BaseCommand):
             try:
                 username = input('Username: ')
                 if username not in [get_user_model().objects.all().only('username')]:
+                    email = input('E-Mail: ')
+                    phone = input('Phone: ')
+                    gender = input('Gender (Male or Female?): ')
                     password = getpass.getpass('Password: ')
                     password1 = getpass.getpass('Password Confirmation: ')
 
                     if password == password1:
-                        print(type(get_user_model()))
-                        new_user = models.User.objects.create_admin(
-                            username=username
+                        new_user = models.User.objects.create_teacher(
+                            username=username,
+                            email=email,
+                            phone=phone,
+                            gender=gender
                         )
 
                         new_user.set_password(password)

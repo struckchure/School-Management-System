@@ -44,12 +44,21 @@ class Cell(SleepCells):
 
 
 class LineEditButton(QGroupBox):
-	def __init__(self, placeHolder, icon, iconText='', iconColor='white'):
+	def __init__(
+		self,
+		placeHolder,
+		icon,
+		iconText='',
+		iconColor='white',
+		width=200,
+		onTextChange=None
+		):
 		super(LineEditButton, self).__init__()
 
 		self.placeHolder = placeHolder
 		self.icon = qta.icon(icon, color=iconColor)
 		self.iconText = iconText
+		self.onTextChange = onTextChange
 
 		self.groupLayout = QHBoxLayout()
 		self.groupLayout.setSpacing(0)
@@ -58,10 +67,11 @@ class LineEditButton(QGroupBox):
 
 		self.setLayout(self.groupLayout)
 		self.setFixedHeight(30)
+		self.setMaximumWidth(width)
 		self.setSizePolicy(
 			QSizePolicy(
-				QSizePolicy.MinimumExpanding,
-				QSizePolicy.MinimumExpanding
+				QSizePolicy.Expanding,
+				QSizePolicy.Expanding
 			)
 		)
 		self.setObjectName('lineEditBox')
@@ -82,7 +92,7 @@ class LineEditButton(QGroupBox):
 		self.groupLayout.addWidget(self.linedEdit)
 
 		self.button = QPushButton(self.icon, self.iconText)
-		self.button.clicked.connect(self.text)
+		# self.button.clicked.connect(self.text)
 		self.button.setObjectName('login')
 		self.button.setFixedHeight(self.height())
 		self.button.setMaximumWidth(250)
@@ -95,6 +105,14 @@ class LineEditButton(QGroupBox):
 
 	def text(self):
 		return self.linedEdit.text()
+	
+	def connectButton(self, event):
+		self.button.clicked.connect(event)
+
+
+'''
+	NavBar
+'''
 
 
 class NavBarUser(QPushButton, QHBoxLayout):
@@ -244,6 +262,11 @@ class NavBar(QGroupBox):
 		)
 
 
+'''
+	SideBar
+'''
+
+
 class SideBarTitle(QLabel):
 	def __init__(self, text):
 		QLabel.__init__(self)
@@ -349,6 +372,11 @@ class SideBar(QScrollArea):
 		self.showMaximized()
 
 
+'''
+	Dashboard
+'''
+
+
 class DashButton(QPushButton, QHBoxLayout):
 	def __init__(self, buttonText, buttonValue, buttonIcon='resources/assets/images/icons/view.png', borderColor='#1554BD'):
 		super(DashButton, self).__init__()
@@ -434,15 +462,6 @@ class DashButton(QPushButton, QHBoxLayout):
 		self.buttonLayout.addLayout(self.rightLayout)
 
 
-class PushNotification(QSystemTrayIcon):
-	def __init__(self, icon=QIcon('resources/assests/images/heart.png'), parent=None):
-		QSystemTrayIcon.__init__(self, icon, parent)
-		
-		menu = QMenu(parent)
-		exitAction = menu.addAction("Exit")
-		self.setContextMenu(menu)
-
-
 class PopUp(QWidget):
 	def __init__(self, title='School Manager', body='Body', buttonText='&Ok, thanks', parent=None):
 		super(QWidget, self).__init__(parent=None)
@@ -526,7 +545,8 @@ class TextInput(QGroupBox):
 		enabled=True,
 		width=350,
 		height=45,
-		password=False
+		password=False,
+		required=False
 		):
 		QGroupBox.__init__(self)
 
@@ -536,6 +556,7 @@ class TextInput(QGroupBox):
 
 		self.placeHolderText = placeHolderText
 		self.labelText = labelText
+		self.required = required
 
 		self.labelTextLabel = QLabel(str(labelText))
 		self.labelTextLabel.setMaximumSize(width, height)
@@ -606,6 +627,7 @@ class ComboInput(QGroupBox):
 		enabled=True,
 		width=350,
 		height=45,
+		required=False
 		):
 		QGroupBox.__init__(self)
 
@@ -615,6 +637,7 @@ class ComboInput(QGroupBox):
 
 		self.placeHolderText = placeHolderText
 		self.labelText = labelText
+		self.required = required
 
 		self.labelTextLabel = QLabel(str(labelText))
 		self.labelTextLabel.setMaximumSize(width, height)
@@ -668,7 +691,7 @@ class ComboInput(QGroupBox):
 
 		self.gridLayout.addWidget(self.comboInput, x, y)
 
-	def currentText(self):
+	def text(self):
 		return self.comboInput.currentText()
 
 	def addItem(self, item):
@@ -684,6 +707,7 @@ class ImageInput(QGroupBox):
 		enabled=True,
 		width=250,
 		height=45 * 4,
+		required=True
 		):
 		QGroupBox.__init__(self)
 
@@ -692,6 +716,7 @@ class ImageInput(QGroupBox):
 		self.gridLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
 
 		self.labelText = labelText
+		self.width_ = width
 
 		self.labelTextLabel = QLabel(str(labelText))
 		self.labelTextLabel.setMaximumSize(width, 45)
@@ -701,33 +726,40 @@ class ImageInput(QGroupBox):
 				QSizePolicy.MinimumExpanding
 			)
 		)
-
-		self.imageInput = QLabel()
+		
+		# self.imageInput = QLabel()
+		self.imageInput = CAvatar(
+			self,
+			shape=CAvatar.Rectangle,
+			url='../images/1.jpg',
+			size=QSize(width, height)
+		)
 		self.imageInput.setEnabled(enabled)
-		self.imageInput.setObjectName('imageInput-Normal')
-		self.imageInput.setMaximumSize(width, height)
+		# self.imageInput.setObjectName('imageInput-Normal')
+		self.imageInput.setMaximumSize(self.width() * 0.2, height)
 		self.imageInput.setSizePolicy(
 			QSizePolicy(
-				QSizePolicy.MinimumExpanding,
-				QSizePolicy.MinimumExpanding
+				QSizePolicy.Expanding,
+				QSizePolicy.Expanding
 			)
 		)
 
 		qss = utils.readQSS()
 		self.setStyleSheet(qss)
 		self.setLayout(self.gridLayout)
-		# self.setObjectName('noBorderBox')
-		self.setMaximumSize(width, height + 50)
+		self.setObjectName('noBorderBox')
+		self.setMaximumSize(width, height)
 		self.setSizePolicy(
 			QSizePolicy(
-				QSizePolicy.MinimumExpanding,
-				QSizePolicy.MinimumExpanding
+				QSizePolicy.Expanding,
+				QSizePolicy.Expanding
 			)
 		)
 
 		self.initialization()
 
 	def initialization(self):
+		self.image_path = None
 		x, y = 0, 0
 
 		if self.labelTextLabel:
@@ -749,11 +781,30 @@ class ImageInput(QGroupBox):
 			'/user/pictures/image/',
 			icon='fa5.image',
 			iconText='',
-			iconColor='white'
+			iconColor='white',
+			width=self.width() * 0.8
 		)
+		self.fieldButton.connectButton(self.select_image_dialog)
 		self.gridLayout.addWidget(self.fieldButton, x, y)
 		x += 1
 		y = 0
+	
+	def connectButton(self, event):
+		self.fieldButton.connectButton(event)
+	
+	def select_image_dialog(self):
+		self.file_dialog_window = QFileDialog.getOpenFileName(self, 'Select image', 'C\\', 'Image (*.jpg *.png *.svg)')
+		self.image_path = self.file_dialog_window[0]
+		image = QPixmap(self.image_path)
+		self.imageInput.setUrl(self.image_path)
+	
+	def imagePath(self):
+		if self.image_path:
+			return self.image_path
+	
+	def setPixmap(self, pixmap):
+		# self.imageInput.setPixmap(pixmap)
+		self.imageInput.setUrl(pixmap)
 
 
 '''
@@ -1437,3 +1488,116 @@ class Tab(QGroupBox):
 
 	def initialization(self):
 		pass
+
+
+'''
+	Buttons
+'''
+
+
+class Button(QPushButton):
+	def __init__(
+		self,
+		text,
+		icon=None,
+		event=None,
+		accent='btnPrimary',
+		width=150,
+		height=45
+		):
+		QPushButton.__init__(self)
+
+		self.event = event
+
+		self.setObjectName(accent)
+		self.setMaximumSize(width, height)
+
+		self.initialization()
+	
+	def initialization(self):
+		self.connect(self.event)
+
+	def connect(self, event):
+		self.clicked.connect(event)
+
+
+'''
+	Forms
+'''
+
+
+class Form(QGroupBox):
+	def __init__(
+		self,
+		fields,
+		buttonText,
+		buttonIcon=None,
+		grid=False,
+		alignment=Qt.AlignCenter,
+		spacing=5,
+		event=None
+		):
+		QGroupBox.__init__(self)
+
+		self.fields = fields
+		self.buttonText = str(buttonText)
+		self.buttonIcon = str(buttonIcon)
+		self.grid = grid
+		self.event = event
+
+		if grid:
+			self.formLayout = QGridLayout()
+		else:
+			self.formLayout = QVBoxLayout()
+
+		self.formLayout.setSpacing(spacing)
+		self.formLayout.setAlignment(alignment)
+
+		self.initialization()
+
+	def initialization(self):
+		self.loopCell = Cell(self.createForm)
+		self.loopCell.startCell()
+
+	def createForm(self):
+		if self.grid:
+			for i in self.fields:
+				self.formLayout.addWidget(i)
+
+			self.submitButton = Button(
+				text=self.buttonText,
+				icon=self.buttonIcon,
+				event=self.event
+			)
+			self.formLayout.addWidget(self.submitButton)
+		else:
+			try:
+				for i in self.fields:
+					self.formLayout.addWidget(
+						i[0],
+						i[1],
+						i[2],
+						i[3],
+						i[4]
+					)
+
+				self.submitButton = Button(
+					text=self.buttonText,
+					icon=self.buttonIcon,
+					event=self.event
+				)
+				self.formLayout.addWidget(self.submitButton)
+			except IndexError as e:
+				message = f'{e}'
+
+	def submitEvent(self):
+		self.fieldValues = []
+
+		if self.event:
+			for i in self.fields:
+				self.fieldValues.append(i.text())
+				if i.required:
+					if i.text():
+						message = f'Field is required'
+
+		return self.fieldValues
