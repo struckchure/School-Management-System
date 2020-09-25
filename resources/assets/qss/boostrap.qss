@@ -76,7 +76,6 @@ QPushButton#login {
 	background-color: $theme;
 }
 
-
 QPushButton#login:pressed {
 	border: 2px solid #68B0B3;
 }
@@ -364,7 +363,7 @@ QGroupBox#noBorderBox {
 QGroupBox#rightMainGroup {
 	border: 0px;
 	margin: 5px;
-	padding: 25px;
+	padding: 15px;
 }
 
 QScrollArea#rightMainScroll {
@@ -736,6 +735,48 @@ QComboBox::down-arrow {
 	image: url(resources/assets/icons/down-arrow.png);
 }
 
+
+/* Boostrap Buttons */
+
+/*buttonPrimary*/
+
+QPushButton#buttonPrimary {
+	border-radius: 0;
+	background-color: $theme;
+	color: white;
+	font-family: Verdana;
+}
+
+QPushButton#buttonPrimary:hover {
+	background-color: royalblue;
+}
+
+QPushButton#buttonPrimary:pressed {
+	border: 2px solid #68B0B3;
+}
+
+QPushButton#buttonPrimary:not(focus) {
+	border: 0px;
+}
+
+/*buttonPrimary*/
+
+
+/* Bootstrap Forms */
+
+/* form */
+
+QGroupBox#form {
+	border: 0;
+	padding: 5px;
+}
+
+/* form */
+
+QScrollArea#transparentScroll {
+	border: 0px;
+	background-color: rgba(0, 0, 0, 0);
+}
 
 /*
 QMenu::item {

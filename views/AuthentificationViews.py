@@ -10,6 +10,7 @@ import sys
 from views import pageConfigurations
 from views import mainWindow
 from views import utils
+from Home import models
 from resources.assets.customWidgets import customWidgets
 
 # Custom Modules End
@@ -72,56 +73,65 @@ class Login(QGroupBox):
 		self.pageTitle.setAlignment(Qt.AlignCenter)
 		self.pageTitle.setObjectName('pageTitle')
 		self.pageTitle.setMaximumSize(500, 100)
-		self.rightPageLayout.addWidget(self.pageTitle, stretch=0, alignment=Qt.AlignTop)
+		self.rightPageLayout.addWidget(self.pageTitle, stretch=0, alignment=Qt.AlignCenter)
 
-		self.spacer = QLabel()
-		self.spacer.setFixedHeight(30)
-		self.rightPageLayout.addWidget(self.spacer, stretch=0, alignment=Qt.AlignTop)
+		# self.spacer = QLabel()
+		# self.spacer.setFixedHeight(20)
+		# self.rightPageLayout.addWidget(self.spacer, stretch=0, alignment=Qt.AlignTop)
 
-		self.username = QLineEdit()
-		self.username.setObjectName('username')
-		self.username.setPlaceholderText('Username')
-		self.username.setMaximumSize(400, 60)
-		self.rightPageLayout.addWidget(self.username)
+		self.form = customWidgets.Form(
+			fields={
+				'fields': [
+					customWidgets.TextInput(
+						placeHolderText='Username',
+						width=425,
+						height=40
+					),
+					customWidgets.TextInput(
+						placeHolderText='Password',
+						width=425,
+						height=40,
+						password=True
+					)
+				],
+				'fieldNames': [
+					'Username',
+					'password'
+				],
+				'buttonSize': (400, 90),
+			},
+			buttonText='Login',
+			grid=False,
+			alignment=Qt.AlignCenter,
+			spacing=0
+		)
+		self.form.onSubmit(self.loginButtonView)
 
-		self.password = QLineEdit()
-		self.password.setObjectName('password')
-		self.password.setPlaceholderText('Password')
-		self.password.setEchoMode(QLineEdit.Password)
-		self.password.setMaximumSize(400, 60)
-		self.rightPageLayout.addWidget(self.password)
+		self.rightPageLayout.addWidget(self.form, stretch=0, alignment=Qt.AlignBottom)
+
+		self.spacer2 = QLabel()
+		self.spacer2.setFixedHeight(10)
+		self.rightPageLayout.addWidget(self.spacer2)
 
 		'''
 			Caps Lock warning, Session Keeper, Forgot Password
 		'''
 
-		self.spacer2 = QLabel()
-		self.spacer2.setFixedHeight(10)
-		self.rightPageLayout.addWidget(self.spacer2)
-
 		self.extraLayout = QHBoxLayout()
+		self.extraLayout.setSpacing(0)
+		self.extraLayout.setAlignment(Qt.AlignCenter)
 		self.extraLayout.setContentsMargins(0, 0, 0, 0)
 		self.rightPageLayout.addLayout(self.extraLayout)
 
-		self.spacer2 = QLabel()
-		self.spacer2.setFixedHeight(10)
-		self.rightPageLayout.addWidget(self.spacer2)
-
 		self.keepSession = QCheckBox('Keep me logged in for 30 days')
-		self.extraLayout.addWidget(self.keepSession, stretch=0, alignment=Qt.AlignLeft)
+		self.extraLayout.addWidget(self.keepSession)
 
 		self.forgotPassword = QPushButton('Forgot password?')
 		self.forgotPassword.setObjectName('forgotPassword')
-		self.extraLayout.addWidget(self.forgotPassword, stretch=0, alignment=Qt.AlignRight)
-
-		self.loginButton = QPushButton('Login')
-		self.loginButton.setObjectName('login')
-		self.loginButton.setMaximumSize(400, 80)
-		self.loginButton.clicked.connect(self.loginButtonView)
-		self.rightPageLayout.addWidget(self.loginButton)
+		self.extraLayout.addWidget(self.forgotPassword)
 
 		self.spacer3 = QLabel()
-		self.spacer3.setFixedHeight(30)
+		self.spacer3.setFixedHeight(10)
 		self.rightPageLayout.addWidget(self.spacer3)
 
 		self.signUpLayout = QHBoxLayout()
@@ -157,16 +167,16 @@ class Login(QGroupBox):
 
 		self.mainPageLayout.addWidget(self.rightPageGroup)
 
-	def keyPressEvent(self, e):
-		if e.key() == Qt.Key_Return:
-			self.loginButtonView()
+	# def keyPressEvent(self, e):
+	# 	if e.key() == Qt.Key_Return:
+	# 		self.loginButtonView()
 
 	def loginButtonView(self):
 		try:
-			from django.contrib.auth.models import User
+			formValues = self.form.submitEvent()
 
-			username = self.username.text()
-			password = self.password.text()
+			username = formValues[0]
+			password = formValues[1]
 
 			if username:
 				if password:
@@ -204,29 +214,18 @@ class Login(QGroupBox):
 			raise e
 
 	def nextPage(self):
-		if 'homePage' not in self.pageFinders['page']:
-			self.pageFinders['page'].append('homePage')
-			self.pageFinders['index'].append(self.pageController.currentIndex() + 1)
-
-			self.pageController.addWidget(
-				mainWindow.Home(self.pageController, self.pageFinders, self.get_user)
-			)
-			self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
-		else:
-			page = utils.findPage(self.pageFinders, 'homePage')
-			self.pageController.setCurrentIndex(page)
+		self.pageController.addWidget(
+			mainWindow.Home(self.pageController, self.get_user)
+		)
+		self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
 
 	def signUpButtonView(self):
-		if 'signUpPage' not in self.pageFinders['page']:
-			self.pageFinders['page'].append('signUpPage')
-			self.pageFinders['index'].append(self.pageController.currentIndex() + 1)
-
-			self.pageController.addWidget(Register(self.pageController))
-			self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
-
-		else:
-			page = utils.findPage(self.pageFinders, 'signUpPage')
-			self.pageController.setCurrentIndex(page)
+		self.pageController.addWidget(
+			Register(
+				self.pageController
+			)
+		)
+		self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
 
 
 class Register(QGroupBox):

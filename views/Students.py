@@ -19,11 +19,10 @@ from Home import models
 
 
 class Students(QGroupBox):
-	def __init__(self, stackedWidget, pageFinders):
+	def __init__(self, stackedWidget):
 		QGroupBox.__init__(self)
 
 		self.stackedWidget = stackedWidget
-		self.pageFinders = pageFinders
 
 		self.groupLayout = QGridLayout()
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
@@ -80,11 +79,10 @@ class Students(QGroupBox):
 
 
 class StudentDetails(QGroupBox):
-	def __init__(self, stackedWidget, pageFinders):
+	def __init__(self, stackedWidget):
 		QGroupBox.__init__(self)
 
 		self.stackedWidget = stackedWidget
-		self.pageFinders = pageFinders
 
 		self.groupLayout = QGridLayout()
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
@@ -183,11 +181,10 @@ class StudentDetails(QGroupBox):
 
 
 class StudentAdmission(QGroupBox):
-	def __init__(self, stackedWidget, pageFinders):
+	def __init__(self, stackedWidget):
 		QGroupBox.__init__(self)
 
 		self.stackedWidget = stackedWidget
-		self.pageFinders = pageFinders
 
 		self.groupLayout = QGridLayout()
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
@@ -227,7 +224,7 @@ class StudentAdmission(QGroupBox):
 		self.admissionCard = customWidgets.CardBasic(
 			accent='rgba(0, 0, 0, 0)',
 			width=self.infoCardWidth,
-			height=self.infoCardHeight,
+			height=self.headerHeight,
 		)
 
 		self.admissionCardContent = customWidgets.CardContent()
@@ -254,6 +251,94 @@ class StudentAdmission(QGroupBox):
 
 		self.admissionCardContent.cardLayout.addWidget(self.studentFormDetailsHeader)
 
+		self.form = customWidgets.Form(
+			fields={
+				'fields': [
+					customWidgets.TextInput(
+						labelText='Admission Number',
+						placeHolderText=f'{admission_num}',
+						enabled=False,
+					),
+					customWidgets.ComboInput(
+						labelText='Class',
+						placeHolderText='select',
+						items=['SSS 1', 'SSS 2', 'SSS 3']
+					),
+					customWidgets.ComboInput(
+						labelText='Gender',
+						placeHolderText='select',
+						items=['Male', 'Female']
+					),
+					customWidgets.ComboInput(
+						labelText='Section',
+						placeHolderText='select',
+						items=['A', 'B']
+					),
+					customWidgets.ImageInput(
+						labelText='Image',
+						width=320,
+						height=330
+					),
+					customWidgets.TextInput(
+						labelText='First Name',
+						placeHolderText='John'
+					),
+					customWidgets.TextInput(
+						labelText='Last Name',
+						placeHolderText='Doe'
+					),
+					customWidgets.TextInput(
+						labelText='Mobile Number',
+						placeHolderText='+234 801 234 5678'
+					),
+					customWidgets.TextInput(
+						labelText='E-Mail',
+						placeHolderText='johndoe@school.com'
+					),
+					customWidgets.TextInput(
+						labelText='New Password',
+						placeHolderText='Keep it secret',
+						password=True
+					),
+					customWidgets.TextInput(
+						labelText='Confirm Password',
+						placeHolderText='Keep it secret',
+						password=True
+					)
+				],
+				'fieldNames': [
+					'Admission Number',
+					'Class',
+					'Gender',
+					'Section',
+					'Image',
+					'First name',
+					'Last name',
+					'Mobile Number',
+					'E-Mail',
+					'Password',
+					'Password (Confirm Password)'
+				],
+				'fieldGrids': [
+					(0, 0, 1, 1),
+					(0, 1, 1, 1),
+					(0, 4, 5, 1),
+					(1, 0, 1, 1),
+					(1, 1, 1, 1),
+					(2, 0, 1, 1),
+					(2, 1, 1, 1),
+					(3, 0, 1, 1),
+					(3, 1, 1, 1),
+					(4, 0, 1, 1),
+					(4, 1, 1, 1)
+				],
+				'buttonGrid': (5, 0, 1, 3),
+				'buttonSize': (500, 50)
+			},
+			buttonText='Register',
+			grid=True
+		)
+
 		# First row
 
 		self.admission_num = customWidgets.TextInput(
@@ -264,35 +349,27 @@ class StudentAdmission(QGroupBox):
 
 		self.school_class = customWidgets.ComboInput(
 			labelText='Class',
-			placeHolderText='select'
+			placeHolderText='select',
+			items=['SSS 1', 'SSS 2', 'SSS 3']
 		)
-
-		self.school_class.addItem('SSS 1')
-		self.school_class.addItem('SSS 2')
-		self.school_class.addItem('SSS 3')
 
 		self.gender = customWidgets.ComboInput(
 			labelText='Gender',
-			placeHolderText='select'
+			placeHolderText='select',
+			items=['Male', 'Female']
 		)
-
-		self.gender.addItem('Male')
-		self.gender.addItem('Female')
 
 		self.section = customWidgets.ComboInput(
 			labelText='Section',
-			placeHolderText='select'
+			placeHolderText='select',
+			items=['A', 'B']
 		)
-
-		self.section.addItem('A')
-		self.section.addItem('B')
 
 		self.image = customWidgets.ImageInput(
 			# labelText='image',
 			width=320,
 			height=330
 		)
-		# self.image.connectButton(self.select_image_dialog)
 
 		# Second row
 		
@@ -328,21 +405,21 @@ class StudentAdmission(QGroupBox):
 			password=True
 		)
 
-		self.formLayout.addWidget(self.admission_num, 0, 0)
-		self.formLayout.addWidget(self.school_class, 0, 1)
-		self.formLayout.addWidget(self.image, 0, 4, 5, 1)
+		# self.formLayout.addWidget(self.admission_num, 0, 0)
+		# self.formLayout.addWidget(self.school_class, 0, 1)
+		# self.formLayout.addWidget(self.image, 0, 4, 5, 1)
 
-		self.formLayout.addWidget(self.gender, 1, 0)
-		self.formLayout.addWidget(self.section, 1, 1)
+		# self.formLayout.addWidget(self.gender, 1, 0)
+		# self.formLayout.addWidget(self.section, 1, 1)
 
-		self.formLayout.addWidget(self.first_name, 2, 0)
-		self.formLayout.addWidget(self.last_name, 2, 1)
+		# self.formLayout.addWidget(self.first_name, 2, 0)
+		# self.formLayout.addWidget(self.last_name, 2, 1)
 
-		self.formLayout.addWidget(self.phone_number, 3, 0)
-		self.formLayout.addWidget(self.email, 3, 1)
+		# self.formLayout.addWidget(self.phone_number, 3, 0)
+		# self.formLayout.addWidget(self.email, 3, 1)
 
-		self.formLayout.addWidget(self.password1, 4, 0)
-		self.formLayout.addWidget(self.password2, 4, 1)
+		# self.formLayout.addWidget(self.password1, 4, 0)
+		# self.formLayout.addWidget(self.password2, 4, 1)
 
 		self.formButtonLayout = QVBoxLayout()
 		self.formButtonLayout.setAlignment(Qt.AlignCenter)
@@ -352,29 +429,16 @@ class StudentAdmission(QGroupBox):
 		self.signUpLabel.setMaximumSize(200, 50)
 		self.formButtonLayout.addWidget(self.signUpLabel)
 
-		self.signUpButton = QPushButton('Sign Up')
-		self.signUpButton.setStyleSheet(
-			'''
-				QPushButton {
-					background-color: blue;
-					color: white;
-				}
-				QPushButton:hover {
-					background-color: rgba(0, 0, 0, 0.9);
-				}
-			'''
-		)
-		self.signUpButton.clicked.connect(self.signUpButtonView)
-		self.signUpButton.setObjectName('admissionButton')
-		self.signUpButton.setMaximumSize(500, 50)
-		self.signUpButton.setSizePolicy(
-			QSizePolicy.Expanding,
-			QSizePolicy.Expanding
-		)
-		self.formButtonLayout.addWidget(self.signUpButton)
+		# self.signUpButton = customWidgets.Button(
+		# 	'Sign Up',
+		# 	width=500,
+		# 	height=50
+		# )
+		# self.formButtonLayout.addWidget(self.signUpButton)
 
-		self.admissionCardContent.cardLayout.addLayout(self.formLayout)
-		self.admissionCardContent.cardLayout.addLayout(self.formButtonLayout)
+		# self.admissionCardContent.cardLayout.addLayout(self.formLayout)
+		self.admissionCardContent.cardLayout.addWidget(self.form)
+		# self.admissionCardContent.cardLayout.addLayout(self.formButtonLayout)
 
 	def signUpButtonView(self):
 		try:
@@ -383,7 +447,8 @@ class StudentAdmission(QGroupBox):
 			all_usernames = list(models.User.objects.values_list('username', flat=True))
 
 			if not self.image.imagePath:
-				self.image.imagePath = '../images/default-avatar.png'
+				self.image.imagePath = 'resources/assets/images/default-avatar.png'
+				# self.image.setPixmap(self.image.imagePath)
 
 			if self.first_name.text() and self.last_name.text():
 				if self.admission_num.placeHolderText not in all_usernames:
@@ -461,11 +526,10 @@ class StudentAdmission(QGroupBox):
 
 
 class StudentPromotion(QGroupBox):
-	def __init__(self, stackedWidget, pageFinders):
+	def __init__(self, stackedWidget):
 		QGroupBox.__init__(self)
 
 		self.stackedWidget = stackedWidget
-		self.pageFinders = pageFinders
 
 		self.groupLayout = QGridLayout()
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)

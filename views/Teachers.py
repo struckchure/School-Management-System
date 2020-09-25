@@ -18,11 +18,10 @@ from Home import models
 
 
 class Teachers(QGroupBox):
-	def __init__(self, stackedWidget, pageFinders):
+	def __init__(self, stackedWidget):
 		QGroupBox.__init__(self)
 
 		self.stackedWidget = stackedWidget
-		self.pageFinders = pageFinders
 
 		self.groupLayout = QGridLayout()
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
@@ -79,11 +78,10 @@ class Teachers(QGroupBox):
 
 
 class TeacherAdmission(QGroupBox):
-	def __init__(self, stackedWidget, pageFinders):
+	def __init__(self, stackedWidget):
 		QGroupBox.__init__(self)
 
 		self.stackedWidget = stackedWidget
-		self.pageFinders = pageFinders
 
 		self.groupLayout = QGridLayout()
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)
@@ -231,25 +229,12 @@ class TeacherAdmission(QGroupBox):
 		self.signUpLabel.setMaximumSize(200, 50)
 		self.formButtonLayout.addWidget(self.signUpLabel)
 
-		self.signUpButton = QPushButton('Sign Up')
-		self.signUpButton.setStyleSheet(
-			'''
-				QPushButton {
-					background-color: blue;
-					color: white;
-				}
-				QPushButton:hover {
-					background-color: rgba(0, 0, 0, 0.9);
-				}
-			'''
+		self.signUpButton = customWidgets.Button(
+			'Sign Up',
+			width=500,
+			height=50
 		)
-		self.signUpButton.clicked.connect(self.signUpButtonView)
-		self.signUpButton.setObjectName('admissionButton')
-		self.signUpButton.setMaximumSize(500, 50)
-		self.signUpButton.setSizePolicy(
-			QSizePolicy.Expanding,
-			QSizePolicy.Expanding
-		)
+		self.signUpButton.connectButton(self.signUpButtonView)
 		self.formButtonLayout.addWidget(self.signUpButton)
 
 		self.admissionCardContent.cardLayout.addLayout(self.formLayout)
@@ -336,11 +321,10 @@ class TeacherAdmission(QGroupBox):
 
 
 class TeacherPromotion(QGroupBox):
-	def __init__(self, stackedWidget, pageFinders):
+	def __init__(self, stackedWidget):
 		QGroupBox.__init__(self)
 
 		self.stackedWidget = stackedWidget
-		self.pageFinders = pageFinders
 
 		self.groupLayout = QGridLayout()
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)

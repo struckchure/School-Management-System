@@ -17,11 +17,10 @@ from resources.assets.customWidgets import customWidgets
 
 
 class DashBoard(QGroupBox):
-	def __init__(self, stackedWidget, pageFinders):
+	def __init__(self, stackedWidget):
 		QGroupBox.__init__(self)
 
 		self.stackedWidget = stackedWidget
-		self.pageFinders = pageFinders
 
 		self.groupLayout = QGridLayout()
 		self.groupLayout.setContentsMargins(0, 0, 0, 0)

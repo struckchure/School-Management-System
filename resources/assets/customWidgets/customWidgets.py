@@ -51,14 +51,12 @@ class LineEditButton(QGroupBox):
 		iconText='',
 		iconColor='white',
 		width=200,
-		onTextChange=None
 		):
 		super(LineEditButton, self).__init__()
 
 		self.placeHolder = placeHolder
 		self.icon = qta.icon(icon, color=iconColor)
 		self.iconText = iconText
-		self.onTextChange = onTextChange
 
 		self.groupLayout = QHBoxLayout()
 		self.groupLayout.setSpacing(0)
@@ -108,6 +106,9 @@ class LineEditButton(QGroupBox):
 	
 	def connectButton(self, event):
 		self.button.clicked.connect(event)
+	
+	def textChange(self, event):
+		self.linedEdit.textChanged.connect(event)
 
 
 '''
@@ -369,7 +370,6 @@ class SideBar(QScrollArea):
 		)
 		self.setMaximumSize(sideBarSize[0], sideBarSize[1])
 		self.setObjectName('sideBarScroll')
-		self.showMaximized()
 
 
 '''
@@ -586,7 +586,7 @@ class TextInput(QGroupBox):
 		qss = utils.readQSS()
 		self.setStyleSheet(qss)
 		self.setLayout(self.gridLayout)
-		# self.setObjectName('noBorderBox')
+		self.setObjectName('noBorderBox')
 		self.setMaximumSize(width, height * 2)
 		self.setSizePolicy(
 			QSizePolicy(
@@ -600,7 +600,7 @@ class TextInput(QGroupBox):
 	def initialization(self):
 		x, y = 0, 0
 
-		if self.labelTextLabel:
+		if self.labelText:
 			self.gridLayout.addWidget(self.labelTextLabel, x, y, 1, 2)
 			x += 1
 			y = 0
@@ -622,6 +622,7 @@ class ComboInput(QGroupBox):
 		self,
 		labelText=None,
 		placeHolderText=None,
+		items=None,
 		iconName=None,
 		iconColor='black',
 		enabled=True,
@@ -638,6 +639,7 @@ class ComboInput(QGroupBox):
 		self.placeHolderText = placeHolderText
 		self.labelText = labelText
 		self.required = required
+		self.items = items
 
 		self.labelTextLabel = QLabel(str(labelText))
 		self.labelTextLabel.setMaximumSize(width, height)
@@ -664,7 +666,7 @@ class ComboInput(QGroupBox):
 		qss = utils.readQSS()
 		self.setStyleSheet(qss)
 		self.setLayout(self.gridLayout)
-		# self.setObjectName('noBorderBox')
+		self.setObjectName('noBorderBox')
 		self.setMaximumSize(width, height * 2)
 		self.setSizePolicy(
 			QSizePolicy(
@@ -676,6 +678,9 @@ class ComboInput(QGroupBox):
 		self.initialization()
 
 	def initialization(self):
+		self.loopCell = Cell(self.createItems)
+		self.loopCell.startCell()
+
 		x, y = 0, 0
 
 		if self.labelTextLabel:
@@ -696,6 +701,11 @@ class ComboInput(QGroupBox):
 
 	def addItem(self, item):
 		self.comboInput.addItem(item)
+	
+	def createItems(self):
+		if self.items:
+			for item in self.items:
+				self.addItem(item)
 
 
 class ImageInput(QGroupBox):
@@ -727,7 +737,6 @@ class ImageInput(QGroupBox):
 			)
 		)
 		
-		# self.imageInput = QLabel()
 		self.imageInput = CAvatar(
 			self,
 			shape=CAvatar.Rectangle,
@@ -735,7 +744,6 @@ class ImageInput(QGroupBox):
 			size=QSize(width, height)
 		)
 		self.imageInput.setEnabled(enabled)
-		# self.imageInput.setObjectName('imageInput-Normal')
 		self.imageInput.setMaximumSize(self.width() * 0.2, height)
 		self.imageInput.setSizePolicy(
 			QSizePolicy(
@@ -785,6 +793,7 @@ class ImageInput(QGroupBox):
 			width=self.width() * 0.8
 		)
 		self.fieldButton.connectButton(self.select_image_dialog)
+		self.fieldButton.textChange(self.updateImage)
 		self.gridLayout.addWidget(self.fieldButton, x, y)
 		x += 1
 		y = 0
@@ -797,14 +806,17 @@ class ImageInput(QGroupBox):
 		self.image_path = self.file_dialog_window[0]
 		image = QPixmap(self.image_path)
 		self.imageInput.setUrl(self.image_path)
+		self.fieldButton.linedEdit.setText(self.image_path)
 	
 	def imagePath(self):
-		if self.image_path:
-			return self.image_path
+		return self.fieldButton.linedEdit.text()
 	
 	def setPixmap(self, pixmap):
 		# self.imageInput.setPixmap(pixmap)
 		self.imageInput.setUrl(pixmap)
+	
+	def updateImage(self):
+		self.setPixmap(self.fieldButton.linedEdit.text())
 
 
 '''
@@ -1359,14 +1371,14 @@ class CardHeader(QLabel):
 		self.setMaximumHeight(height)
 		self.setSizePolicy(
 			QSizePolicy(
-				QSizePolicy.MinimumExpanding,
-				QSizePolicy.MinimumExpanding
+				QSizePolicy.Expanding,
+				QSizePolicy.Expanding
 			)
 		)
 
 
 class CardContent(QGroupBox):
-	def __init__(self, width=1500, height=600, accent='rgba(0, 0, 0, 0)', alignment=Qt.AlignTop | Qt.AlignHCenter):
+	def __init__(self, width=1900, height=600, accent='rgba(0, 0, 0, 0)', alignment=Qt.AlignTop | Qt.AlignHCenter):
 		QGroupBox.__init__(self)
 
 		self.accent = accent
@@ -1391,15 +1403,18 @@ class CardContent(QGroupBox):
 
 		self.setStyleSheet(qss)
 		self.setObjectName('cardContent')
+		self.setLayout(self.cardLayout)
+		self.setGraphicsEffect(self.cardShadow)
+		self.setMaximumSize(width, height * 3)
 		self.setSizePolicy(
 			QSizePolicy(
 				QSizePolicy.Expanding,
 				QSizePolicy.Expanding
 			)
 		)
-		self.setLayout(self.cardLayout)
-		self.setGraphicsEffect(self.cardShadow)
-		self.setMaximumSize(width, height * 3)
+	
+	def addWidget(self, widget):
+		self.cardLayout.addWidget(widget)
 
 
 '''
@@ -1426,8 +1441,8 @@ class TabCardBasic(QGroupBox):
 		self.setObjectName('tabCardBasic')
 		self.setSizePolicy(
 			QSizePolicy(
-				QSizePolicy.MinimumExpanding,
-				QSizePolicy.MinimumExpanding
+				QSizePolicy.Expanding,
+				QSizePolicy.Expanding
 			)
 		)
 		self.setLayout(self.cardLayout)
@@ -1445,8 +1460,8 @@ class TabBasic(QTabWidget):
 
 		self.setSizePolicy(
 			QSizePolicy(
-				QSizePolicy.Maximum,
-				QSizePolicy.Maximum
+				QSizePolicy.Expanding,
+				QSizePolicy.Expanding
 			)
 		)
 		# self.setMinimumWidth(700)
@@ -1476,8 +1491,8 @@ class Tab(QGroupBox):
 		self.setObjectName('tabContent')
 		self.setSizePolicy(
 			QSizePolicy(
-				QSizePolicy.MinimumExpanding,
-				QSizePolicy.MinimumExpanding
+				QSizePolicy.Expanding,
+				QSizePolicy.Expanding
 			)
 		)
 		self.setLayout(self.groupLayout)
@@ -1500,25 +1515,35 @@ class Button(QPushButton):
 		self,
 		text,
 		icon=None,
-		event=None,
-		accent='btnPrimary',
-		width=150,
+		accent='buttonPrimary',
+		width=100,
 		height=45
 		):
 		QPushButton.__init__(self)
 
-		self.event = event
-
+		self.setText(text)
 		self.setObjectName(accent)
 		self.setMaximumSize(width, height)
+		self.setSizePolicy(
+			QSizePolicy.Expanding,
+			QSizePolicy.Expanding
+		)
+
+		qss = utils.findReplace(
+			f'$theme',
+			f'{accent}',
+			'/*buttonPrimary*/'
+		)
+		self.setStyleSheet(qss)
 
 		self.initialization()
 	
 	def initialization(self):
-		self.connect(self.event)
+		pass
 
-	def connect(self, event):
-		self.clicked.connect(event)
+	def connectButton(self, event):
+		if event:
+			self.clicked.connect(event)
 
 
 '''
@@ -1533,71 +1558,101 @@ class Form(QGroupBox):
 		buttonText,
 		buttonIcon=None,
 		grid=False,
-		alignment=Qt.AlignCenter,
-		spacing=5,
-		event=None
+		alignment=Qt.AlignHCenter | Qt.AlignTop,
+		spacing=3,
 		):
-		QGroupBox.__init__(self)
+		super(Form, self).__init__()
 
 		self.fields = fields
 		self.buttonText = str(buttonText)
 		self.buttonIcon = str(buttonIcon)
 		self.grid = grid
-		self.event = event
+
+		self.mainFormLayout = QVBoxLayout()
+		self.mainFormLayout.setSpacing(0)
+		self.mainFormLayout.setContentsMargins(0, 0, 0, 0)
+		self.mainFormLayout.setAlignment(Qt.AlignCenter)
 
 		if grid:
 			self.formLayout = QGridLayout()
 		else:
 			self.formLayout = QVBoxLayout()
 
+		self.formLayout.setContentsMargins(0, 0, 0, 0)
 		self.formLayout.setSpacing(spacing)
 		self.formLayout.setAlignment(alignment)
+		self.mainFormLayout.addLayout(self.formLayout)
+
+		self.formFooterLayout = QVBoxLayout()
+		# self.formFooterLayout.setContentsMargins(0, 0, 0, 0)
+		self.formFooterLayout.setAlignment(Qt.AlignCenter)
+		self.mainFormLayout.addLayout(self.formFooterLayout)
+
+		self.setLayout(self.mainFormLayout)
+		self.setObjectName('form')
 
 		self.initialization()
 
 	def initialization(self):
+		self.submitButton = Button(
+			text=self.buttonText,
+			icon=self.buttonIcon,
+		)
+
+		if self.fields.get('buttonSize'):
+			self.submitButton.setMaximumSize(self.fields['buttonSize'][0], self.fields['buttonSize'][1])
+
 		self.loopCell = Cell(self.createForm)
 		self.loopCell.startCell()
 
 	def createForm(self):
-		if self.grid:
-			for i in self.fields:
+		if not self.grid:
+			for i in self.fields['fields']:
 				self.formLayout.addWidget(i)
 
-			self.submitButton = Button(
-				text=self.buttonText,
-				icon=self.buttonIcon,
-				event=self.event
-			)
-			self.formLayout.addWidget(self.submitButton)
+			self.formFooterLayout.addWidget(self.submitButton, stretch=0, alignment=Qt.AlignBottom)
 		else:
+			buttonPlacements = self.fields['buttonGrid']
 			try:
-				for i in self.fields:
+				for i in self.fields['fields']:
+					placements = self.fields['fieldGrids'][self.fields['fields'].index(i)]
 					self.formLayout.addWidget(
-						i[0],
-						i[1],
-						i[2],
-						i[3],
-						i[4]
+						i,
+						placements[0],
+						placements[1],
+						placements[2],
+						placements[3]
 					)
 
-				self.submitButton = Button(
-					text=self.buttonText,
-					icon=self.buttonIcon,
-					event=self.event
+				self.formFooterLayout.addWidget(
+					self.submitButton,
+					# buttonPlacements[0],
+					# buttonPlacements[1],
+					# buttonPlacements[2],
+					# buttonPlacements[3]
 				)
-				self.formLayout.addWidget(self.submitButton)
 			except IndexError as e:
 				message = f'{e}'
 
 	def submitEvent(self):
 		self.fieldValues = []
 
-		if self.event:
-			for i in self.fields:
-				self.fieldValues.append(i.text())
-				if i.required:
-					if i.text():
-						message = f'Field is required'
+		for i in self.fields['fields']:
+			fieldName = self.fields['fieldNames'][self.fields['fields'].index(i)]
+			self.fieldValues.append(i.text())
+			if i.required:
+				if not i.text():
+					message = f'{fieldName} is required'
+
+					self.messagePopUp = PopUp(title='School Manager', body=message, buttonText='&Ok')
+					self.messagePopUp.show()
+					break
 
 		return self.fieldValues
+	
+	def keyPressEvent(self, e):
+		if e.key() == Qt.Key_Return:
+			self.submitEvent()
+	
+	def onSubmit(self, event):
+		self.submitButton.connectButton(event)
