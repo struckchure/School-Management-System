@@ -1572,6 +1572,12 @@ class Form(QGroupBox):
 		self.mainFormLayout.setSpacing(0)
 		self.mainFormLayout.setContentsMargins(0, 0, 0, 0)
 		self.mainFormLayout.setAlignment(Qt.AlignCenter)
+		'''
+			Header goes here before adding the actual form layout
+		'''
+
+		if fields.get('header'):
+			self.mainFormLayout.addWidget(fields['header'], stretch=0, alignment=Qt.AlignTop)
 
 		if grid:
 			self.formLayout = QGridLayout()
@@ -1587,6 +1593,13 @@ class Form(QGroupBox):
 		# self.formFooterLayout.setContentsMargins(0, 0, 0, 0)
 		self.formFooterLayout.setAlignment(Qt.AlignCenter)
 		self.mainFormLayout.addLayout(self.formFooterLayout)
+
+		'''
+			Footer goes here after adding the actual form
+		'''
+
+		if fields.get('footer'):
+			self.mainFormLayout.addWidget(fields['footer'], stretch=0, alignment=Qt.AlignBottom)
 
 		self.setLayout(self.mainFormLayout)
 		self.setObjectName('form')

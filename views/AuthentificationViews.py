@@ -69,18 +69,72 @@ class Login(QGroupBox):
 		self.rightPageLayout.setContentsMargins(0, 0, 0, 0)
 		self.rightPageLayout.setAlignment(Qt.AlignCenter)
 
+		'''
+			Header
+		'''
+
+		self.headerLayout = QVBoxLayout()
+		self.headerLayout.setContentsMargins(0, 0, 0, 0)
+		self.headerLayout.setAlignment(Qt.AlignCenter)
+
+		self.headerWidget = QGroupBox()
+		self.headerWidget.setObjectName('noBorderBox')
+		self.headerWidget.setLayout(self.headerLayout)
+
 		self.pageTitle = QLabel('School Management System')
 		self.pageTitle.setAlignment(Qt.AlignCenter)
 		self.pageTitle.setObjectName('pageTitle')
 		self.pageTitle.setMaximumSize(500, 100)
-		self.rightPageLayout.addWidget(self.pageTitle, stretch=0, alignment=Qt.AlignCenter)
+		self.headerLayout.addWidget(self.pageTitle, stretch=0, alignment=Qt.AlignCenter)
 
-		# self.spacer = QLabel()
-		# self.spacer.setFixedHeight(20)
-		# self.rightPageLayout.addWidget(self.spacer, stretch=0, alignment=Qt.AlignTop)
+		'''
+			Footer
+		'''
+
+		self.footerLayout = QVBoxLayout()
+		self.footerLayout.setContentsMargins(0, 0, 0, 0)
+		self.footerLayout.setAlignment(Qt.AlignCenter)
+
+		self.footerWidget = QGroupBox()
+		self.footerWidget.setObjectName('noBorderBox')
+		self.footerWidget.setLayout(self.footerLayout)
+
+		self.extraLayout = QHBoxLayout()
+		self.extraLayout.setSpacing(0)
+		self.extraLayout.setAlignment(Qt.AlignCenter)
+		self.extraLayout.setContentsMargins(0, 0, 0, 0)
+		self.footerLayout.addLayout(self.extraLayout)
+
+		self.keepSession = QCheckBox('Keep me logged in for 30 days')
+		self.extraLayout.addWidget(self.keepSession)
+
+		self.forgotPassword = QPushButton('Forgot password?')
+		self.forgotPassword.setObjectName('forgotPassword')
+		self.extraLayout.addWidget(self.forgotPassword)
+
+		self.spacer3 = QLabel()
+		self.spacer3.setFixedHeight(10)
+		self.footerLayout.addWidget(self.spacer3)
+
+		self.signUpLayout = QHBoxLayout()
+		self.signUpLayout.setSpacing(0)
+		self.signUpLayout.setAlignment(Qt.AlignCenter)
+		self.footerLayout.addLayout(self.signUpLayout)
+
+		self.signUpLabel = QLabel('Need an account?')
+		self.signUpLabel.setObjectName('signUpLabel')
+		self.signUpLabel.setMaximumSize(120, 50)
+		self.signUpLayout.addWidget(self.signUpLabel)
+
+		self.signUpButton = QPushButton('Sign Up')
+		self.signUpButton.setObjectName('signUpButton')
+		self.signUpButton.clicked.connect(self.signUpButtonView)
+		self.signUpButton.setMaximumSize(120, 50)
+		self.signUpLayout.addWidget(self.signUpButton)
 
 		self.form = customWidgets.Form(
 			fields={
+				'header': self.headerWidget,
 				'fields': [
 					customWidgets.TextInput(
 						placeHolderText='Username',
@@ -98,7 +152,8 @@ class Login(QGroupBox):
 					'Username',
 					'password'
 				],
-				'buttonSize': (400, 90),
+				'buttonSize': (400, 100),
+				'footer': self.footerWidget
 			},
 			buttonText='Login',
 			grid=False,
@@ -117,39 +172,6 @@ class Login(QGroupBox):
 			Caps Lock warning, Session Keeper, Forgot Password
 		'''
 
-		self.extraLayout = QHBoxLayout()
-		self.extraLayout.setSpacing(0)
-		self.extraLayout.setAlignment(Qt.AlignCenter)
-		self.extraLayout.setContentsMargins(0, 0, 0, 0)
-		self.rightPageLayout.addLayout(self.extraLayout)
-
-		self.keepSession = QCheckBox('Keep me logged in for 30 days')
-		self.extraLayout.addWidget(self.keepSession)
-
-		self.forgotPassword = QPushButton('Forgot password?')
-		self.forgotPassword.setObjectName('forgotPassword')
-		self.extraLayout.addWidget(self.forgotPassword)
-
-		self.spacer3 = QLabel()
-		self.spacer3.setFixedHeight(10)
-		self.rightPageLayout.addWidget(self.spacer3)
-
-		self.signUpLayout = QHBoxLayout()
-		self.signUpLayout.setSpacing(0)
-		self.signUpLayout.setAlignment(Qt.AlignCenter)
-		self.rightPageLayout.addLayout(self.signUpLayout)
-
-		self.signUpLabel = QLabel('Need an account?')
-		self.signUpLabel.setObjectName('signUpLabel')
-		self.signUpLabel.setMaximumSize(120, 50)
-		self.signUpLayout.addWidget(self.signUpLabel)
-
-		self.signUpButton = QPushButton('Sign Up')
-		self.signUpButton.setObjectName('signUpButton')
-		self.signUpButton.clicked.connect(self.signUpButtonView)
-		self.signUpButton.setMaximumSize(120, 50)
-		self.signUpLayout.addWidget(self.signUpButton)
-
 		blurRadius = 90
 		offset = 20
 		color = QColor(0, 0, 0, 255 * .3)
@@ -167,9 +189,9 @@ class Login(QGroupBox):
 
 		self.mainPageLayout.addWidget(self.rightPageGroup)
 
-	# def keyPressEvent(self, e):
-	# 	if e.key() == Qt.Key_Return:
-	# 		self.loginButtonView()
+	def keyPressEvent(self, e):
+		if e.key() == Qt.Key_Return:
+			self.loginButtonView()
 
 	def loginButtonView(self):
 		try:
@@ -471,12 +493,5 @@ class Register(QGroupBox):
 			raise e
 
 	def signInButtonView(self):
-		if 'signInPage' not in self.pageFinders['page']:
-			self.pageFinders['page'].append('signInPage')
-			self.pageFinders['index'].append(self.pageController.currentIndex() + 1)
-			
-			self.pageController.addWidget(Register(self.pageController, self.pageFinders))
-			self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
-		else:
-			page = utils.findPage(self.pageFinders, 'signInPage')
-			self.pageController.setCurrentIndex(page)
+		self.pageController.addWidget(Login(self.pageController, self.pageFinders))
+		self.pageController.setCurrentIndex(self.pageController.currentIndex() + 1)
